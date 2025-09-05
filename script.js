@@ -10,8 +10,28 @@
   toggle.addEventListener('click', () => {
     const open = menu.classList.toggle('is-open');
     toggle.setAttribute('aria-expanded', String(open));
+    document.body.classList.toggle('no-scroll', open);
 
   });
+  // Close menu on link click
+  menu.addEventListener('click', (e) => {
+    const link = e.target && e.target.closest('a');
+    if (!link) return;
+    menu.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('no-scroll');
+  });
+
+  // Ensure menu resets when resizing to desktop
+  const MQ = 821;
+  function syncMenuOnResize() {
+    if (window.innerWidth >= MQ && menu.classList.contains('is-open')) {
+      menu.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('no-scroll');
+    }
+  }
+  window.addEventListener('resize', syncMenuOnResize);
 })();
 
 // PostHog tracking events for Kalycs
