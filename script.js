@@ -10,6 +10,96 @@
   toggle.addEventListener('click', () => {
     const open = menu.classList.toggle('is-open');
     toggle.setAttribute('aria-expanded', String(open));
+
+  });
+})();
+
+// PostHog tracking events for Kalycs
+(function(){
+  // Track button clicks
+  document.addEventListener('DOMContentLoaded', function() {
+    // Track hero CTA button clicks
+    const heroCtaButtons = document.querySelectorAll('.hero .cta .btn');
+    heroCtaButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const buttonText = button.textContent.trim();
+        if (typeof posthog !== 'undefined') {
+          posthog.capture('cta_clicked', {
+            section: 'hero',
+            button_text: buttonText,
+            href: button.getAttribute('href')
+          });
+        }
+      });
+    });
+
+    // Track navigation clicks
+    const navLinks = document.querySelectorAll('.nav__links a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (typeof posthog !== 'undefined') {
+          posthog.capture('nav_clicked', {
+            section: link.textContent.trim(),
+            href: link.getAttribute('href')
+          });
+        }
+      });
+    });
+
+    // Track pricing button clicks
+    const pricingButton = document.querySelector('.pricing__cta');
+    if (pricingButton) {
+      pricingButton.addEventListener('click', () => {
+        if (typeof posthog !== 'undefined') {
+          posthog.capture('pricing_clicked', {
+            section: 'pricing',
+            button_text: pricingButton.textContent.trim()
+          });
+        }
+      });
+    }
+
+    // Track tutorial video views (when YouTube modals open)
+    const videoThumbs = document.querySelectorAll('.t-video-thumb');
+    videoThumbs.forEach(thumb => {
+      thumb.addEventListener('click', function() {
+        const videoId = this.getAttribute('data-video-id');
+        const slideCard = this.closest('.t-slide-card');
+        const titleEl = slideCard ? slideCard.querySelector('.t-slide-title') : null;
+        const title = titleEl ? titleEl.textContent.trim() : 'Unknown Tutorial';
+
+        if (typeof posthog !== 'undefined') {
+          posthog.capture('tutorial_video_opened', {
+            video_id: videoId,
+            title: title
+          });
+        }
+      });
+    });
+
+    // Track section scrolls (when user views different sections)
+    let currentSection = '';
+    const sections = ['hero', 'preview', 'features', 'tutorials', 'buy', 'faqs'];
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.id;
+          if (currentSection !== sectionId && sections.includes(sectionId)) {
+            currentSection = sectionId;
+            if (typeof posthog !== 'undefined') {
+              posthog.capture('section_viewed', {
+                section: sectionId
+              });
+            }
+          }
+        }
+      });
+    }, { threshold: 0.5 });
+
+    sections.forEach(section => {
+      const element = document.getElementById(section);
+      if (element) observer.observe(element);
+    });
   });
 })();
 

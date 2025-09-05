@@ -6,12 +6,54 @@
     <title>Kalycs — No More Searching. Just Finding.</title>
     <meta name="description" content="Kalycs keeps your files organized and uses AI to give you instant answers." />
 
+    <!-- Icons & PWA -->
+    <link rel="icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#0B0C0F">
+    <meta name="color-scheme" content="dark light">
+
+    <!-- Social (OG/Twitter) -->
+    <meta property="og:title" content="Kalycs — No More Searching. Just Finding.">
+    <meta property="og:description" content="Kalycs keeps your files organized and uses AI to give you instant answers.">
+    <meta property="og:image" content="https://your-domain.com/assets/og.jpg">
+    <meta property="og:url" content="https://your-domain.com/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Canonical & robots -->
+    <link rel="canonical" href="https://your-domain.com/">
+    <meta name="robots" content="index,follow">
+
+    <!-- Font performance -->
+    <link rel="preload" as="font" href="/assets/fonts/manrope-var.woff2" type="font/woff2" crossorigin>
+    <style>/* ensure swap if using Google Fonts */</style>
+
+    <!-- Basic CSP (tune for your domain/CDNs) -->
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com 'self'; script-src 'self' 'unsafe-inline' https://app.posthog.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com;">
+
     <!-- Manrope + Sono fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sono:wght@400;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="styles.css" />
+
+    <!-- TODO: Replace 'https://your-domain.com/' with the actual domain URL -->
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"SoftwareApplication",
+      "name":"Kalycs",
+      "applicationCategory":"BusinessApplication",
+      "operatingSystem":"macOS, Windows",
+      "offers":{"@type":"Offer","price":"49.99","priceCurrency":"USD"},
+      "description":"Kalycs keeps your files organized and uses AI to give you instant answers.",
+      "url":"https://your-domain.com/"
+    }
+    </script>
   </head>
   <body>
     <!-- Header / Nav -->
@@ -31,16 +73,17 @@
 
         <nav id="primary-menu" class="nav__links" aria-label="Primary">
           <div class="nav__pill">
-            <a href="#features">Features</a>
+            <a href="#features" aria-current="page">Features</a>
             <a href="#tutorials">Tutorials</a>
             <a href="#faqs">FAQ's</a>
+            <a href="#buy">Pricing</a>
           </div>
         </nav>
       </div>
     </header>
 
     <!-- Hero -->
-    <main>
+    <main id="main">
       <section class="section hero">
         <div class="container grid-hero">
           <div class="hero__text">
@@ -56,7 +99,7 @@
             </div>
           </div>
           <div class="hero__image-wrap">
-            <img src="assets/hero_image.png" alt="Person overwhelmed with flying folders" class="hero__image hero__image--base" />
+            <img src="assets/hero_image.png" alt="Person overwhelmed with flying folders" class="hero__image hero__image--base" loading="eager" />
             <img src="assets/hero_image_2.png" alt="" aria-hidden="true" class="hero__image hero__image--alt" />
           </div>
         </div>
@@ -66,7 +109,7 @@
       <section class="section app-shot" id="preview">
         <div class="container">
           <figure class="preview">
-            <img src="assets/screenshot.png" alt="Kalycs app preview" />
+            <img src="assets/screenshot.png" alt="Kalycs app preview" loading="lazy" decoding="async" />
           </figure>
         </div>
       </section>
@@ -198,11 +241,11 @@
                 <li class="t-slide">
                   <article class="t-slide-card" role="group" aria-label="Semantic Search">
                     <div class="t-slide-media">
-                      <a class="t-video-thumb" href="#" data-video-id="SYyvx6GE2UI" aria-label="Play: Semantic Search">
-                        <img src="assets/screenshot.png" alt="Semantic Search preview" loading="lazy" />
+                      <button class="t-video-thumb" data-video-id="SYyvx6GE2UI" aria-label="Play: Semantic Search" type="button">
+                        <img src="assets/screenshot.png" alt="Semantic Search preview" loading="lazy" decoding="async" />
                         <span class="t-play" aria-hidden="true">▶</span>
                         <div class="t-media-overlay" aria-hidden="true"></div>
-                      </a>
+                      </button>
                     </div>
                     <header class="t-slide-meta">
                       <h3 class="t-slide-title">Semantic Search</h3>
@@ -214,11 +257,11 @@
                 <li class="t-slide">
                   <article class="t-slide-card" role="group" aria-label="Auto‑Organize">
                     <div class="t-slide-media">
-                      <a class="t-video-thumb" href="#" data-video-id="SYyvx6GE2UI" aria-label="Play: Auto‑Organize">
-                        <img src="assets/screenshot.png" alt="Auto‑Organize preview" loading="lazy" />
+                      <button class="t-video-thumb" data-video-id="SYyvx6GE2UI" aria-label="Play: Auto‑Organize" type="button">
+                        <img src="assets/screenshot.png" alt="Auto‑Organize preview" loading="lazy" decoding="async" />
                         <span class="t-play" aria-hidden="true">▶</span>
                         <div class="t-media-overlay" aria-hidden="true"></div>
-                      </a>
+                      </button>
                     </div>
                     <header class="t-slide-meta">
                       <h3 class="t-slide-title">Auto‑Organize</h3>
@@ -230,11 +273,11 @@
                 <li class="t-slide">
                   <article class="t-slide-card" role="group" aria-label="Rules Engine">
                     <div class="t-slide-media">
-                      <a class="t-video-thumb" href="#" data-video-id="SYyvx6GE2UI" aria-label="Play: Rules Engine">
-                        <img src="assets/screenshot.png" alt="Rules engine preview" loading="lazy" />
+                      <button class="t-video-thumb" data-video-id="SYyvx6GE2UI" aria-label="Play: Rules Engine" type="button">
+                        <img src="assets/screenshot.png" alt="Rules engine preview" loading="lazy" decoding="async" />
                         <span class="t-play" aria-hidden="true">▶</span>
                         <div class="t-media-overlay" aria-hidden="true"></div>
-                      </a>
+                      </button>
                     </div>
                     <header class="t-slide-meta">
                       <h3 class="t-slide-title">Rules Engine</h3>
@@ -246,11 +289,11 @@
                 <li class="t-slide">
                   <article class="t-slide-card" role="group" aria-label="AI Answers">
                     <div class="t-slide-media">
-                      <a class="t-video-thumb" href="#" data-video-id="SYyvx6GE2UI" aria-label="Play: AI Answers">
-                        <img src="assets/screenshot.png" alt="AI Answers preview" loading="lazy" />
+                      <button class="t-video-thumb" data-video-id="SYyvx6GE2UI" aria-label="Play: AI Answers" type="button">
+                        <img src="assets/screenshot.png" alt="AI Answers preview" loading="lazy" decoding="async" />
                         <span class="t-play" aria-hidden="true">▶</span>
                         <div class="t-media-overlay" aria-hidden="true"></div>
-                      </a>
+                      </button>
                     </div>
                     <header class="t-slide-meta">
                       <h3 class="t-slide-title">AI Answers</h3>
@@ -262,11 +305,11 @@
                 <li class="t-slide">
                   <article class="t-slide-card" role="group" aria-label="Summaries & Tags">
                     <div class="t-slide-media">
-                      <a class="t-video-thumb" href="#" data-video-id="SYyvx6GE2UI" aria-label="Play: Summaries & Tags">
-                        <img src="assets/tutorials/Summaries_Tags.png" alt="Summaries and Tags preview" loading="lazy" />
+                      <button class="t-video-thumb" data-video-id="SYyvx6GE2UI" aria-label="Play: Summaries & Tags" type="button">
+                        <img src="assets/tutorials/Summaries_Tags.png" alt="Summaries and Tags preview" loading="lazy" decoding="async" />
                         <span class="t-play" aria-hidden="true">▶</span>
                         <div class="t-media-overlay" aria-hidden="true"></div>
-                      </a>
+                      </button>
                     </div>
                     <header class="t-slide-meta">
                       <h3 class="t-slide-title">Summaries & Tags</h3>
@@ -278,11 +321,11 @@
                 <li class="t-slide">
                   <article class="t-slide-card" role="group" aria-label="Privacy‑First Local">
                     <div class="t-slide-media">
-                      <a class="t-video-thumb" href="#" data-video-id="SYyvx6GE2UI" aria-label="Play: Privacy‑First Local">
-                        <img src="assets/screenshot.png" alt="Privacy‑First preview" loading="lazy" />
+                      <button class="t-video-thumb" data-video-id="SYyvx6GE2UI" aria-label="Play: Privacy‑First Local" type="button">
+                        <img src="assets/screenshot.png" alt="Privacy‑First preview" loading="lazy" decoding="async" />
                         <span class="t-play" aria-hidden="true">▶</span>
                         <div class="t-media-overlay" aria-hidden="true"></div>
-                      </a>
+                      </button>
                     </div>
                     <header class="t-slide-meta">
                       <h3 class="t-slide-title">Privacy‑First Local</h3>
@@ -294,6 +337,32 @@
             </div>
             <button class="t-c-arrow t-c-next" aria-label="Next slide" type="button">›</button>
           </div>
+        </div>
+      </section>
+
+      <!-- Pricing -->
+      <section class="section pricing" id="buy" aria-label="Pricing">
+        <div class="container">
+          <header class="pricing__header text-center">
+            <span class="pricing__kicker">Simple Pricing</span>
+            <h2 class="h2">One yearly subscription</h2>
+            <p class="pricing__sub">All features. One low price.</p>
+          </header>
+
+          <article class="pricing__card" role="group" aria-label="Yearly plan">
+            <div class="pricing__plan">
+              <h3 class="pricing__title">Yearly</h3>
+              <p class="pricing__desc">Full access to Kalycs features and updates.</p>
+            </div>
+
+            <div class="pricing__price" aria-label="Price">
+              <span class="pricing__amount" aria-label="49.99 US dollars">$49.99</span>
+              <span class="pricing__period">/year</span>
+            </div>
+
+            <button class="btn btn--primary pricing__cta" type="button">Buy Now</button>
+            <p class="pricing__note">Single yearly subscription in USD.</p>
+          </article>
         </div>
       </section>
 
@@ -399,13 +468,13 @@
     <footer class="site-footer">
       <div class="container footer">
         <div class="footer__left">
-          <img src="assets/logo.png" alt="Kalycs logo" class="brand__logo small" />
+          <img src="assets/logo.png" alt="Kalycs logo" class="brand__logo small" loading="lazy" decoding="async" />
           <span>© <span id="year"></span> Kalycs</span>
         </div>
         <div class="footer__right">
-          <a href="#">Privacy</a>
-          <a href="#">Terms</a>
-          <a href="#">Contact</a>
+          <button type="button">Privacy</button>
+          <button type="button">Terms</button>
+          <button type="button">Contact</button>
         </div>
       </div>
     </footer>
@@ -420,6 +489,33 @@
         </div>
       </div>
     </div>
+
+    <!-- PostHog Analytics -->
+    <script>
+      !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init Re Ms Fs Pe Rs Cs capture Ve calculateEventProperties Ds register register_once register_for_session unregister unregister_for_session zs getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey canRenderSurveyAsync createPersonProfile Ns Is Us opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing is_capturing clear_opt_in_out_capturing Os debug I js getPageViewId captureTraceFeedback captureTraceMetric".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+
+      // Initialize PostHog
+      posthog.init('phc_4Y9RxCs4bQ2WIah1xVjluDkkmsaWAy7n7wsG7K2fkO2', {
+          api_host: 'https://eu.i.posthog.com',
+          capture_pageview: true,
+          capture_pageleave: true,
+          autocapture: true,
+          disable_session_recording: false,
+          enable_recording_console_log: false,
+          person_profiles: 'identified_only'
+      });
+
+      // Debug PostHog initialization
+      console.log('PostHog initialized:', typeof posthog !== 'undefined');
+
+      // Track page view manually if needed
+      if (typeof posthog !== 'undefined') {
+          posthog.capture('page_view', {
+              page_title: document.title,
+              page_url: window.location.href
+          });
+      }
+    </script>
 
     <script src="script.js"></script>
   </body>
