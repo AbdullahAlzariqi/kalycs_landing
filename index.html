@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kalycs — No More Searching. Just Finding.</title>
+    <meta name="description" content="Kalycs keeps your files organized and uses AI to give you instant answers." />
+
+    <!-- Manrope + Sono fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sono:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header / Nav -->
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="#">
+          <img src="assets/logo.png" alt="Kalycs logo" class="brand__logo" />
+          <span class="brand__name">kalycs</span>
+        </a>
+
+        <button class="nav__toggle" aria-controls="primary-menu" aria-expanded="false">
+          <span class="sr-only">Toggle menu</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+
+        <nav id="primary-menu" class="nav__links" aria-label="Primary">
+          <div class="nav__pill">
+            <a href="#features">Features</a>
+            <a href="#tutorials">Tutorials</a>
+            <a href="#faqs">FAQ's</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <main>
+      <section class="section hero">
+        <div class="container grid-hero">
+          <div class="hero__text">
+            <h1 class="h1">No More Searching. Just Finding.</h1>
+            <p class="lead">
+              <a href="#" class="link">Kalycs</a> keeps your files <span class="u">organized</span>, makes
+              <span class="u">finding</span> effortless, and uses AI to give you instant
+              <span class="u">answers</span>.
+            </p>
+            <div class="cta">
+              <a class="btn btn--ghost" href="#features">How can Kalycs Help?</a>
+              <a class="btn btn--primary" href="#buy">Buy Now</a>
+            </div>
+          </div>
+          <div class="hero__image-wrap">
+            <img src="assets/hero_image.png" alt="Person overwhelmed with flying folders" class="hero__image hero__image--base" />
+            <img src="assets/hero_image_2.png" alt="" aria-hidden="true" class="hero__image hero__image--alt" />
+          </div>
+        </div>
+      </section>
+
+      <!-- App preview -->
+      <section class="section app-shot" id="preview">
+        <div class="container">
+          <figure class="preview">
+            <img src="assets/screenshot.png" alt="Kalycs app preview" />
+          </figure>
+        </div>
+      </section>
+
+      <!-- Features -->
+      <section class="section" id="features">
+        <div class="container">
+          <h2 class="h2 features__title">Three reasons to use Kal<strong>y</strong>cs</h2>
+
+          <section class="features-grid" aria-label="Kalycs key features">
+            <!-- Card 1 -->
+            <article class="feature-card">
+              <div class="badge" aria-hidden="true">1</div>
+              <h3>Ask away</h3>
+              <p>Ask Kalycs a question using natural language and get instant answers powered by AI.</p>
+
+              <div class="feature-search" role="search" aria-label="Search example">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z" stroke="#8F93B8" stroke-width="1.6"/>
+                  <path d="m20.5 20.5-3.8-3.8" stroke="#8F93B8" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+                <input type="text" value="What’s our plan?" aria-label="Search input mock" />
+                <span class="kbd">⌘K</span>
+              </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="feature-card">
+              <div class="badge" aria-hidden="true">2</div>
+              <h3>Find everything</h3>
+              <p>Kalycs keeps your documents and files organized so you’re never left looking for a needle in the haystack.</p>
+
+              <!-- Stacked folders illustration -->
+              <svg class="stack" width="150" height="110" viewBox="0 0 150 110" fill="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#FFE7B4"/>
+                    <stop offset="1" stop-color="#E1B06A"/>
+                  </linearGradient>
+                  <linearGradient id="shade" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="rgba(0,0,0,.45)"/>
+                    <stop offset="1" stop-color="rgba(0,0,0,0)"/>
+                  </linearGradient>
+                </defs>
+                <g transform="translate(6,8)">
+                  <rect x="18" y="60" rx="6" ry="6" width="112" height="24" fill="#2B2F3D"/>
+                  <rect x="12" y="48" rx="6" ry="6" width="116" height="24" fill="#32384A"/>
+                  <rect x="8"  y="36" rx="6" ry="6" width="120" height="24" fill="#3A4156"/>
+                  <rect x="4"  y="24" rx="6" ry="6" width="124" height="24" fill="#424B63"/>
+                  <rect x="0"  y="0"  rx="8" ry="8" width="126" height="34" fill="url(#paper)"/>
+                  <rect x="0"  y="26" width="126" height="8" fill="url(#shade)" />
+                </g>
+              </svg>
+            </article>
+
+            <!-- Card 3 — Auto-organize Downloads -->
+            <article class="feature-card">
+              <div class="badge" aria-hidden="true">3</div>
+              <h3>Auto-organize your Downloads</h3>
+              <p>Kalycs watches your <em>Downloads</em> and instantly sorts files into the right folders—by rules or AI.</p>
+
+              <div class="feature-visual" aria-label="Files falling into organized folders">
+                <div class="organize-container">
+                  <!-- Download Arrow -->
+                  <div class="download-arrow" aria-hidden="true">
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="url(#acc-grad)" stroke-width="2" role="img" aria-label="Download">
+                      <defs>
+                        <linearGradient id="acc-grad" x1="0" y1="0" x2="1" y2="1">
+                          <stop offset="0" stop-color="#8285E3"/>
+                          <stop offset="1" stop-color="#585CDA"/>
+                        </linearGradient>
+                      </defs>
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="7,10 12,15 17,10"/>
+                      <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                  </div>
+
+                  <!-- Falling files -->
+                  <div class="falling-files" aria-hidden="true">
+                    <div class="file file-pdf"></div>
+                    <div class="file file-image"></div>
+                    <div class="file file-doc"></div>
+                  </div>
+
+                  <!-- Destination folders -->
+                  <div class="folders-container">
+                    <div class="folder folder-docs">
+                      <div class="folder-icon"></div>
+                      <span>Docs</span>
+                    </div>
+                    <div class="folder folder-images">
+                      <div class="folder-icon"></div>
+                      <span>Images</span>
+                    </div>
+                    <div class="folder folder-other">
+                      <div class="folder-icon"></div>
+                      <span>Other</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </section>
+        </div>
+      </section>
+
+      <!-- Tutorials -->
+      <section class="section tutorials-section" id="tutorials" aria-label="Kalycs Tutorials">
+        <!-- Soft top glow -->
+        <div class="t-top-glow" aria-hidden="true"></div>
+
+        <div class="container">
+          <header class="t-header">
+            <div class="t-badge">
+              <span>Tutorials</span>
+              <span class="t-badge-dot"></span>
+              <span>Quick Guides</span>
+            </div>
+            <h2 class="t-main-title">Video Tutorials</h2>
+            <p class="t-main-desc">Short demos of core workflows. Links will update once YouTube URLs are added.</p>
+          </header>
+
+          <!-- Carousel -->
+          <div class="t-carousel" role="region" aria-label="Tutorial videos">
+            <button class="t-c-arrow t-c-prev" aria-label="Previous slide" type="button">‹</button>
+            <div class="t-carousel-viewport" tabindex="0">
+              <ul class="t-carousel-track">
+                <li class="t-slide">
+                  <article class="t-slide-card" role="group" aria-label="Semantic Search">
+                    <div class="t-slide-media">
+                      <a class="t-video-thumb" href="#" data-video-id="SYyvx6GE2UI" aria-label="Play: Semantic Search">
+                        <img src="assets/screenshot.png" alt="Semantic Search preview" loading="lazy" />
+                        <span class="t-play" aria-hidden="true">▶</span>
+                        <div class="t-media-overlay" aria-hidden="true"></div>
+                      </a>
+                    </div>
+                    <header class="t-slide-meta">
+                      <h3 class="t-slide-title">Semantic Search</h3>
+                      <p class="t-slide-desc">Find meaning across your documents with natural language.</p>
+                    </header>
+                  </article>
+                </li>
+
+                <li class="t-slide">
+                  <article class="t-slide-card" role="group" aria-label="Auto‑Organize">
+                    <div class="t-slide-media">
+                      <a class="t-video-thumb" href="#" data-video-id="SYyvx6GE2UI" aria-label="Play: Auto‑Organize">
+                        <img src="assets/screenshot.png" alt="Auto‑Organize preview" loading="lazy" />
+                        <span class="t-play" aria-hidden="true">▶</span>
+                        <div class="t-media-overlay" aria-hidden="true"></div>
+                      </a>
+                    </div>
+                    <header class="t-slide-meta">
+                      <h3 class="t-slide-title">Auto‑Organize</h3>
+                      <p class="t-slide-desc">Watcher sorts new files into projects by rules or AI.</p>
+                    </header>
+                  </article>
+                </li>
+
+                <li class="t-slide">
+                  <article class="t-slide-card" role="group" aria-label="Rules Engine">
+                    <div class="t-slide-media">
+                      <a class="t-video-thumb" href="#" data-video-id="SYyvx6GE2UI" aria-label="Play: Rules Engine">
+                        <img src="assets/screenshot.png" alt="Rules engine preview" loading="lazy" />
+                        <span class="t-play" aria-hidden="true">▶</span>
+                        <div class="t-media-overlay" aria-hidden="true"></div>
+                      </a>
+                    </div>
+                    <header class="t-slide-meta">
+                      <h3 class="t-slide-title">Rules Engine</h3>
+                      <p class="t-slide-desc">If‑This‑Then‑That naming, regex and metadata pipelines.</p>
+                    </header>
+                  </article>
+                </li>
+
+                <li class="t-slide">
+                  <article class="t-slide-card" role="group" aria-label="AI Answers">
+                    <div class="t-slide-media">
+                      <a class="t-video-thumb" href="#" data-video-id="SYyvx6GE2UI" aria-label="Play: AI Answers">
+                        <img src="assets/screenshot.png" alt="AI Answers preview" loading="lazy" />
+                        <span class="t-play" aria-hidden="true">▶</span>
+                        <div class="t-media-overlay" aria-hidden="true"></div>
+                      </a>
+                    </div>
+                    <header class="t-slide-meta">
+                      <h3 class="t-slide-title">AI Answers</h3>
+                      <p class="t-slide-desc">Grounded answers with citations and copy‑ready snippets.</p>
+                    </header>
+                  </article>
+                </li>
+
+                <li class="t-slide">
+                  <article class="t-slide-card" role="group" aria-label="Summaries & Tags">
+                    <div class="t-slide-media">
+                      <a class="t-video-thumb" href="#" data-video-id="SYyvx6GE2UI" aria-label="Play: Summaries & Tags">
+                        <img src="assets/tutorials/Summaries_Tags.png" alt="Summaries and Tags preview" loading="lazy" />
+                        <span class="t-play" aria-hidden="true">▶</span>
+                        <div class="t-media-overlay" aria-hidden="true"></div>
+                      </a>
+                    </div>
+                    <header class="t-slide-meta">
+                      <h3 class="t-slide-title">Summaries & Tags</h3>
+                      <p class="t-slide-desc">Create summaries and organize with automatic tagging.</p>
+                    </header>
+                  </article>
+                </li>
+
+                <li class="t-slide">
+                  <article class="t-slide-card" role="group" aria-label="Privacy‑First Local">
+                    <div class="t-slide-media">
+                      <a class="t-video-thumb" href="#" data-video-id="SYyvx6GE2UI" aria-label="Play: Privacy‑First Local">
+                        <img src="assets/screenshot.png" alt="Privacy‑First preview" loading="lazy" />
+                        <span class="t-play" aria-hidden="true">▶</span>
+                        <div class="t-media-overlay" aria-hidden="true"></div>
+                      </a>
+                    </div>
+                    <header class="t-slide-meta">
+                      <h3 class="t-slide-title">Privacy‑First Local</h3>
+                      <p class="t-slide-desc">Everything runs on-device with optional sync.</p>
+                    </header>
+                  </article>
+                </li>
+              </ul>
+            </div>
+            <button class="t-c-arrow t-c-next" aria-label="Next slide" type="button">›</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQs -->
+      <section class="section faq-section" id="faqs">
+        <div class="container">
+          <div class="faq-intro">
+            <span class="faq-kicker"><span class="dot" aria-hidden="true"></span>FAQ</span>
+            <h2 class="h2">Frequently Asked Questions</h2>
+            <p class="faq-sub">Quick answers about Kalycs, AI features, and privacy.</p>
+          </div>
+
+          <div class="faq-list" role="list">
+            <details class="faq-item" role="listitem">
+              <summary>
+                <span>Is AI included in Kalycs?</span>
+              </summary>
+              <div class="faq-body">
+                <p>
+                  Yes. Kalycs includes AI features like semantic search, natural language Q&amp;A, intelligent file
+                  categorization, and smart summaries. You can find answers across your files, not just keywords.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq-item" role="listitem">
+              <summary>
+                <span>Do I need an OpenAI API key to use Kalycs?</span>
+              </summary>
+              <div class="faq-body">
+                <p>
+                  OpenAI API key is required. Add your key in Settings to enable AI features. Without a key, non‑AI
+                  features like local search still work.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq-item" role="listitem">
+              <summary>
+                <span>Which AI models (LLMs) does Kalycs support?</span>
+              </summary>
+              <div class="faq-body">
+                <p>Only OpenAI (GPT) is supported. Other providers are not supported.</p>
+              </div>
+            </details>
+
+            <details class="faq-item" role="listitem">
+              <summary>
+                <span>Can I use Kalycs without AI?</span>
+              </summary>
+              <div class="faq-body">
+                <p>
+                  Yes. Kalycs includes a local search engine (Bleve) that works entirely offline. You can organize,
+                  search, and manage files without AI. AI features like summaries and tagging are optional.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq-item" role="listitem">
+              <summary>
+                <span>How does Kalycs handle my data?</span>
+              </summary>
+              <div class="faq-body">
+                <p>
+                  Your data stays under your control. All files and searches run on your device. When you use AI
+                  features, requests are sent to OpenAI using your API key; we never share your content with third
+                  parties beyond that processing.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq-item" role="listitem">
+              <summary>
+                <span>How are my API keys stored?</span>
+              </summary>
+              <div class="faq-body">
+                <p>
+                  API keys are stored securely in your system's keychain, not transmitted to Kalycs servers. This ensures your credentials remain private and under your control.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq-item" role="listitem">
+              <summary>
+                <span>Does Kalycs send my files to AI providers?</span>
+              </summary>
+              <div class="faq-body">
+                <p>
+                  When using AI features, relevant file content may be sent to your configured AI providers for processing (summarization, chat, etc.). This follows the same privacy policies as using these AI services directly.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <aside class="faq-tip" aria-label="Tip">
+            <strong>Note:</strong>AI capabilities (semantic search, chat with files, smart tagging)
+            as a feature requiring OpenAI API key.
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer">
+        <div class="footer__left">
+          <img src="assets/logo.png" alt="Kalycs logo" class="brand__logo small" />
+          <span>© <span id="year"></span> Kalycs</span>
+        </div>
+        <div class="footer__right">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Video Modal -->
+    <div class="video-modal" id="video-modal" aria-hidden="true">
+      <div class="video-backdrop" data-close="video-modal" aria-hidden="true"></div>
+      <div class="video-content" role="dialog" aria-modal="true" aria-label="Video player">
+        <button class="video-close" type="button" aria-label="Close video" data-close="video-modal">×</button>
+        <div class="video-aspect">
+          <!-- iframe injected dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+  </html>
