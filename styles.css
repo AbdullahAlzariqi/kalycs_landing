@@ -498,23 +498,96 @@ body {
 .faq-item .faq-body ul { margin: 8px 0 0 18px; padding: 0; color: rgba(255,255,255,0.78); }
 .faq-item .faq-body li { margin: 4px 0; }
 
-.faq-tip { 
-  margin-top: 18px; 
-  display: inline-flex; align-items: center; gap: 10px; 
-  padding: 10px 12px; border-radius: 10px; 
-  border: 1px solid rgba(255,255,255,0.12); 
-  background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
-  color: rgba(255,255,255,0.85);
+.faq-note { 
+  margin-top: 24px; 
+  display: flex; align-items: flex-start; gap: 14px; 
+  padding: 18px 20px; border-radius: 14px; 
+  border: 1px solid rgba(130, 133, 227, 0.25); 
+  background: linear-gradient(180deg, rgba(130, 133, 227, 0.08), rgba(88, 92, 218, 0.06));
+  color: rgba(255,255,255,0.9);
+  box-shadow: 0 4px 12px rgba(88, 92, 218, 0.12);
+}
+.faq-note__icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 8px;
+  background: linear-gradient(180deg, var(--color-primary-600), var(--primary));
+  color: #fff; font-weight: 700; font-size: 14px; line-height: 1;
+  box-shadow: 0 2px 8px rgba(88, 92, 218, 0.3);
+  flex-shrink: 0;
+}
+.faq-note__content {
+  flex: 1; line-height: 1.6;
 }
 @media (min-width: 640px) { .faq-list { gap: 14px; } }
 
 /* Footer */
-.site-footer { border-top: 1px solid #1d1b24; padding: 22px 0 40px; color: #c7c4d6; }
-.footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.site-footer { 
+  position: relative;
+  isolation: isolate;
+  border-top: 1px solid #1d1b24;
+  padding: 26px 0 44px;
+  color: #c7c4d6;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
+}
+/* Accent line + soft top glow */
+.site-footer::before {
+  content: "";
+  position: absolute; inset: 0 0 auto 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(130,133,227,0.55) 25%, rgba(88,92,218,0.65) 50%, rgba(130,133,227,0.55) 75%, transparent);
+  opacity: 0.9; pointer-events: none;
+}
+.site-footer::after {
+  content: "";
+  position: absolute; left: 50%; transform: translateX(-50%);
+  top: -48px; width: min(640px, 86%); height: 160px;
+  background: radial-gradient(50% 60% at 50% 0%, rgba(88,92,218,0.28), rgba(130,133,227,0.10) 40%, rgba(88,92,218,0.0) 70%);
+  filter: blur(20px); pointer-events: none; z-index: -1;
+}
+
+.footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 .footer__left { display: flex; align-items: center; gap: 10px; }
-.footer__right { display: flex; gap: 18px; }
-.footer__right a { color: #a8a5b9; text-decoration: none; }
-.footer__right a:hover { color: var(--text); }
+.footer__right { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+.footer__nav { display: flex; gap: 12px; flex-wrap: wrap; }
+.footer__link { 
+  color: #a8a5b9; 
+  text-decoration: none; 
+  font-weight: 500;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  position: relative;
+}
+.footer__link:hover { 
+  color: var(--text); 
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.footer__link:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+/* Animated underline accent on hover */
+.footer__link::after {
+  content: "";
+  position: absolute; left: 12px; right: 12px; bottom: 6px; height: 2px;
+  background: linear-gradient(90deg, var(--color-primary-600), var(--primary));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .22s ease;
+  opacity: .9;
+}
+.footer__link:hover::after { transform: scaleX(1); }
+
+/* Subtle hover affordance on logo in footer */
+.site-footer .brand__logo.small { filter: drop-shadow(0 4px 10px rgba(0,0,0,.35)); transition: transform .15s ease, filter .2s ease; }
+.site-footer .brand__logo.small:hover { transform: translateY(-1px) scale(1.02); filter: drop-shadow(0 10px 20px rgba(0,0,0,.45)); }
+
+/* Footer responsive tweaks */
+@media (max-width: 640px) {
+  .footer { justify-content: center; text-align: center; gap: 14px; }
+  .footer__right { justify-content: center; }
+}
 
 /* Pricing */
 .pricing { position: relative; }
@@ -525,6 +598,14 @@ body {
   border: 1px solid rgba(255,255,255,0.1);
   background: rgba(255,255,255,0.05);
   padding: 4px 10px; border-radius: 999px;
+}
+
+.pricing__kicker--primary {
+  border-color: var(--primary);
+  background: rgba(88, 92, 218, 0.1);
+  color: var(--primary);
+  padding: 8px 10px;
+  margin-bottom: 10px;
 }
 .pricing__sub { margin: 6px 0 0; color: rgba(255,255,255,0.7); }
 
