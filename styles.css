@@ -789,8 +789,8 @@ body {
 }
 .tutorials-section .t-c-arrow:hover { background: rgba(255,255,255,0.12); transform: translateY(-50%) scale(1.05); }
 .tutorials-section .t-c-arrow:disabled { opacity: 0.5; cursor: default; }
-.tutorials-section .t-c-prev { left: -6px; }
-.tutorials-section .t-c-next { right: -6px; }
+.tutorials-section .t-c-prev { left: -30px; }
+.tutorials-section .t-c-next { right: -40px; }
 
 @media (max-width: 639px){
   .tutorials-section .t-c-arrow { width: 36px; height: 36px; font-size: 18px; }
