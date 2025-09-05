@@ -15,6 +15,7 @@
 })();
 
 // PostHog tracking events for Kalycs
+/*
 (function(){
   // Track button clicks
   document.addEventListener('DOMContentLoaded', function() {
@@ -102,6 +103,7 @@
     });
   });
 })();
+*/
 
 // Hero image animated swap for CTA buttons (chaos -> calm)
 (function () {
@@ -351,36 +353,55 @@
       }
     });
 
-    function getStep() {
-      if (slides.length < 1) return 0;
-      const r0 = slides[0].getBoundingClientRect();
-      const r1 = slides[1] ? slides[1].getBoundingClientRect() : r0;
-      const gap = Math.max(0, r1.left - r0.right);
-      return Math.round(r0.width + gap);
-    }
+    // Helpers to compute precise targets and indices
+    const getTargetLeftForSlide = (slide) => {
+      const vRect = viewport.getBoundingClientRect();
+      const sRect = slide.getBoundingClientRect();
+      return sRect.left - vRect.left + viewport.scrollLeft;
+    };
+
+    const getNearestIndex = () => {
+      const current = viewport.scrollLeft;
+      let best = 0;
+      let bestDelta = Infinity;
+      for (let i = 0; i < slides.length; i++) {
+        const left = getTargetLeftForSlide(slides[i]);
+        const d = Math.abs(left - current);
+        if (d < bestDelta) { best = i; bestDelta = d; }
+      }
+      return best;
+    };
 
     function updateArrows() {
       if (!prev || !next) return;
-      const max = viewport.scrollWidth - viewport.clientWidth - 1;
-      prev.disabled = viewport.scrollLeft <= 1;
-      next.disabled = viewport.scrollLeft >= max;
+      const max = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
+      const x = viewport.scrollLeft;
+      const atStart = x <= 1;
+      const atEnd = x >= (max - 1);
+      prev.disabled = atStart;
+      next.disabled = atEnd;
     }
 
-    function scrollByStep(dir) {
-      const step = getStep() || viewport.clientWidth * 0.9;
-      viewport.scrollBy({ left: dir * step, behavior: 'smooth' });
-      // Update arrows after animation frame
-      requestAnimationFrame(() => setTimeout(updateArrows, 220));
+    function scrollToIndex(nextIndex) {
+      const i = Math.max(0, Math.min(slides.length - 1, nextIndex));
+      const left = getTargetLeftForSlide(slides[i]);
+      viewport.scrollTo({ left, behavior: 'smooth' });
+      requestAnimationFrame(() => setTimeout(updateArrows, 250));
     }
 
-    prev && prev.addEventListener('click', () => scrollByStep(-1));
-    next && next.addEventListener('click', () => scrollByStep(1));
+    function step(dir) {
+      const i = getNearestIndex();
+      scrollToIndex(i + (dir < 0 ? -1 : 1));
+    }
+
+    prev && prev.addEventListener('click', () => step(-1));
+    next && next.addEventListener('click', () => step(1));
     viewport.addEventListener('scroll', () => { requestAnimationFrame(updateArrows); }, { passive: true });
 
     // Keyboard nav on focused viewport
     viewport.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') { e.preventDefault(); scrollByStep(-1); }
-      if (e.key === 'ArrowRight') { e.preventDefault(); scrollByStep(1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
     });
 
     // Initial state
