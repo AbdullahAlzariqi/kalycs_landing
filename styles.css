@@ -76,7 +76,7 @@ body.no-scroll { overflow: hidden; }
 .h1 { font-size: clamp(24px, 4.2vw, 48px); line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 16px; font-weight: 800; }
 .h2 { font-size: clamp(22px, 3.6vw, 36px); line-height: 1.2; margin: 0 0 8px; font-weight: 700; }
 .lead { font-size: clamp(16px, 2.2vw, 20px); color: var(--muted); max-width: 60ch; }
-.u { text-decoration: underline; text-decoration-color: #6d6bf73d; text-underline-offset: 3px; }
+.u { text-decoration: underline; text-decoration-color: var(--primary); text-decoration-thickness: 2px; text-underline-offset: 3px; }
 .link { color: #9aa0ff; text-decoration: underline; text-decoration-color: #9aa0ff66; text-underline-offset: 3px; }
 .link:hover { color: #b5b9ff; }
 
@@ -520,11 +520,88 @@ body.no-scroll { overflow: hidden; }
 .faq-item .faq-body ul { margin: 8px 0 0 18px; padding: 0; color: rgba(255,255,255,0.78); }
 .faq-item .faq-body li { margin: 4px 0; }
 
-.faq-note { 
-  margin-top: 24px; 
-  display: flex; align-items: flex-start; gap: 14px; 
-  padding: 18px 20px; border-radius: 14px; 
-  border: 1px solid rgba(130, 133, 227, 0.25); 
+/* Local-first section */
+.local-first {
+  position: relative;
+  text-align: center;
+  padding: clamp(32px, 4vw, 48px) 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Subtle background accent */
+.local-first::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(800px 400px at 50% 50%, rgba(88,92,218,0.04) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(130,133,227,.02) 0%, rgba(88,92,218,.01) 50%, transparent);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.local-first__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(12px, 2vw, 16px);
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Add a subtle badge/pill for "Local-First" */
+.local-first__content::before {
+  content: "🔒 Privacy First";
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: rgba(130,133,227,0.9);
+  border: 1px solid rgba(130,133,227,0.2);
+  background: rgba(130,133,227,0.08);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  margin-bottom: 8px;
+}
+
+.local-first__title {
+  font-size: clamp(24px, 3.2vw, 32px);
+  font-weight: 800;
+  margin: 0;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.local-first__desc {
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(15px, 1.8vw, 18px);
+  line-height: 1.6;
+  max-width: 52ch;
+  font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .local-first {
+    padding: clamp(24px, 3vw, 32px) 0;
+  }
+  
+  .local-first__content {
+    gap: 10px;
+  }
+}
+
+.faq-note {
+  margin-top: 24px;
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 18px 20px; border-radius: 14px;
+  border: 1px solid rgba(130, 133, 227, 0.25);
   background: linear-gradient(180deg, rgba(130, 133, 227, 0.08), rgba(88, 92, 218, 0.06));
   color: rgba(255,255,255,0.9);
   box-shadow: 0 4px 12px rgba(88, 92, 218, 0.12);
