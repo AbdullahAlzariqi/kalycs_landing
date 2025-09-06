@@ -226,7 +226,10 @@
 
   // Create and add buy now button (desktop/top-right)
   const buyButton = document.createElement('a');
-  buyButton.href = '#buy';
+  // Make the Buy link work from any page
+  const path = (location && location.pathname) || '';
+  const isIndex = /\/?$/.test(path) || /\/(index\.html)?$/.test(path) || path.endsWith('index.html');
+  buyButton.href = isIndex ? '#buy' : 'index.html#buy';
   buyButton.className = 'btn btn--primary nav__buy-btn';
   buyButton.textContent = 'Buy Now';
   nav.appendChild(buyButton);
@@ -586,6 +589,83 @@
         try { if (window.showToast) window.showToast('Something went wrong. Please try again.', { type: 'error', duration: 4500 }); } catch (_) {}
         // Fallback: let Netlify handle full page POST if desired
         // setTimeout(() => form.submit(), 800);
+      } finally {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    });
+  }
+
+  // Open on hash link
+  if (window.location && window.location.hash === '#contact') {
+    // Ensure we open after styles/layout settle
+    setTimeout(open, 50);
+  }
+})();
+
+// Feature Request modal + Netlify form submission
+(function(){
+  const frOpeners = [
+    document.getElementById('feature-request-link'),
+    document.getElementById('feature-request-link-footer')
+  ].filter(Boolean);
+  const modal = document.getElementById('feature-modal');
+  if (!modal) return;
+
+  const content = modal.querySelector('.contact-content');
+  const closeButtons = modal.querySelectorAll('[data-close="feature-modal"]');
+  const form = modal.querySelector('form[name="feature-request"]');
+  const status = modal.querySelector('.contact-status');
+  let lastActive = null;
+
+  function close() {
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    document.removeEventListener('keydown', onKey);
+    if (lastActive && typeof lastActive.focus === 'function') lastActive.focus();
+  }
+
+  function onKey(e) { if (e.key === 'Escape') close(); }
+
+  function open() {
+    lastActive = document.activeElement;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    const firstField = modal.querySelector('#fr-title') || modal.querySelector('input, textarea, button');
+    if (firstField) firstField.focus();
+    document.addEventListener('keydown', onKey, { once: false });
+  }
+
+  frOpeners.forEach((btn) => btn.addEventListener('click', (e) => { e.preventDefault(); open(); }));
+  closeButtons.forEach((btn) => btn.addEventListener('click', close));
+  modal.addEventListener('click', (e) => { if (e.target && e.target.getAttribute('data-close') === 'feature-modal') close(); });
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      try {
+        e.preventDefault();
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (status) status.textContent = 'Sending…';
+        if (submitBtn) submitBtn.disabled = true;
+
+        const formData = new FormData(form);
+        if (!formData.get('form-name') && form.getAttribute('name')) {
+          formData.set('form-name', form.getAttribute('name'));
+        }
+        const body = new URLSearchParams(formData).toString();
+        const res = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body });
+        if (!res.ok) throw new Error('Network error');
+
+        if (typeof posthog !== 'undefined') { try { posthog.capture('feature_requested'); } catch(_){} }
+        if (status) status.textContent = 'Thanks! Your request has been sent.';
+        try { if (window.showToast) window.showToast('Feature request sent. Thank you!', { type: 'success' }); } catch(_){}
+        form.reset();
+        setTimeout(() => { close(); if (status) status.textContent=''; }, 1800);
+      } catch (err) {
+        if (status) status.textContent = 'Something went wrong. Please try again.';
+        try { if (window.showToast) window.showToast('Something went wrong. Please try again.', { type: 'error', duration: 4500 }); } catch(_){}
       } finally {
         const submitBtn = form.querySelector('button[type="submit"]');
         if (submitBtn) submitBtn.disabled = false;

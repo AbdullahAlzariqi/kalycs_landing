@@ -152,6 +152,57 @@ body.no-scroll { overflow: hidden; }
   opacity: 0.95;
 }
 
+/* Announcement Bar */
+.announcement {
+  position: relative;
+  z-index: 5;
+  background: rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.announcement__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 10px 0;
+  flex-wrap: wrap;
+}
+.announcement__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--primary);
+  box-shadow: 0 0 0 0 rgba(88,92,218,0.35);
+  animation: ann-pulse 2.2s ease-out infinite;
+}
+.announcement__text {
+  color: rgba(255,255,255,0.9);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+}
+.announcement__link {
+  color: #e6e6ff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  transition: border-color .2s ease, background .2s ease, transform .1s ease;
+}
+.announcement__link:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+@keyframes ann-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(88,92,218,0.35); }
+  70% { box-shadow: 0 0 0 8px rgba(88,92,218,0); }
+  100% { box-shadow: 0 0 0 0 rgba(88,92,218,0); }
+}
+
 .nav__links { 
   display: flex; 
   gap: clamp(16px, 4vw, 40px); 
@@ -305,6 +356,7 @@ body.no-scroll { overflow: hidden; }
   padding-bottom: clamp(40px, 6vw, 80px);
   margin-top: -60px;
 }
+.announcement + main .hero { margin-top: 0; padding-top: clamp(16px, 4vh, 28px); }
 .grid-hero { display: grid; grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: clamp(16px, 2vw, 32px); }
 .hero__text { padding: 8px 0; }
 .cta { display: flex; gap: 14px; margin-top: 22px; flex-wrap: wrap; }
@@ -1106,14 +1158,14 @@ body.no-scroll { overflow: hidden; }
 .contact-form .hidden { display: none; }
 .field { display: grid; gap: 6px; }
 .field label { font-weight: 600; font-size: 14px; color: #d6d4e4; }
-.field input, .field textarea {
+.field input, .field textarea, .field select {
   appearance: none; width: 100%;
   background: #161823; color: #D8DAE7;
   border: 1px solid #222635; border-radius: 10px;
   padding: 12px 14px; font-size: 14px; line-height: 1.5;
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
 }
-.field input:focus, .field textarea:focus { outline: 2px solid var(--ring); outline-offset: 2px; }
+.field input:focus, .field textarea:focus, .field select:focus { outline: 2px solid var(--ring); outline-offset: 2px; }
 .field textarea { resize: vertical; min-height: 120px; }
 
 .contact-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 4px; }
