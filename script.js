@@ -429,3 +429,97 @@
     window.addEventListener('resize', () => requestAnimationFrame(updateArrows));
   });
 })();
+
+// Contact modal + Netlify form submission
+(function(){
+  const contactLink = document.getElementById('contact-link') || document.querySelector('.footer__link[href="#contact"]');
+  const modal = document.getElementById('contact-modal');
+  if (!modal) return;
+
+  const content = modal.querySelector('.contact-content');
+  const closeButtons = modal.querySelectorAll('[data-close="contact-modal"]');
+  const form = modal.querySelector('form[name="contact"]');
+  const status = modal.querySelector('.contact-status');
+  let lastActive = null;
+
+  function close() {
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    document.removeEventListener('keydown', onKey);
+    if (lastActive && typeof lastActive.focus === 'function') {
+      lastActive.focus();
+    }
+  }
+
+  function onKey(e) {
+    if (e.key === 'Escape') close();
+  }
+
+  function open() {
+    lastActive = document.activeElement;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    const firstField = modal.querySelector('#contact-name') || modal.querySelector('input, textarea, button');
+    if (firstField) firstField.focus();
+    document.addEventListener('keydown', onKey, { once: false });
+  }
+
+  // Wire open triggers
+  if (contactLink) {
+    contactLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      open();
+    });
+  }
+
+  // Close behaviors
+  closeButtons.forEach((btn) => btn.addEventListener('click', close));
+  modal.addEventListener('click', (e) => {
+    if (e.target && e.target.getAttribute('data-close') === 'contact-modal') close();
+  });
+
+  // Netlify AJAX submission to avoid page reload
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      try {
+        e.preventDefault();
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (status) status.textContent = 'Sending…';
+        if (submitBtn) submitBtn.disabled = true;
+
+        const formData = new FormData(form);
+        // Ensure form-name exists for Netlify parsing
+        if (!formData.get('form-name') && form.getAttribute('name')) {
+          formData.set('form-name', form.getAttribute('name'));
+        }
+
+        const body = new URLSearchParams(formData).toString();
+        const res = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body
+        });
+
+        if (!res.ok) throw new Error('Network error');
+
+        if (typeof posthog !== 'undefined') {
+          try { posthog.capture('contact_submitted'); } catch (_) {}
+        }
+
+        if (status) status.textContent = 'Thanks! Your message has been sent.';
+        form.reset();
+        // Optionally close after a delay
+        setTimeout(() => { close(); if (status) status.textContent = ''; }, 1800);
+      } catch (err) {
+        if (status) status.textContent = 'Something went wrong. Please try again.';
+        // Fallback: let Netlify handle full page POST if desired
+        // setTimeout(() => form.submit(), 800);
+      } finally {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    });
+  }
+})();
