@@ -34,6 +34,74 @@
   window.addEventListener('resize', syncMenuOnResize);
 })();
 
+// Toasts: lightweight, accessible notifications (success/error/info)
+(function(){
+  const TOAST_DURATION = 3000; // ms
+  let container = null;
+
+  function ensureContainer() {
+    if (container && document.body.contains(container)) return container;
+    container = document.createElement('div');
+    container.className = 'toast-container';
+    container.setAttribute('aria-live', 'polite');
+    container.setAttribute('aria-atomic', 'false');
+    document.body.appendChild(container);
+    return container;
+  }
+
+  function showToast(message, opts = {}) {
+    const { type = 'info', duration = TOAST_DURATION } = opts;
+    const host = ensureContainer();
+    const toast = document.createElement('div');
+    toast.className = `toast toast--${type}`;
+
+    // Icon
+    const icon = document.createElement('span');
+    icon.className = 'toast__icon';
+    icon.setAttribute('aria-hidden', 'true');
+    icon.textContent = type === 'success' ? '✓' : type === 'error' ? '⚠' : 'ℹ';
+
+    const text = document.createElement('div');
+    text.className = 'toast__text';
+    text.textContent = message;
+
+    // Close button
+    const close = document.createElement('button');
+    close.className = 'toast__close';
+    close.type = 'button';
+    close.setAttribute('aria-label', 'Dismiss notification');
+    close.textContent = '×';
+
+    toast.appendChild(icon);
+    toast.appendChild(text);
+    toast.appendChild(close);
+
+    // Enter
+    host.appendChild(toast);
+    requestAnimationFrame(() => toast.classList.add('is-in'));
+
+    let hideTimer = null;
+    function hide() {
+      toast.classList.remove('is-in');
+      toast.classList.add('is-out');
+      setTimeout(() => { toast.remove(); }, 200);
+    }
+
+    close.addEventListener('click', hide);
+    if (duration !== Infinity) {
+      hideTimer = setTimeout(hide, duration);
+      // Pause on hover
+      toast.addEventListener('mouseenter', () => { if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; } });
+      toast.addEventListener('mouseleave', () => { if (!hideTimer) hideTimer = setTimeout(hide, 1500); });
+    }
+
+    return hide;
+  }
+
+  // Expose globally for quick use
+  window.showToast = showToast;
+})();
+
 // PostHog tracking events for Kalycs
 /*
 (function(){
@@ -509,11 +577,13 @@
         }
 
         if (status) status.textContent = 'Thanks! Your message has been sent.';
+        try { if (window.showToast) window.showToast('Message sent. Thanks!', { type: 'success' }); } catch (_) {}
         form.reset();
         // Optionally close after a delay
         setTimeout(() => { close(); if (status) status.textContent = ''; }, 1800);
       } catch (err) {
         if (status) status.textContent = 'Something went wrong. Please try again.';
+        try { if (window.showToast) window.showToast('Something went wrong. Please try again.', { type: 'error', duration: 4500 }); } catch (_) {}
         // Fallback: let Netlify handle full page POST if desired
         // setTimeout(() => form.submit(), 800);
       } finally {
