@@ -552,6 +552,10 @@
   // Netlify AJAX submission to avoid page reload
   if (form) {
     form.addEventListener('submit', async (e) => {
+      // If not served over HTTP(S), let the browser submit normally
+      if (!/^https?:$/.test(window.location.protocol)) {
+        return; // no preventDefault -> regular submission
+      }
       try {
         e.preventDefault();
         const submitBtn = form.querySelector('button[type="submit"]');
@@ -585,8 +589,8 @@
       } catch (err) {
         if (status) status.textContent = 'Something went wrong. Please try again.';
         try { if (window.showToast) window.showToast('Something went wrong. Please try again.', { type: 'error', duration: 4500 }); } catch (_) {}
-        // Fallback: let Netlify handle full page POST if desired
-        // setTimeout(() => form.submit(), 800);
+        // Fallback: let Netlify handle full page POST (works on deployed site)
+        setTimeout(() => { try { form.submit(); } catch(_){} }, 400);
       } finally {
         const submitBtn = form.querySelector('button[type="submit"]');
         if (submitBtn) submitBtn.disabled = false;
@@ -642,6 +646,10 @@
 
   if (form) {
     form.addEventListener('submit', async (e) => {
+      // If not served over HTTP(S), let the browser submit normally
+      if (!/^https?:$/.test(window.location.protocol)) {
+        return;
+      }
       try {
         e.preventDefault();
         const submitBtn = form.querySelector('button[type="submit"]');
@@ -657,13 +665,14 @@
         if (!res.ok) throw new Error('Network error');
 
         if (typeof posthog !== 'undefined') { try { posthog.capture('feature_requested'); } catch(_){} }
-        if (status) status.textContent = 'Thanks! Your request has been sent.';
-        try { if (window.showToast) window.showToast('Feature request sent. Thank you!', { type: 'success' }); } catch(_){}
-        form.reset();
-        setTimeout(() => { close(); if (status) status.textContent=''; }, 1800);
+        // Redirect to thank-you page for feature requests (contact stays modal-only)
+        const action = (form.getAttribute('action') || 'thanks.html');
+        window.location.href = action + (action.includes('?') ? '&' : '?') + 'form=feature-request';
       } catch (err) {
         if (status) status.textContent = 'Something went wrong. Please try again.';
         try { if (window.showToast) window.showToast('Something went wrong. Please try again.', { type: 'error', duration: 4500 }); } catch(_){}
+        // Fallback: full page POST to the form action or current page
+        setTimeout(() => { try { form.submit(); } catch(_){} }, 400);
       } finally {
         const submitBtn = form.querySelector('button[type="submit"]');
         if (submitBtn) submitBtn.disabled = false;

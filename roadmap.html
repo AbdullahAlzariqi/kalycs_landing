@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="styles.css" />
 
     <meta http-equiv="Content-Security-Policy"
-          content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com 'self'; script-src 'self' 'unsafe-inline' https://app.posthog.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com;">
+          content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com 'self'; script-src 'self' 'unsafe-inline' https://app.posthog.com https://eu-assets.i.posthog.com https://eu.i.posthog.com; connect-src 'self' https://eu.i.posthog.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com;">
   </head>
   <body>
     <!-- Header / Nav (links route back to index anchors) -->
@@ -152,10 +152,51 @@
         <div class="footer__right">
           <a href="privacy.html" class="footer__link">Privacy</a>
           <a href="terms.html" class="footer__link">Terms of Use</a>
-          <a href="index.html#contact" class="footer__link" id="contact-link-footer">Contact</a>
+          <a href="#contact" class="footer__link" id="contact-link">Contact</a>
+          <a href="#feature-request" class="footer__link" id="feature-request-link-footer">Request a Feature</a>
         </div>
       </div>
     </footer>
+
+    <!-- Contact Modal -->
+    <div class="contact-modal" id="contact-modal" aria-hidden="true">
+      <div class="contact-backdrop" data-close="contact-modal" aria-hidden="true"></div>
+      <div class="contact-content" role="dialog" aria-modal="true" aria-labelledby="contact-title">
+        <button class="contact-close" type="button" aria-label="Close contact form" data-close="contact-modal">×</button>
+        <header class="contact-header">
+          <h2 class="h2" id="contact-title">Contact Us</h2>
+          <p class="tiny muted">We’ll get back to you within 1–2 business days.</p>
+        </header>
+        <!-- Netlify form: keep in static HTML so Netlify detects it -->
+        <form class="contact-form" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="contact" />
+          <p class="hidden">
+            <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
+          </p>
+          <div class="field">
+            <label for="contact-name">Name</label>
+            <input id="contact-name" name="name" type="text" autocomplete="name" required />
+          </div>
+          <div class="field">
+            <label for="contact-email">Email</label>
+            <input id="contact-email" name="email" type="email" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="contact-subject">Subject (optional)</label>
+            <input id="contact-subject" name="subject" type="text" />
+          </div>
+          <div class="field">
+            <label for="contact-message">Message</label>
+            <textarea id="contact-message" name="message" rows="5" required></textarea>
+          </div>
+          <div class="contact-actions">
+            <button class="btn btn--ghost" type="button" data-close="contact-modal">Cancel</button>
+            <button class="btn btn--primary" type="submit">Send</button>
+          </div>
+          <p class="contact-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
 
     <!-- Feature Request Modal (reuses contact styles) -->
     <div class="contact-modal" id="feature-modal" aria-hidden="true">
@@ -166,7 +207,7 @@
           <h2 class="h2" id="feature-title">Request a Feature</h2>
           <p class="tiny muted">Tell us the outcome you want; we’ll use this to prioritize.</p>
         </header>
-        <form class="contact-form" name="feature-request" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+        <form class="contact-form" name="feature-request" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="thanks.html">
           <input type="hidden" name="form-name" value="feature-request" />
           <p class="hidden">
             <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
