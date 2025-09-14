@@ -689,6 +689,11 @@
       }
     });
   }
+
+  // Open on hash link (for deep-linking from other pages)
+  if (window.location && window.location.hash === '#feature-request') {
+    setTimeout(open, 50);
+  }
 })();
 
 // Thanks page: personalize copy and track interactions
