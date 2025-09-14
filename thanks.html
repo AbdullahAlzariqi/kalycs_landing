@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Thanks — We received your request</title>
     <meta name="description" content="Thanks for your submission. We’ve received your request and will review it shortly." />
+    <meta name="robots" content="noindex, nofollow" />
+
+    <!-- Social (OG/Twitter) -->
+    <meta property="og:title" content="Thanks — We received your request">
+    <meta property="og:description" content="We’ve received your submission and will review it shortly.">
+    <meta property="og:image" content="https://your-domain.com/assets/og.jpg">
+    <meta property="og:url" content="https://your-domain.com/thanks.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://your-domain.com/thanks.html">
 
     <link rel="icon" href="assets/logo.png">
     <link rel="stylesheet" href="styles.css" />
@@ -25,8 +37,8 @@
           <h1 class="h2" id="thanks-title">Thanks for your request</h1>
           <p class="lead" id="thanks-desc">We’ve received your feature request. We read every submission and use it to guide our roadmap.</p>
           <div style="margin-top: 20px;">
-            <a class="btn btn--primary" href="index.html#main">Back to Home</a>
-            <a class="btn btn--ghost" href="roadmap.html">View Roadmap</a>
+            <a class="btn btn--primary" id="thanks-home" href="index.html#main">Back to Home</a>
+            <a class="btn btn--ghost" id="thanks-roadmap" href="roadmap.html">View Roadmap</a>
           </div>
         </div>
       </section>
@@ -85,7 +97,26 @@
       </div>
     </div>
 
+    <!-- PostHog Analytics -->
+    <script>
+      !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init Re Ms Fs Pe Rs Cs capture Ve calculateEventProperties Ds register register_once register_for_session unregister unregister_for_session zs getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey canRenderSurveyAsync createPersonProfile Ns Is Us opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing is_capturing clear_opt_in_out_capturing Os debug I js getPageViewId captureTraceFeedback captureTraceMetric".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+
+      posthog.init('phc_4Y9RxCs4bQ2WIah1xVjluDkkmsaWAy7n7wsG7K2fkO2', {
+          api_host: 'https://eu.i.posthog.com',
+          capture_pageview: true,
+          capture_pageleave: true,
+          autocapture: true,
+          disable_session_recording: false,
+          enable_recording_console_log: false,
+          person_profiles: 'identified_only'
+      });
+
+      // Track page view manually
+      if (typeof posthog !== 'undefined') {
+        posthog.capture('page_view', { page_title: document.title, page_url: window.location.href });
+      }
+    </script>
+
     <script src="script.js" defer></script>
   </body>
   </html>
-

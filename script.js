@@ -552,9 +552,10 @@
   // Netlify AJAX submission to avoid page reload
   if (form) {
     form.addEventListener('submit', async (e) => {
+      const isLocal = /^localhost$|^127\.0\.0\.1$/.test(window.location.hostname);
       // If not served over HTTP(S), let the browser submit normally
       if (!/^https?:$/.test(window.location.protocol)) {
-        return; // no preventDefault -> regular submission
+        return; // no preventDefault -> regular submission (file:// etc.)
       }
       try {
         e.preventDefault();
@@ -589,8 +590,11 @@
       } catch (err) {
         if (status) status.textContent = 'Something went wrong. Please try again.';
         try { if (window.showToast) window.showToast('Something went wrong. Please try again.', { type: 'error', duration: 4500 }); } catch (_) {}
-        // Fallback: let Netlify handle full page POST (works on deployed site)
-        setTimeout(() => { try { form.submit(); } catch(_){} }, 400);
+        // Fallback behavior
+        if (!isLocal) {
+          // On production (e.g., Netlify), allow native submit for server handling
+          setTimeout(() => { try { form.submit(); } catch(_){} }, 200);
+        }
       } finally {
         const submitBtn = form.querySelector('button[type="submit"]');
         if (submitBtn) submitBtn.disabled = false;
@@ -646,6 +650,7 @@
 
   if (form) {
     form.addEventListener('submit', async (e) => {
+      const isLocal = /^localhost$|^127\.0\.0\.1$/.test(window.location.hostname);
       // If not served over HTTP(S), let the browser submit normally
       if (!/^https?:$/.test(window.location.protocol)) {
         return;
@@ -671,12 +676,73 @@
       } catch (err) {
         if (status) status.textContent = 'Something went wrong. Please try again.';
         try { if (window.showToast) window.showToast('Something went wrong. Please try again.', { type: 'error', duration: 4500 }); } catch(_){}
-        // Fallback: full page POST to the form action or current page
-        setTimeout(() => { try { form.submit(); } catch(_){} }, 400);
+        // Fallback: on production allow native submit; on localhost just GET the thanks page to avoid 405
+        if (isLocal) {
+          const action = (form.getAttribute('action') || 'thanks.html');
+          window.location.href = action + (action.includes('?') ? '&' : '?') + 'form=feature-request&local=1';
+        } else {
+          setTimeout(() => { try { form.submit(); } catch(_){} }, 200);
+        }
       } finally {
         const submitBtn = form.querySelector('button[type="submit"]');
         if (submitBtn) submitBtn.disabled = false;
       }
     });
   }
+})();
+
+// Thanks page: personalize copy and track interactions
+(function(){
+  document.addEventListener('DOMContentLoaded', function(){
+    const titleEl = document.getElementById('thanks-title');
+    const descEl = document.getElementById('thanks-desc');
+    if (!titleEl || !descEl) return;
+
+    const params = new URLSearchParams(window.location.search || '');
+    const formType = (params.get('form') || '').toLowerCase();
+    const isLocal = params.has('local');
+
+    const COPY = {
+      'feature-request': {
+        title: 'Thanks — Feature request received',
+        desc: 'We’ve logged your feature request. We read every submission and use it to guide our roadmap.'
+      },
+      'contact': {
+        title: 'Thanks — Message sent',
+        desc: 'We received your message and will get back within 1–2 business days.'
+      }
+    };
+
+    const fallback = {
+      title: 'Thanks — We got it',
+      desc: 'We received your submission. We appreciate your feedback and will review it shortly.'
+    };
+
+    const next = COPY[formType] || fallback;
+    titleEl.textContent = next.title;
+    descEl.textContent = next.desc;
+
+    // Analytics
+    if (typeof posthog !== 'undefined') {
+      try { posthog.capture('thanks_viewed', { form: formType || 'unknown' }); } catch(_){}
+    }
+
+    // Local dev hint
+    if (isLocal) {
+      try { if (window.showToast) window.showToast('Local dev: simulated submission (no network).', { type: 'info', duration: 4500 }); } catch(_){}
+    }
+
+    // Track CTA clicks
+    function trackClick(id, cta) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener('click', () => {
+        if (typeof posthog !== 'undefined') {
+          try { posthog.capture('thanks_cta_clicked', { cta }); } catch(_){}
+        }
+      });
+    }
+    trackClick('thanks-home', 'home');
+    trackClick('thanks-roadmap', 'roadmap');
+  });
 })();
