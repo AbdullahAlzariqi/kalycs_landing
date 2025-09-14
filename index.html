@@ -32,7 +32,7 @@
 
     <!-- Basic CSP (tune for your domain/CDNs) -->
     <meta http-equiv="Content-Security-Policy"
-          content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com 'self'; script-src 'self' 'unsafe-inline' https://app.posthog.com; frame-src 'self';">
+          content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com 'self'; script-src 'self' 'unsafe-inline' https://app.posthog.com https://eu-assets.i.posthog.com https://eu.i.posthog.com; connect-src 'self' https://eu.i.posthog.com; frame-src 'self';">
 
     <!-- Manrope + Sono fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -490,6 +490,7 @@
           <a href="privacy.html" class="footer__link">Privacy</a>
           <a href="terms.html" class="footer__link">Terms of Use</a>
           <a href="#contact" class="footer__link" id="contact-link">Contact</a>
+          <a href="#feature-request" class="footer__link" id="feature-request-link-footer">Request a Feature</a>
         </div>
       </div>
     </footer>
@@ -530,6 +531,58 @@
           <div class="contact-actions">
             <button class="btn btn--ghost" type="button" data-close="contact-modal">Cancel</button>
             <button class="btn btn--primary" type="submit">Send</button>
+          </div>
+          <p class="contact-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- Feature Request Modal -->
+    <div class="contact-modal" id="feature-modal" aria-hidden="true">
+      <div class="contact-backdrop" data-close="feature-modal" aria-hidden="true"></div>
+      <div class="contact-content" role="dialog" aria-modal="true" aria-labelledby="fr-title">
+        <button class="contact-close" type="button" aria-label="Close feature request form" data-close="feature-modal">×</button>
+        <header class="contact-header">
+          <h2 class="h2" id="fr-title">Request a Feature</h2>
+          <p class="tiny muted">Tell us what would make Kalycs better for you.</p>
+        </header>
+        <!-- Netlify form: keep in static HTML so Netlify detects it -->
+        <form class="contact-form" name="feature-request" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="feature-request" />
+          <p class="hidden">
+            <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
+          </p>
+          <div class="field">
+            <label for="fr-name">Name</label>
+            <input id="fr-name" name="name" type="text" autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="fr-email">Email</label>
+            <input id="fr-email" name="email" type="email" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="fr-feature">Feature title</label>
+            <input id="fr-feature" name="feature" type="text" placeholder="e.g., Sync tags across devices" required />
+          </div>
+          <div class="field">
+            <label for="fr-details">What problem does this solve?</label>
+            <textarea id="fr-details" name="details" rows="5" placeholder="Describe your use case and why this matters." required></textarea>
+          </div>
+          <div class="field">
+            <label for="fr-priority">Priority</label>
+            <select id="fr-priority" name="priority">
+              <option value="nice-to-have">Nice to have</option>
+              <option value="important">Important</option>
+              <option value="urgent">Urgent</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="fr-context">Anything else? (optional)</label>
+            <input id="fr-context" name="context" type="text" placeholder="Links, examples, or similar tools" />
+          </div>
+          <div class="contact-actions">
+            <button class="btn btn--ghost" type="button" data-close="feature-modal">Cancel</button>
+            <button class="btn btn--primary" type="submit">Submit</button>
           </div>
           <p class="contact-status" role="status" aria-live="polite"></p>
         </form>

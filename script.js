@@ -103,7 +103,6 @@
 })();
 
 // PostHog tracking events for Kalycs
-/*
 (function(){
   // Track button clicks
   document.addEventListener('DOMContentLoaded', function() {
@@ -191,7 +190,6 @@
     });
   });
 })();
-*/
 
 // Hero image animated swap for CTA buttons (chaos -> calm)
 (function () {
