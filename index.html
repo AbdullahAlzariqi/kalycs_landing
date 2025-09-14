@@ -32,7 +32,7 @@
 
     <!-- Basic CSP (tune for your domain/CDNs) -->
     <meta http-equiv="Content-Security-Policy"
-          content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com 'self'; script-src 'self' 'unsafe-inline' https://app.posthog.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com;">
+          content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com 'self'; script-src 'self' 'unsafe-inline' https://app.posthog.com; frame-src 'self';">
 
     <!-- Manrope + Sono fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -75,7 +75,6 @@
           <div class="nav__pill">
             <a href="#main">Home</a>
             <a href="#features" aria-current="page">Features</a>
-            <a href="#tutorials">Tutorials</a>
             <a href="#faqs">FAQ</a>
             <a href="#buy">Pricing</a>
           </div>
@@ -94,10 +93,14 @@
 
     <!-- Hero -->
     <main id="main">
-      <section class="section hero">
+      <section class="section hero hero--caravaggio">
         <div class="container grid-hero">
           <div class="hero__text">
-            <h1 class="h1">Stop searching. Start finding.</h1>
+            <div class="hero-kicker" role="note" aria-label="Kalycs qualities">
+              <span class="hero-kicker__dot" aria-hidden="true"></span>
+              <span class="hero-kicker__text"><strong>Local-first</strong> • <strong>Private</strong> • <strong>Fast</strong></span>
+            </div>
+            <h1 class="h1">Stop searching. Start <span class="hero-rotator" aria-live="polite" data-phrases="finding.,answers.,what matters.,clarity.,signal."><span class="hero-rotator__item is-active">finding.</span></span></h1>
             <p class="lead">
               <a href="#" class="link">Kalycs</a> keeps your files <span class="u">organized</span>, makes <span class="u">finding</span> effortless, and turns them into instant <span class="u">answers</span>.
             </p>
@@ -225,128 +228,135 @@
         </div>
       </section>
 
-      <!-- Tutorials -->
-      <section class="section tutorials-section" id="tutorials" aria-label="Kalycs Tutorials">
-        <!-- Soft top glow -->
-        <div class="t-top-glow" aria-hidden="true"></div>
-
+      <!-- Bento Feature Map -->
+      <section class="section bento" id="feature-map" aria-label="What’s inside Kalycs">
         <div class="container">
-          <header class="t-header">
-            <div class="t-badge">
-              <span>Tutorials</span>
-              <span class="t-badge-dot"></span>
-              <span>Quick Guides</span>
-            </div>
-            <h2 class="t-main-title">Video Tutorials</h2>
-            <p class="t-main-desc">60-second demos of core workflows. Full videos are coming soon—thumbnails below play previews.</p>
+          <header class="bento__header">
+            <span class="bento__kicker"><span class="dot" aria-hidden="true"></span>What’s Inside</span>
+            <h2 class="h2">What you can do with Kalycs</h2>
+            <p class="bento__sub">Here’s what’s ready now — and what’s coming next.</p>
           </header>
 
-          <!-- Carousel -->
-          <div class="t-carousel" role="region" aria-label="Tutorial videos">
-            <button class="t-c-arrow t-c-prev" aria-label="Previous slide" type="button">‹</button>
-            <div class="t-carousel-viewport" tabindex="0">
-              <ul class="t-carousel-track">
-                <li class="t-slide">
-                  <article class="t-slide-card" role="group" aria-label="Semantic Search">
-                    <div class="t-slide-media">
-                      <button class="t-video-thumb" data-video-id="SYyvx6GE2UI" aria-label="Play: Semantic Search" type="button">
-                        <img src="assets/screenshot.png" alt="Semantic Search preview" loading="lazy" decoding="async" />
-                        <span class="t-play" aria-hidden="true">▶</span>
-                        <div class="t-media-overlay" aria-hidden="true"></div>
-                      </button>
-                    </div>
-                    <header class="t-slide-meta">
-                      <h3 class="t-slide-title">Semantic Search</h3>
-                      <p class="t-slide-desc">Find meaning across your documents with natural language.</p>
-                    </header>
-                  </article>
-                </li>
+          <div class="bento-grid" role="list">
+            <!-- Implemented: File Upload & Projects -->
+            <article class="bento-card bento-card--wide" role="listitem">
+              <div class="bento-card__head">
+                <div class="bento-icon" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M3 7h5l2 2h9a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6"/>
+                    <path d="M12 12v4m0 0-2-2m2 2 2-2" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <h3>Upload files and organize</h3>
+                <span class="status status--done" title="Available">Available</span>
+              </div>
+              <p>Upload your files and keep them tidy in projects. Your files stay on your device.</p>
+              <div class="bento-tags">
+                <span class="tag">Local-first</span>
+                <span class="tag">Private</span>
+              </div>
+            </article>
 
-                <li class="t-slide">
-                  <article class="t-slide-card" role="group" aria-label="Auto‑Organize">
-                    <div class="t-slide-media">
-                      <button class="t-video-thumb" data-video-id="SYyvx6GE2UI" aria-label="Play: Auto‑Organize" type="button">
-                        <img src="assets/screenshot.png" alt="Auto‑Organize preview" loading="lazy" decoding="async" />
-                        <span class="t-play" aria-hidden="true">▶</span>
-                        <div class="t-media-overlay" aria-hidden="true"></div>
-                      </button>
-                    </div>
-                    <header class="t-slide-meta">
-                      <h3 class="t-slide-title">Auto‑Organize</h3>
-                      <p class="t-slide-desc">Watcher sorts new files into projects by rules or AI.</p>
-                    </header>
-                  </article>
-                </li>
+            <!-- Implemented: Vector Search -->
+            <article class="bento-card" role="listitem">
+              <div class="bento-card__head">
+                <div class="bento-icon" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <circle cx="11" cy="11" r="6.5" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6"/>
+                    <path d="m20 20-3.8-3.8" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <h3>Smart search</h3>
+                <span class="status status--done" title="Available">Available</span>
+              </div>
+              <p>Find what you need even if you don’t use the exact words.</p>
+              <div class="bento-mini">
+                <span class="chip">Understands what you mean</span>
+                <span class="chip">Fast</span>
+              </div>
+            </article>
 
-                <li class="t-slide">
-                  <article class="t-slide-card" role="group" aria-label="Rules Engine">
-                    <div class="t-slide-media">
-                      <button class="t-video-thumb" data-video-id="SYyvx6GE2UI" aria-label="Play: Rules Engine" type="button">
-                        <img src="assets/screenshot.png" alt="Rules engine preview" loading="lazy" decoding="async" />
-                        <span class="t-play" aria-hidden="true">▶</span>
-                        <div class="t-media-overlay" aria-hidden="true"></div>
-                      </button>
-                    </div>
-                    <header class="t-slide-meta">
-                      <h3 class="t-slide-title">Rules Engine</h3>
-                      <p class="t-slide-desc">If‑This‑Then‑That naming, regex and metadata pipelines.</p>
-                    </header>
-                  </article>
-                </li>
+            <!-- Implemented: Indexing & Chunking -->
+            <article class="bento-card" role="listitem">
+              <div class="bento-card__head">
+                <div class="bento-icon" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <rect x="3.5" y="4" width="6.5" height="6.5" rx="1.5" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6"/>
+                    <rect x="13" y="4" width="7.5" height="6.5" rx="1.5" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6"/>
+                    <rect x="3.5" y="13" width="6.5" height="7.5" rx="1.5" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6"/>
+                  </svg>
+                </div>
+                <h3>Prepares your files for search</h3>
+                <span class="status status--done" title="Available">Available</span>
+              </div>
+              <p>Kalycs reads and prepares your files so search and answers stay accurate.</p>
+              <div class="bento-mini">
+                <span class="chip">Works with many file types</span>
+                <span class="chip">Accurate results</span>
+              </div>
+            </article>
 
-                <li class="t-slide">
-                  <article class="t-slide-card" role="group" aria-label="AI Answers">
-                    <div class="t-slide-media">
-                      <button class="t-video-thumb" data-video-id="SYyvx6GE2UI" aria-label="Play: AI Answers" type="button">
-                        <img src="assets/screenshot.png" alt="AI Answers preview" loading="lazy" decoding="async" />
-                        <span class="t-play" aria-hidden="true">▶</span>
-                        <div class="t-media-overlay" aria-hidden="true"></div>
-                      </button>
-                    </div>
-                    <header class="t-slide-meta">
-                      <h3 class="t-slide-title">AI Answers</h3>
-                      <p class="t-slide-desc">Grounded answers with citations and copy‑ready snippets.</p>
-                    </header>
-                  </article>
-                </li>
+            <!-- Implemented: Local Vector DB -->
+            <article class="bento-card" role="listitem">
+              <div class="bento-card__head">
+                <div class="bento-icon" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <ellipse cx="12" cy="6" rx="6.5" ry="3" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6"/>
+                    <path d="M5.5 6v8c0 1.66 2.9 3 6.5 3s6.5-1.34 6.5-3V6" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6"/>
+                  </svg>
+                </div>
+                <h3>On‑device storage</h3>
+                <span class="status status--done" title="Available">Available</span>
+              </div>
+              <p>Keeps your data fast and private — no cloud needed.</p>
+              <div class="bento-mini">
+                <span class="chip">On‑device</span>
+                <span class="chip">No cloud</span>
+              </div>
+            </article>
 
-                <li class="t-slide">
-                  <article class="t-slide-card" role="group" aria-label="Summaries & Tags">
-                    <div class="t-slide-media">
-                      <button class="t-video-thumb" data-video-id="SYyvx6GE2UI" aria-label="Play: Summaries & Tags" type="button">
-                        <img src="assets/tutorials/Summaries_Tags.png" alt="Summaries and Tags preview" loading="lazy" decoding="async" />
-                        <span class="t-play" aria-hidden="true">▶</span>
-                        <div class="t-media-overlay" aria-hidden="true"></div>
-                      </button>
-                    </div>
-                    <header class="t-slide-meta">
-                      <h3 class="t-slide-title">Summaries & Tags</h3>
-                      <p class="t-slide-desc">Create summaries and organize with automatic tagging.</p>
-                    </header>
-                  </article>
-                </li>
+            <!-- Implemented: Project/UI Basics -->
+            <article class="bento-card" role="listitem">
+              <div class="bento-card__head">
+                <div class="bento-icon" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <rect x="3.5" y="4" width="17" height="5" rx="1.5" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6"/>
+                    <rect x="3.5" y="11" width="8" height="8.5" rx="1.5" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6"/>
+                    <rect x="13.5" y="11" width="7" height="8.5" rx="1.5" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6"/>
+                  </svg>
+                </div>
+                <h3>Simple project and file view</h3>
+                <span class="status status--done" title="Available">Available</span>
+              </div>
+              <p>Browse files, manage projects, and take quick actions.</p>
+              <div class="bento-tags">
+                <span class="tag">Quick actions</span>
+                <span class="tag">Flexible rules</span>
+              </div>
+            </article>
 
-                <li class="t-slide">
-                  <article class="t-slide-card" role="group" aria-label="Privacy‑First Local">
-                    <div class="t-slide-media">
-                      <button class="t-video-thumb" data-video-id="SYyvx6GE2UI" aria-label="Play: Privacy‑First Local" type="button">
-                        <img src="assets/screenshot.png" alt="Privacy‑First preview" loading="lazy" decoding="async" />
-                        <span class="t-play" aria-hidden="true">▶</span>
-                        <div class="t-media-overlay" aria-hidden="true"></div>
-                      </button>
-                    </div>
-                    <header class="t-slide-meta">
-                      <h3 class="t-slide-title">Privacy‑First Local</h3>
-                      <p class="t-slide-desc">Everything runs on-device with optional sync.</p>
-                    </header>
-                  </article>
-                </li>
-              </ul>
-            </div>
-            <button class="t-c-arrow t-c-next" aria-label="Next slide" type="button">›</button>
+            <!-- Coming Soon: Universal Search Bar -->
+            <article class="bento-card bento-card--accent" role="listitem" aria-labelledby="soon-universal-search">
+              <div class="bento-card__head">
+                <div class="bento-icon" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <rect x="4" y="6" width="16" height="12" rx="3" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6"/>
+                    <path d="M10 12h4" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <h3 id="soon-universal-search">Search from anywhere</h3>
+                <span class="status status--soon" title="Coming soon">Soon</span>
+              </div>
+              <p>Open search from anywhere with <span class="kbd">⌘K</span>. Simple and speedy.</p>
+              <div class="bento-mini">
+                <span class="chip">Quick access</span>
+                <span class="chip">Time saver</span>
+              </div>
+            </article>
           </div>
         </div>
       </section>
+
 
       <!-- Local-first Section -->
       <section class="section local-first" id="local-first">
@@ -453,7 +463,7 @@
             <details class="faq-item" role="listitem">
               <summary><span>How do I get support?</span></summary>
               <div class="faq-body">
-                <p>Email support and quick-start tutorials are included. We typically respond within 1–2 business days.</p>
+                <p>Email support is included. We typically respond within 1–2 business days.</p>
               </div>
             </details>
           </div>
@@ -484,16 +494,7 @@
       </div>
     </footer>
 
-    <!-- Video Modal -->
-    <div class="video-modal" id="video-modal" aria-hidden="true">
-      <div class="video-backdrop" data-close="video-modal" aria-hidden="true"></div>
-      <div class="video-content" role="dialog" aria-modal="true" aria-label="Video player">
-        <button class="video-close" type="button" aria-label="Close video" data-close="video-modal">×</button>
-        <div class="video-aspect">
-          <!-- iframe injected dynamically -->
-        </div>
-      </div>
-    </div>
+    
 
     <!-- Contact Modal -->
     <div class="contact-modal" id="contact-modal" aria-hidden="true">
