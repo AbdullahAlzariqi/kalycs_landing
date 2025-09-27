@@ -32,7 +32,7 @@
 
     <!-- Basic CSP (tune for your domain/CDNs) -->
     <meta http-equiv="Content-Security-Policy"
-          content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com 'self'; script-src 'self' 'unsafe-inline' https://app.posthog.com https://eu-assets.i.posthog.com https://eu.i.posthog.com; connect-src 'self' https://eu.i.posthog.com; frame-src 'self';">
+          content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com 'self'; script-src 'self' 'unsafe-inline' https://app.posthog.com https://eu-assets.i.posthog.com https://eu.i.posthog.com https://www.googletagmanager.com; connect-src 'self' https://eu.i.posthog.com https://www.google-analytics.com https://analytics.google.com; frame-src 'self';">
 
     <!-- Manrope + Sono fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,6 +40,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sono:wght@400;600;700&family=Voces:wght@400&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="styles.css" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17605791643"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'AW-17605791643');
+    </script>
 
     <!-- TODO: Replace 'https://your-domain.com/' with the actual domain URL -->
     <script type="application/ld+json">
