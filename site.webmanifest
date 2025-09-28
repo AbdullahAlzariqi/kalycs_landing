@@ -1,0 +1,20 @@
+{
+  "name": "Kalycs — AI File Search & Auto-Organize for Mac",
+  "short_name": "Kalycs",
+  "description": "Local-first AI file organization and search for Mac. Find anything fast and get instant answers from your documents.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B0C0F",
+  "theme_color": "#0B0C0F",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "assets/logo.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities"],
+  "lang": "en-US"
+}

@@ -830,9 +830,39 @@ a[href^="mailto:"]:hover {
 .site-footer .brand__logo.small:hover { transform: translateY(-1px) scale(1.02); filter: drop-shadow(0 10px 20px rgba(0,0,0,.45)); }
 
 /* Footer responsive tweaks */
+/* Footer Social Media */
+.footer__right { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+.footer__links { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+.footer__social { display: flex; gap: 12px; align-items: center; }
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.social-link:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+}
+
+.social-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 @media (max-width: 640px) {
   .footer { justify-content: center; text-align: center; gap: 14px; }
-  .footer__right { justify-content: center; }
+  .footer__right { justify-content: center; align-items: center; }
+  .footer__links { justify-content: center; }
 }
 
 /* Pricing */
