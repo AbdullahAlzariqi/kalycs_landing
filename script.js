@@ -224,10 +224,9 @@
 
   // Create and add buy now button (desktop/top-right)
   const buyButton = document.createElement('a');
-  // Make the Buy link work from any page
-  const path = (location && location.pathname) || '';
-  const isIndex = /\/?$/.test(path) || /\/(index\.html)?$/.test(path) || path.endsWith('index.html');
-  buyButton.href = isIndex ? '#buy' : 'index.html#buy';
+  // Link to on-page anchor if present; otherwise route to home
+  const hasBuy = !!document.getElementById('buy');
+  buyButton.href = hasBuy ? '#buy' : 'index.html#buy';
   buyButton.className = 'btn btn--primary nav__buy-btn';
   buyButton.textContent = 'Buy Now';
   nav.appendChild(buyButton);
