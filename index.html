@@ -7,8 +7,9 @@
     <meta name="description" content="Stop searching. Start finding. Kalycs keeps your files organized, finds anything fast, and turns documents into instant answers — all on your device." />
 
     <!-- Icons & PWA -->
-    <!-- Ensure browser tab uses logo-derived PNG icons -->
-    <link rel="icon" type="image/png" href="/assets/favicon-32x32.png">
+    <!-- Prefer SVG favicon for Google Search; include 48px PNG fallback -->
+    <link rel="icon" type="image/svg+xml" sizes="any" href="/assets/favicon.svg">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
@@ -22,15 +23,15 @@
     <meta property="og:url" content="https://kalycs.com/">
     <meta property="og:title" content="Kalycs — AI File Search & Auto-Organize for Mac">
     <meta property="og:description" content="Local-first, private, and fast. Ask your documents anything and get grounded answers with citations.">
-    <meta property="og:image" content="https://kalycs.com/assets/X-Preview.png">
+    <meta property="og:image" content="https://kalycs.com/assets/icon-512x512.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Kalycs — AI File Search & Auto-Organize for Mac">
     <meta name="twitter:description" content="On-device file intelligence: organize, search, and get instant answers.">
-    <meta name="twitter:image" content="https://kalycs.com/assets/X-Preview.png">
+    <meta name="twitter:image" content="https://kalycs.com/assets/icon-512x512.png">
 
     <!-- Canonical & robots -->
     <link rel="canonical" href="https://kalycs.com/">
-    <meta name="robots" content="index,follow">
+    <meta name="robots" content="index,follow,max-image-preview:large">
 
     <!-- Font performance -->
     <link rel="preload" as="font" href="/assets/fonts/manrope-var.woff2" type="font/woff2" crossorigin>

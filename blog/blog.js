@@ -167,7 +167,8 @@
       const d = document.getElementById('html-desc'); if (d) d.setAttribute('content', meta.excerpt || '');
       const ogt = document.getElementById('og-title'); if (ogt) ogt.setAttribute('content', meta.title || '');
       const ogd = document.getElementById('og-desc'); if (ogd) ogd.setAttribute('content', meta.excerpt || '');
-      const ogi = document.getElementById('og-image'); if (ogi && meta.image) ogi.setAttribute('content', meta.image);
+      const ogi = document.getElementById('og-image');
+      if (ogi) ogi.setAttribute('content', meta.image || 'https://kalycs.com/assets/icon-512x512.png');
 
       elTitle.textContent = meta.title;
       elDate.textContent = fmtDate(meta.date);
