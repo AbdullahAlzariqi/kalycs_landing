@@ -34,6 +34,46 @@
   window.addEventListener('resize', syncMenuOnResize);
 })();
 
+// Hero rotator: animate full sentence rotation with colors
+(function(){
+  const rotator = document.querySelector('.hero-rotator');
+  if (!rotator) return;
+
+  // Define pain-point focused sentences with their colors (matching design palette)
+  const sentences = [
+    { text: 'Start finding.', color: '#8285e3' },      // Primary-600
+    { text: 'Save time.', color: '#a7a9f1' },          // Primary-700 (lighter)
+    { text: 'Stay focused.', color: '#585cda' },       // Primary-500
+    { text: 'Get answers.', color: '#d5d6f6' },        // Primary-800 (lightest)
+    { text: 'Reclaim control.', color: '#8285e3' }     // Primary-600
+  ];
+
+  let currentIndex = 0;
+
+  // Clear existing content and create new items
+  rotator.innerHTML = '';
+  sentences.forEach((item, idx) => {
+    const span = document.createElement('span');
+    span.className = 'hero-rotator__item';
+    if (idx === 0) span.classList.add('is-active');
+    span.textContent = item.text;
+    span.style.color = item.color;
+    rotator.appendChild(span);
+  });
+
+  const items = rotator.querySelectorAll('.hero-rotator__item');
+  if (items.length < 2) return;
+
+  function rotate() {
+    items[currentIndex].classList.remove('is-active');
+    currentIndex = (currentIndex + 1) % items.length;
+    items[currentIndex].classList.add('is-active');
+  }
+
+  // Rotate every 3 seconds
+  setInterval(rotate, 3000);
+})();
+
 // Toasts: lightweight, accessible notifications (success/error/info)
 (function(){
   const TOAST_DURATION = 3000; // ms

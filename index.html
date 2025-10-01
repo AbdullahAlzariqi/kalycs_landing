@@ -49,6 +49,10 @@
       /* Critical styles for above-the-fold content */
       body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
       .site-header { position: sticky; top: 0; z-index: 100; }
+      /* Reserve space for hero rotator to prevent layout shift */
+      .hero-rotator { display: inline-block; min-width: 220px; }
+      /* Prevent layout shift from main content */
+      main { min-height: 100vh; }
     </style>
 
     <!-- Basic CSP (tune for your domain/CDNs) -->
@@ -60,8 +64,7 @@
     <noscript><link rel="stylesheet" href="styles.min.css"></noscript>
 
     <!-- Manrope + Sono fonts - with display=swap for better performance -->
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sono:wght@400;600;700&family=Voces:wght@400&display=swap" rel="stylesheet" media="print" onload="this.media='all'; this.onload=null;">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sono:wght@400;600;700&family=Voces:wght@400&display=swap" rel="stylesheet"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sono:wght@400;600;700&family=Voces:wght@400&display=swap" rel="stylesheet">
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17605791643"></script>
@@ -161,7 +164,7 @@
               <span class="hero-kicker__dot" aria-hidden="true"></span>
               <span class="hero-kicker__text"><strong>Local-first</strong> • <strong>Private</strong> • <strong>Fast</strong></span>
             </div>
-            <h1 class="h1">Stop searching. Start <span class="hero-rotator" aria-live="polite" data-phrases="finding.,answers.,what matters.,clarity.,signal."><span class="hero-rotator__item is-active">finding.</span></span></h1>
+            <h1 class="h1">Stop searching. <span class="hero-rotator" aria-live="polite"></span></h1>
             <p class="lead">
               <a href="#" class="link">Kalycs</a> keeps your files <span class="u">organized</span>, makes <span class="u">finding</span> effortless, and turns them into instant <span class="u">answers</span>.
             </p>
@@ -170,14 +173,14 @@
               <a class="btn btn--primary" href="https://apps.apple.com/us/app/kalycs-search-organization/id6752540769" target="_blank" rel="noopener">Get Kalycs</a>
             </div>
           </div>
-          <div class="hero__image-wrap">
+          <div class="hero__image-wrap" style="aspect-ratio: 516/776;">
             <picture>
               <source srcset="assets/hero_image.webp" type="image/webp" width="516" height="776" />
-              <img src="assets/hero_image.png" alt="Person overwhelmed with flying folders" class="hero__image hero__image--base" loading="eager" fetchpriority="high" width="516" height="776" />
+              <img src="assets/hero_image.png" alt="Person overwhelmed with flying folders" class="hero__image hero__image--base" loading="eager" fetchpriority="high" width="516" height="776" style="aspect-ratio: 516/776;" />
             </picture>
             <picture>
               <source srcset="assets/hero_image_2.webp" type="image/webp" width="516" height="700" />
-              <img src="assets/hero_image_2.png" alt="" aria-hidden="true" class="hero__image hero__image--alt" width="516" height="700" />
+              <img src="assets/hero_image_2.png" alt="" aria-hidden="true" class="hero__image hero__image--alt" width="516" height="700" style="aspect-ratio: 516/700;" />
             </picture>
           </div>
         </div>
@@ -186,10 +189,10 @@
       <!-- App preview -->
       <section class="section app-shot" id="preview">
         <div class="container">
-          <figure class="preview">
+          <figure class="preview" style="aspect-ratio: 1200/730;">
             <picture>
               <source srcset="assets/screenshot.webp" type="image/webp" width="1200" height="730" />
-              <img src="assets/screenshot.png" alt="Kalycs app preview" loading="lazy" decoding="async" width="1200" height="730" />
+              <img src="assets/screenshot.png" alt="Kalycs app preview" loading="lazy" decoding="async" width="1200" height="730" style="aspect-ratio: 1200/730;" />
             </picture>
           </figure>
         </div>

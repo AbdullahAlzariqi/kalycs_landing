@@ -76,6 +76,46 @@ body.no-scroll { overflow: hidden; }
 .h1 { font-size: clamp(24px, 4.2vw, 48px); line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 16px; font-weight: 800; }
 .h2 { font-size: clamp(22px, 3.6vw, 36px); line-height: 1.2; margin: 0 0 8px; font-weight: 700; }
 .lead { font-size: clamp(16px, 2.2vw, 20px); color: var(--muted); max-width: 60ch; }
+
+/* Hero rotator animation */
+.hero-rotator {
+  display: inline-block;
+  position: relative;
+  min-width: 280px;
+  text-align: left;
+  vertical-align: baseline;
+  contain: layout style;
+}
+.hero-rotator__item {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
+  pointer-events: none;
+  transform: translateY(10px);
+  text-shadow: 0 0 20px currentColor;
+  font-weight: 700;
+}
+.hero-rotator__item.is-active {
+  opacity: 1;
+  position: static;
+  pointer-events: auto;
+  transform: translateY(0);
+  animation: glow 0.7s ease-in-out;
+}
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 5px currentColor;
+  }
+  50% {
+    text-shadow: 0 0 25px currentColor, 0 0 35px currentColor;
+  }
+  100% {
+    text-shadow: 0 0 20px currentColor;
+  }
+}
 /* Enhanced underline styles for the aesthetic */
 .u {
   text-decoration: none;
@@ -137,14 +177,16 @@ a[href^="mailto:"]:hover {
 }
 
 /* Header */
-.site-header { 
-  position: sticky; 
-  top: 0; 
+.site-header {
+  position: sticky;
+  top: 0;
   z-index: 9999;
   isolation: isolate; /* ensure header paints in its own stacking context above content */
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   backdrop-filter: blur(0px);
   -webkit-backdrop-filter: blur(0px);
+  contain: layout style;
+  will-change: background, backdrop-filter, border-bottom, box-shadow;
 }
 
 .site-header.is-scrolled {
@@ -180,11 +222,12 @@ a[href^="mailto:"]:hover {
   z-index: 10;
 }
 
-.brand__logo { 
-  width: 40px; 
-  height: 40px; 
+.brand__logo {
+  width: 40px;
+  height: 40px;
   display: block;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  contain: layout size;
 }
 
 .site-header.is-scrolled .brand__logo {
@@ -458,10 +501,16 @@ a[href^="mailto:"]:hover {
 
 .hero__image-wrap { position: relative; }
 .hero__image { width: 100%; height: auto; max-height: clamp(600px, 90vh, 1100px); object-fit: contain; display: block; }
+.hero__image-wrap { contain: layout; }
 
 /* Layered images for animated swap (chaos -> calm) */
 .hero__image--base,
-.hero__image--alt { filter: drop-shadow(0 40px 80px rgba(0,0,0,.55)); transition: opacity .5s ease, transform .5s ease, filter .5s ease; }
+.hero__image--alt {
+  filter: drop-shadow(0 40px 80px rgba(0,0,0,.55));
+  transition: opacity .5s ease, transform .5s ease, filter .5s ease;
+  will-change: opacity, transform;
+  contain: layout style;
+}
 
 /* The calm image sits on top and is revealed on hover */
 .hero__image--alt {
@@ -514,7 +563,7 @@ a[href^="mailto:"]:hover {
 }
 
 /* App preview */
-.preview { border-radius: var(--radius-3xl); background: #0f0e14; border: 1px solid #242231; box-shadow: var(--shadow); overflow: hidden; margin: 0; }
+.preview { border-radius: var(--radius-3xl); background: #0f0e14; border: 1px solid #242231; box-shadow: var(--shadow); overflow: hidden; margin: 0; contain: layout; }
 .preview img { display: block; width: 100%; height: auto; }
 
 /* Features (enhanced cards) */
@@ -538,6 +587,7 @@ a[href^="mailto:"]:hover {
   flex-direction: column;
   justify-content: flex-start;
   gap: 16px;
+  contain: layout style paint;
 }
 .feature-card::after{
   content: "";
