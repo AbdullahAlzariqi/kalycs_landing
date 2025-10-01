@@ -77,14 +77,17 @@ body.no-scroll { overflow: hidden; }
 .h2 { font-size: clamp(22px, 3.6vw, 36px); line-height: 1.2; margin: 0 0 8px; font-weight: 700; }
 .lead { font-size: clamp(16px, 2.2vw, 20px); color: var(--muted); max-width: 60ch; }
 
-/* Hero rotator animation */
+/* Hero rotator — subtle reveal with underline accent */
 .hero-rotator {
-  display: inline-block;
+  display: inline-flex;
+  align-items: baseline;
   position: relative;
   min-width: 280px;
   text-align: left;
   vertical-align: baseline;
-  contain: layout style;
+  /* Avoid layout containment here to preserve baseline alignment with the heading */
+  contain: style;
+  line-height: inherit;
 }
 .hero-rotator__item {
   opacity: 0;
@@ -92,29 +95,53 @@ body.no-scroll { overflow: hidden; }
   left: 0;
   top: 0;
   white-space: nowrap;
-  transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
   pointer-events: none;
-  transform: translateY(10px);
-  text-shadow: 0 0 20px currentColor;
-  font-weight: 700;
+  transform: translateY(8px) scale(0.995);
+  transition: opacity 0.5s ease, transform 0.6s cubic-bezier(.2,.8,.2,1);
+  font-weight: 800;
+  color: inherit; /* keep headline color consistent */
+  line-height: inherit;
 }
 .hero-rotator__item.is-active {
   opacity: 1;
-  position: static;
+  position: relative; /* keep underline sized to the text */
   pointer-events: auto;
-  transform: translateY(0);
-  animation: glow 0.7s ease-in-out;
+  transform: translateY(0) scale(1);
 }
-@keyframes glow {
-  0% {
-    text-shadow: 0 0 5px currentColor;
-  }
-  50% {
-    text-shadow: 0 0 25px currentColor, 0 0 35px currentColor;
-  }
-  100% {
-    text-shadow: 0 0 20px currentColor;
-  }
+/* Underline accent (brand gradient) */
+.hero-rotator__item::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.18em;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-primary-600), var(--color-primary-500));
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s cubic-bezier(.2,.8,.2,1) 80ms;
+  pointer-events: none;
+}
+.hero-rotator__item.is-active::after {
+  transform: scaleX(1);
+}
+/* Remove spark/glow for a cleaner underline */
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .hero-rotator__item { transition: none !important; transform: none !important; }
+  .hero-rotator__item.is-active { animation: none !important; }
+  .hero-rotator__item::after { transition: none !important; transform: scaleX(1) !important; }
+  .hero-rotator__item::before { display: none !important; }
+}
+
+/* Ensure baseline alignment of the heading and rotator */
+.hero .h1 {
+  display: flex;
+  align-items: baseline;
+  gap: 0 .35ch;
+  flex-wrap: wrap;
 }
 /* Enhanced underline styles for the aesthetic */
 .u {

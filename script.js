@@ -34,44 +34,81 @@
   window.addEventListener('resize', syncMenuOnResize);
 })();
 
-// Hero rotator: animate full sentence rotation with colors
+// Hero rotator: refined reveal + underline accent (brand-consistent)
 (function(){
   const rotator = document.querySelector('.hero-rotator');
   if (!rotator) return;
 
-  // Define pain-point focused sentences with their colors (matching design palette)
+  // Sentences focused on benefits; color handled by CSS for consistency
   const sentences = [
-    { text: 'Start finding.', color: '#8285e3' },      // Primary-600
-    { text: 'Save time.', color: '#a7a9f1' },          // Primary-700 (lighter)
-    { text: 'Stay focused.', color: '#585cda' },       // Primary-500
-    { text: 'Get answers.', color: '#d5d6f6' },        // Primary-800 (lightest)
-    { text: 'Reclaim control.', color: '#8285e3' }     // Primary-600
+    'Start finding.',
+    'Save time.',
+    'Stay focused.',
+    'Get answers.',
+    'Reclaim control.'
   ];
 
   let currentIndex = 0;
 
-  // Clear existing content and create new items
+  // Build DOM items
   rotator.innerHTML = '';
-  sentences.forEach((item, idx) => {
+  sentences.forEach((text, idx) => {
     const span = document.createElement('span');
     span.className = 'hero-rotator__item';
     if (idx === 0) span.classList.add('is-active');
-    span.textContent = item.text;
-    span.style.color = item.color;
+    span.textContent = text;
     rotator.appendChild(span);
   });
 
   const items = rotator.querySelectorAll('.hero-rotator__item');
   if (items.length < 2) return;
 
-  function rotate() {
-    items[currentIndex].classList.remove('is-active');
-    currentIndex = (currentIndex + 1) % items.length;
-    items[currentIndex].classList.add('is-active');
+  function activate(index) {
+    items.forEach((el, i) => {
+      if (i === index) el.classList.add('is-active');
+      else el.classList.remove('is-active');
+    });
   }
 
-  // Rotate every 3 seconds
-  setInterval(rotate, 3000);
+  function next() {
+    currentIndex = (currentIndex + 1) % items.length;
+    activate(currentIndex);
+  }
+
+  // Interval with pause on hover/visibility/scroll
+  let timer = null;
+  const INTERVAL = 4000;
+  const isReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function start() {
+    if (isReduced || timer) return;
+    timer = setInterval(next, INTERVAL);
+  }
+  function stop() {
+    if (!timer) return;
+    clearInterval(timer);
+    timer = null;
+  }
+
+  // Pause when not visible
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stop(); else start();
+  });
+
+  // Pause when hero not in view
+  const hero = document.querySelector('.hero');
+  if ('IntersectionObserver' in window && hero) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { e.isIntersecting ? start() : stop(); });
+    }, { threshold: 0.2 });
+    io.observe(hero);
+  }
+
+  // Pause on hover/focus to avoid distracting while reading
+  ['mouseenter','focusin'].forEach(evt => rotator.addEventListener(evt, stop));
+  ['mouseleave','focusout'].forEach(evt => rotator.addEventListener(evt, start));
+
+  start();
 })();
 
 // Toasts: lightweight, accessible notifications (success/error/info)
