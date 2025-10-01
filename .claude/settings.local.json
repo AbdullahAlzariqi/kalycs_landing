@@ -1,7 +1,25 @@
 {
   "permissions": {
     "allow": [
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(grep:*)",
+      "Bash(brew install:*)",
+      "Bash(cwebp:*)",
+      "Bash(npx csso:*)",
+      "Bash(npx terser:*)",
+      "Bash(npx clean-css-cli:*)",
+      "Bash(awk:*)",
+      "Bash(for file in /Users/abdullah/Documents/Projects/kalycs_landing/{privacy,terms,roadmap,thanks}.html)",
+      "Bash(done)",
+      "Bash(for file in privacy.html terms.html roadmap.html thanks.html)",
+      "Bash(do sed -i.bak 's/styles\\.css/styles.min.css/g; s/script\\.js/script.min.js/g' \"$file\")",
+      "Bash(echo:*)",
+      "Bash(do sed -i.bak2 's|<img src=\"\"assets/logo\\.png\"\" alt=\"\"Kalycs logo\"\" class=\"\"brand__logo\"\"|<picture><source srcset=\"\"assets/logo.webp\"\" type=\"\"image/webp\"\" /><img src=\"\"assets/logo.png\"\" alt=\"\"Kalycs logo\"\" class=\"\"brand__logo\"\" width=\"\"40\"\" height=\"\"40\"\"|g' \"$file\")",
+      "Bash(do sed -i.bak3 's|<picture><source srcset=\"\"assets/logo\\.webp\"\" type=\"\"image/webp\"\" /><img src=\"\"assets/logo\\.png\"\" alt=\"\"Kalycs logo\"\" class=\"\"brand__logo\"\" width=\"\"40\"\" height=\"\"40\"\" />|<picture><source srcset=\"\"assets/logo.webp\"\" type=\"\"image/webp\"\" /><img src=\"\"assets/logo.png\"\" alt=\"\"Kalycs logo\"\" class=\"\"brand__logo\"\" width=\"\"40\"\" height=\"\"40\"\" /></picture>|g' \"$file\")",
+      "Bash(find:*)",
+      "Bash(for file in blog/index.html blog/post.html blog/posts/*.html)",
+      "Bash(do sed -i.bak2 's|<img src=\"\"\\.\\./assets/logo\\.png\"\"|<picture><source srcset=\"\"../assets/logo.webp\"\" type=\"\"image/webp\"\" /><img src=\"\"../assets/logo.png\"\" width=\"\"40\"\" height=\"\"40\"\"|g; s|<img src=\"\"assets/logo\\.png\"\"|<picture><source srcset=\"\"assets/logo.webp\"\" type=\"\"image/webp\"\" /><img src=\"\"assets/logo.png\"\" width=\"\"40\"\" height=\"\"40\"\"|g' \"$file\")",
+      "Bash(do sed -i '' 's|<picture><source srcset=\"\"\\.\\./assets/logo\\.webp\"\" type=\"\"image/webp\"\" /><img src=\"\"\\.\\./assets/logo\\.png\"\" width=\"\"40\"\" height=\"\"40\"\" alt=\"\"Kalycs logo\"\" class=\"\"brand__logo\"\" />|<picture><source srcset=\"\"../assets/logo.webp\"\" type=\"\"image/webp\"\" /><img src=\"\"../assets/logo.png\"\" width=\"\"40\"\" height=\"\"40\"\" alt=\"\"Kalycs logo\"\" class=\"\"brand__logo\"\" /></picture>|g; s|<picture><source srcset=\"\"\\.\\./assets/logo\\.webp\"\" type=\"\"image/webp\"\" /><img src=\"\"\\.\\./assets/logo\\.png\"\" width=\"\"40\"\" height=\"\"40\"\" alt=\"\"Kalycs logo\"\" class=\"\"brand__logo small\"\" loading=\"\"lazy\"\" decoding=\"\"async\"\" />|<picture><source srcset=\"\"../assets/logo.webp\"\" type=\"\"image/webp\"\" /><img src=\"\"../assets/logo.png\"\" width=\"\"40\"\" height=\"\"40\"\" alt=\"\"Kalycs logo\"\" class=\"\"brand__logo small\"\" loading=\"\"lazy\"\" decoding=\"\"async\"\" /></picture>|g' \"$file\")"
     ],
     "deny": [],
     "ask": []
