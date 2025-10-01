@@ -39,27 +39,9 @@
   const rotator = document.querySelector('.hero-rotator');
   if (!rotator) return;
 
-  // Sentences focused on benefits; color handled by CSS for consistency
-  const sentences = [
-    'Start finding.',
-    'Save time.',
-    'Stay focused.',
-    'Get answers.',
-    'Reclaim control.'
-  ];
-
   let currentIndex = 0;
 
-  // Build DOM items
-  rotator.innerHTML = '';
-  sentences.forEach((text, idx) => {
-    const span = document.createElement('span');
-    span.className = 'hero-rotator__item';
-    if (idx === 0) span.classList.add('is-active');
-    span.textContent = text;
-    rotator.appendChild(span);
-  });
-
+  // Use pre-rendered items from HTML (no innerHTML clear to prevent layout shift)
   const items = rotator.querySelectorAll('.hero-rotator__item');
   if (items.length < 2) return;
 
@@ -77,7 +59,7 @@
 
   // Interval with pause on hover/visibility/scroll
   let timer = null;
-  const INTERVAL = 4000;
+  const INTERVAL = 2500;
   const isReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function start() {
@@ -305,7 +287,7 @@
   const hasBuy = !!document.getElementById('buy');
   buyButton.href = hasBuy ? '#buy' : 'index.html#buy';
   buyButton.className = 'btn btn--primary nav__buy-btn';
-  buyButton.textContent = 'Buy Now';
+  buyButton.textContent = 'Get Kalycs';
   nav.appendChild(buyButton);
 
   // Direction-aware navbar state

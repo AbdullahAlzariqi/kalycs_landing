@@ -1,3 +1,22 @@
+/* Fallback font faces with size-adjust to match web fonts */
+@font-face {
+  font-family: 'Manrope-fallback';
+  src: local('Arial');
+  size-adjust: 105%;
+  ascent-override: 95%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Space-Grotesk-fallback';
+  src: local('Arial');
+  size-adjust: 100%;
+  ascent-override: 90%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+
 /* Base + Design Tokens */
 :root {
   /* Color scale: Primary */
@@ -24,7 +43,7 @@
 
   /* Fonts */
   --font-sono: "Sono", sans-serif;
-  --font-manrope: "Manrope", sans-serif;
+  --font-manrope: "Manrope", 'Manrope-fallback', sans-serif;
   --font-voces: "Voces", sans-serif;
 
   /* Radii */
@@ -65,9 +84,10 @@ body.no-scroll { overflow: hidden; }
   margin-inline: auto;
 }
 
-.section { padding: clamp(40px, 6vw, 96px) 0; }
-.section.app-shot { padding-top: 0; margin-top: 0; }
-.section { scroll-margin-top: 96px; }
+.section { padding: clamp(40px, 6vw, 96px) 0; scroll-margin-top: 100px; }
+.section.app-shot { padding-top: 0; margin-top: 0; scroll-margin-top: 0; }
+.section#features { scroll-margin-top: 80px; }
+.section#feature-map { padding-top: 0; }
 .anchor-placeholder { padding: 0; margin: 0; height: 1px; }
 .text-center { text-align: center; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; clip-path: inset(50%); }
@@ -75,20 +95,29 @@ body.no-scroll { overflow: hidden; }
 /* Typography */
 .h1 { font-size: clamp(24px, 4.2vw, 48px); line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 16px; font-weight: 800; }
 .h2 { font-size: clamp(22px, 3.6vw, 36px); line-height: 1.2; margin: 0 0 8px; font-weight: 700; }
-.lead { font-size: clamp(16px, 2.2vw, 20px); color: var(--muted); max-width: 60ch; }
+.lead {
+  font-size: clamp(16px, 2.2vw, 20px);
+  color: var(--muted);
+  max-width: 60ch;
+  /* Prevent layout shift from font loading */
+  min-height: auto;
+}
 
 /* Hero rotator — subtle reveal with underline accent */
 .hero-rotator {
   display: inline-flex;
   align-items: baseline;
   position: relative;
-  min-width: 280px;
-  min-height: 1.15em;
+  /* Fixed width AND height to prevent layout shift */
+  width: 320px;
+  min-width: 320px;
+  height: 1.15em;
   text-align: left;
   vertical-align: baseline;
   /* Avoid layout containment here to preserve baseline alignment with the heading */
   contain: style;
   line-height: inherit;
+  overflow: visible;
 }
 .hero-rotator__item {
   opacity: 0;
@@ -145,7 +174,7 @@ body.no-scroll { overflow: hidden; }
   align-items: baseline;
   gap: 0 .35ch;
   flex-wrap: wrap;
-  font-family: 'Space Grotesk', var(--font-manrope), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family: 'Space Grotesk', 'Space-Grotesk-fallback', var(--font-manrope), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   font-weight: 700;
 }
 /* Enhanced underline styles for the aesthetic */
@@ -289,6 +318,8 @@ a[href^="mailto:"]:hover {
   z-index: 5;
   background: rgba(255,255,255,0.04);
   border-bottom: 1px solid rgba(255,255,255,0.08);
+  height: 37px;
+  overflow: hidden;
 }
 .announcement__inner {
   display: flex;
@@ -296,7 +327,8 @@ a[href^="mailto:"]:hover {
   justify-content: center;
   gap: 12px;
   padding: 10px 0;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  height: 100%;
 }
 .announcement__dot {
   width: 6px;
@@ -311,6 +343,9 @@ a[href^="mailto:"]:hover {
   font-weight: 700;
   font-size: 14px;
   letter-spacing: 0.2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .announcement__link {
   color: #e6e6ff;
@@ -531,9 +566,18 @@ a[href^="mailto:"]:hover {
 .btn--ghost { background: #2a2835; border-color: #3a3847; color: #d6d4e4; }
 .btn--ghost:hover { background: #333042; }
 
-.hero__image-wrap { position: relative; }
-.hero__image { width: 100%; height: auto; max-height: clamp(600px, 90vh, 1100px); object-fit: contain; display: block; }
-.hero__image-wrap { contain: layout; }
+.hero__image-wrap {
+  position: relative;
+  contain: layout;
+  aspect-ratio: 516/776;
+}
+.hero__image {
+  width: 100%;
+  height: 100%;
+  max-height: clamp(600px, 90vh, 1100px);
+  object-fit: contain;
+  display: block;
+}
 
 /* Layered images for animated swap (chaos -> calm) */
 .hero__image--base,
@@ -569,6 +613,11 @@ a[href^="mailto:"]:hover {
   filter: blur(2px) drop-shadow(0 40px 80px rgba(0,0,0,.55));
 }
 
+/* Laptop spacing: add a bit more space between headline and lead */
+@media (min-width: 980px) and (max-width: 1440px) {
+  .hero .h1 { margin-bottom: clamp(20px, 2.6vh, 32px); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero__image--base, .hero__image--alt { transition: opacity .25s linear; transform: none !important; filter: drop-shadow(0 40px 80px rgba(0,0,0,.55)); }
 }
@@ -595,8 +644,21 @@ a[href^="mailto:"]:hover {
 }
 
 /* App preview */
-.preview { border-radius: var(--radius-3xl); background: #0f0e14; border: 1px solid #242231; box-shadow: var(--shadow); overflow: hidden; margin: 0; contain: layout; }
-.preview img { display: block; width: 100%; height: auto; }
+.preview {
+  border-radius: var(--radius-3xl);
+  background: #0f0e14;
+  border: 1px solid #242231;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin: 0;
+  contain: layout;
+}
+.preview img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
 
 /* Features (enhanced cards) */
 .features__title { margin: 8px 0 24px; }
@@ -1196,6 +1258,21 @@ a[href^="mailto:"]:hover {
 
 @media (min-width: 1920px) {
   .container { width: min(1600px, 84%); }
+}
+
+/* Laptop layout tuning (1024–1439px): add breathing room and avoid overcrowding */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  /* Slightly larger gaps around key sections */
+  .grid-hero { gap: clamp(24px, 3vw, 48px); }
+  .features-grid { gap: clamp(24px, 2.8vw, 36px); }
+  .feature-card { padding: clamp(24px, 2vw, 32px); }
+  .section { padding: clamp(48px, 6vw, 96px) 0; }
+  .nav__pill { gap: 12px; }
+}
+
+/* Keep laptop container modest to reduce visual crowding on 1280–1439px */
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .container { width: min(1120px, 86%); }
 }
 
 /* --- Toasts (global notifications) --- */
