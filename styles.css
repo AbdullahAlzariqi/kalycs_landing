@@ -66,7 +66,7 @@ body.no-scroll { overflow: hidden; }
 }
 
 .section { padding: clamp(40px, 6vw, 96px) 0; }
-.section.app-shot { padding-top: 0; margin-top: -160px; }
+.section.app-shot { padding-top: 0; margin-top: 0; }
 .section { scroll-margin-top: 96px; }
 .anchor-placeholder { padding: 0; margin: 0; height: 1px; }
 .text-center { text-align: center; }
@@ -83,6 +83,7 @@ body.no-scroll { overflow: hidden; }
   align-items: baseline;
   position: relative;
   min-width: 280px;
+  min-height: 1.15em;
   text-align: left;
   vertical-align: baseline;
   /* Avoid layout containment here to preserve baseline alignment with the heading */
@@ -98,15 +99,17 @@ body.no-scroll { overflow: hidden; }
   pointer-events: none;
   transform: translateY(8px) scale(0.995);
   transition: opacity 0.5s ease, transform 0.6s cubic-bezier(.2,.8,.2,1);
-  font-weight: 800;
+  font-weight: inherit;
   color: inherit; /* keep headline color consistent */
   line-height: inherit;
+  will-change: opacity, transform;
 }
 .hero-rotator__item.is-active {
   opacity: 1;
   position: relative; /* keep underline sized to the text */
   pointer-events: auto;
   transform: translateY(0) scale(1);
+  will-change: auto;
 }
 /* Underline accent (brand gradient) */
 .hero-rotator__item::after {
@@ -142,6 +145,8 @@ body.no-scroll { overflow: hidden; }
   align-items: baseline;
   gap: 0 .35ch;
   flex-wrap: wrap;
+  font-family: 'Space Grotesk', var(--font-manrope), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 700;
 }
 /* Enhanced underline styles for the aesthetic */
 .u {
@@ -578,7 +583,7 @@ a[href^="mailto:"]:hover {
 @media (max-width: 980px) {
   .hero { margin-top: 0; padding-top: clamp(16px, 4vh, 28px); }
   .hero__image { max-height: clamp(280px, 50vh, 560px); }
-  .section.app-shot { margin-top: 0; padding-top: clamp(8px, 2vh, 16px); }
+  .section.app-shot { margin-top: 0; padding-top: clamp(40px, 6vw, 80px); }
 }
 
 @media (max-width: 640px) {
