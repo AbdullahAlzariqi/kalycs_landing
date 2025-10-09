@@ -20,6 +20,90 @@
                   radial-gradient(1000px 600px at 110% 10%, rgba(185,168,249,.15), transparent 50%),
                   #0B0D19 !important;
     }
+    /* Override global .badge (40x40 icon style) inside demo */
+    .demo-page .badge {
+      width: auto;
+      height: auto;
+      box-shadow: none;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    /* Layout: two-column grid to keep preview visible */
+    .demo-page .shell > .grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 18px;
+      align-items: start;
+    }
+    @media (max-width: 980px) {
+      .demo-page .shell > .grid { grid-template-columns: 1fr; }
+    }
+
+    /* Keep rules from pushing actions/preview down */
+    .demo-page .rules {
+      max-height: 46vh;
+      overflow: auto;
+      padding-right: 4px; /* room for scrollbar */
+    }
+
+    /* Tone down limitation cards so they don't look clickable */
+    .demo-page .limits { gap: 6px; margin-top: 12px; }
+    .demo-page .lim {
+      background: transparent !important;
+      border: none !important;
+      padding: 0 !important;
+    }
+    .demo-page .lim b { color: var(--muted) !important; font-weight: 700; }
+    .demo-page .lim span { color: var(--muted) !important; }
+
+    /* Preview overlay */
+    .demo-page .preview-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      z-index: 9999;
+      padding: 14px;
+      box-sizing: border-box;
+      align-items: center;
+      justify-content: center;
+    }
+    .demo-page .preview-overlay.is-open { display: flex; }
+    .demo-page .overlay-panel {
+      width: min(1400px, 98vw);
+      height: min(94vh, 1000px);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 6px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 16px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.45);
+      overflow: hidden;
+    }
+    .demo-page .overlay-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .demo-page .overlay-title { margin: 0; font-size: 16px; }
+    .demo-page .overlay-actions { display:flex; gap:8px; align-items:center; }
+    .demo-page .overlay-content { padding: 0; overflow: hidden; display:flex; }
+    .demo-page .overlay-footer { padding: 6px 10px; border-top: 1px solid rgba(255,255,255,.08); }
+
+    /* Let the preview table occupy the space */
+    .demo-page .preview-overlay .preview {
+      flex: 1;
+      height: 100%;
+      max-height: none;
+      margin: 0;
+      border: none;
+      border-radius: 0;
+      overflow: auto;
+    }
   </style>
 </head>
 <body class="demo-page">
@@ -29,34 +113,16 @@
   </header>
 
   <div class="shell">
+    <div class="grid">
     <section class="card">
       <!-- Tabs -->
       <div class="tabs">
-        <button class="tab active" data-tab="rules">📋 Organization Rules</button>
-        <button class="tab" data-tab="upload">📁 Folder Upload</button>
-      </div>
-
-      <!-- Rules Tab Content -->
-      <div class="tab-content active" id="rules-tab">
-        <h2>Define Organization Rules</h2>
-        <p class="hint" style="margin-bottom:16px">Rules are processed in order (first match wins). Each rule belongs to a folder and defines how files should be organized.</p>
-        
-        <div class="rules" id="rules"></div>
-        
-        <div class="toolbar">
-          <button class="btn secondary" id="addRule">+ Add Rule</button>
-          <button class="btn ghost" id="sampleRules">Load sample rules</button>
-        </div>
-        
-        <div class="toolbar" style="margin-top:20px; padding-top:20px; border-top:1px solid rgba(255,255,255,.08)">
-          <button class="btn primary" id="preview"><span style="color:#fff; font-weight:700;">Preview Organization</span></button>
-          <button class="btn secondary" id="download" disabled>Download Organized .zip</button>
-          <button class="btn warn" id="reset">Reset All</button>
-        </div>
+        <button class="tab active" data-tab="upload">📁 Folder Upload</button>
+        <button class="tab" data-tab="rules">📋 Organization Rules</button>
       </div>
 
       <!-- Upload Tab Content -->
-      <div class="tab-content" id="upload-tab">
+      <div class="tab-content active" id="upload-tab">
         <h2>Upload Directory</h2>
         <div class="filebox">
           <label for="dir">Choose a directory</label>
@@ -70,22 +136,59 @@
           <div class="lim"><b>Max file size</b><span id="maxFileSize"></span></div>
           <div class="lim"><b>Max folder depth</b><span id="maxDepth"></span></div>
         </div>
+      </div>
 
-        <div class="progress-wrap">
-          <div class="progress"><div class="bar" id="bar"></div></div>
-          <div class="progress-label"><span id="progLabel">Idle</span><span id="progPct">0%</span></div>
+      <!-- Rules Tab Content -->
+      <div class="tab-content" id="rules-tab">
+        <h2>Define Organization Rules</h2>
+        <p class="hint" style="margin-bottom:16px">Rules are processed in order (first match wins). Each rule belongs to a folder and defines how files should be organized.</p>
+        
+        <div class="rules" id="rules"></div>
+        
+        <div class="toolbar">
+          <button class="btn secondary" id="addRule">+ Add Rule</button>
+          <button class="btn ghost" id="sampleRules">Load sample rules</button>
+        </div>
+        
+        <div class="toolbar" style="margin-top:20px; padding-top:20px; border-top:1px solid rgba(255,255,255,.08)">
+          <button class="btn primary" id="previewBtn"><span style="color:#fff; font-weight:700;">Preview Organization</span></button>
+          <button class="btn secondary" id="download" disabled>Download Organized .zip</button>
+          <button class="btn warn" id="reset">Reset All</button>
         </div>
       </div>
     </section>
 
     <!-- Preview Table -->
-    <section class="card" style="margin-top:18px">
-      <h2>Preview</h2>
+    <section class="card">
+      <div class="inline" style="align-items:center; justify-content: space-between;">
+        <h2 style="margin:0">Preview</h2>
+        <button class="btn ghost" id="expandPreview">Expand</button>
+      </div>
       <div class="hint">Shows how files will be placed into target folders. Files that don't match any rules will be placed in <code class="inline">Others/</code> folder.</div>
       <div id="violations" class="hint" style="margin-top:8px;color:var(--danger)"></div>
       <div class="preview" id="preview"></div>
       <div id="pagination"></div>
     </section>
+    </div>
+  </div>
+
+  <!-- Preview Overlay -->
+  <div class="preview-overlay" id="previewOverlay" aria-hidden="true">
+    <div class="overlay-panel" role="dialog" aria-modal="true" aria-labelledby="overlayTitle">
+      <div class="overlay-header">
+        <h3 class="overlay-title" id="overlayTitle">Preview</h3>
+        <div class="overlay-actions">
+          <button class="btn secondary" id="downloadOverlay" disabled>Download Organized .zip</button>
+          <button class="btn ghost" id="closeOverlay">Close</button>
+        </div>
+      </div>
+      <div class="overlay-content">
+        <div class="preview" id="overlayPreview"></div>
+      </div>
+      <div class="overlay-footer">
+        <div id="overlayPagination"></div>
+      </div>
+    </div>
   </div>
 
   <footer>
@@ -108,12 +211,19 @@
     rules: document.getElementById('rules'),
     addRule: document.getElementById('addRule'),
     sampleRules: document.getElementById('sampleRules'),
-    previewBtn: document.getElementById('preview'),
+    previewBtn: document.getElementById('previewBtn'),
     downloadBtn: document.getElementById('download'),
     resetBtn: document.getElementById('reset'),
     preview: document.getElementById('preview'),
     pagination: document.getElementById('pagination'),
     violations: document.getElementById('violations'),
+    expandPreviewBtn: document.getElementById('expandPreview'),
+    overlay: document.getElementById('previewOverlay'),
+    overlayPreview: document.getElementById('overlayPreview'),
+    overlayPagination: document.getElementById('overlayPagination'),
+    downloadOverlayBtn: document.getElementById('downloadOverlay'),
+    closeOverlayBtn: document.getElementById('closeOverlay'),
+    // progress elements removed in UX simplification
     bar: document.getElementById('bar'),
     progLabel: document.getElementById('progLabel'),
     progPct: document.getElementById('progPct'),
@@ -137,6 +247,12 @@
   let currentPage = 1;    // current page for pagination
   const ITEMS_PER_PAGE = 10; // items per page
 
+  function updateDownloadButtons(){
+    const ready = !!lastPlan;
+    if(els.downloadBtn) els.downloadBtn.disabled = !ready;
+    if(els.downloadOverlayBtn) els.downloadOverlayBtn.disabled = !ready;
+  }
+
   function bytes(n){
     if(n < 1024) return `${n} B`;
     if(n < 1024**2) return `${(n/1024).toFixed(1)} KB`;
@@ -145,9 +261,10 @@
   }
 
   function setProgress(pct, label){
-    els.bar.style.width = `${Math.max(0, Math.min(100, pct))}%`;
-    els.progPct.textContent = `${Math.round(pct)}%`;
-    if(label) els.progLabel.textContent = label;
+    // Progress bar removed; keep this no-op for compatibility
+    if (els.bar) els.bar.style.width = `${Math.max(0, Math.min(100, pct))}%`;
+    if (els.progPct) els.progPct.textContent = `${Math.round(pct)}%`;
+    if (label && els.progLabel) els.progLabel.textContent = label;
   }
 
   // Extension presets and categories
@@ -193,7 +310,7 @@
     const folderBadge = document.createElement('div');
     folderBadge.className = 'rule-folder-badge';
     folderBadge.textContent = rule.target || '';
-    folderBadge.style.cssText = 'border:none; outline:none; background:linear-gradient(135deg, var(--main-violet), var(--primary-indigo)); color:#fff; padding:6px 12px; border-radius:8px; font-size:13px; font-weight:700; flex-shrink:0';
+    folderBadge.style.cssText = 'border:none; outline:none; background:linear-gradient(135deg, var(--main-violet), var(--primary-indigo)); color:#fff; padding:10px 20px; border-radius:999px; font-size:15px; font-weight:700; flex-shrink:0; min-height:36px; min-width:100px; white-space:nowrap';
     
     header.appendChild(folderBadge);
 
@@ -441,9 +558,9 @@
       const isOthers = t === 'Others';
       const isActive = currentFilter === t;
       const badgeClass = isOthers ? 'badge clickable' : 'badge clickable';
-      const badgeStyle = isOthers ? 
-        `background:rgba(255,93,93,.3); color:#ff5d5d; border:1px solid rgba(255,93,93,.4); font-weight:700${isActive ? '; box-shadow:0 0 0 2px rgba(255,93,93,.3)' : ''}` : 
-        `${isActive ? 'background:rgba(90,63,207,.6); box-shadow:0 0 0 2px rgba(90,63,207,.3)' : ''}`;
+      const badgeStyle = isOthers ?
+        `background:rgba(255,93,93,.3); color:#ff5d5d; border:1px solid rgba(255,93,93,.4); font-weight:600; font-size:14px; padding:8px 16px; border-radius:999px; display:inline-block${isActive ? '; box-shadow:0 0 0 2px rgba(255,93,93,.3)' : ''}` :
+        `${isActive ? 'background:rgba(90,63,207,.6); box-shadow:0 0 0 2px rgba(90,63,207,.3); font-weight:600; font-size:14px; padding:8px 16px; border-radius:999px; display:inline-block' : 'font-weight:600; font-size:14px; padding:8px 16px; border-radius:999px; display:inline-block'}`;
       const rowStyle = isOthers ? 'background:rgba(255,93,93,.05); border-left:3px solid #ff5d5d' : '';
       html += `<tr style="${rowStyle}"><td><span class="${badgeClass}" style="${badgeStyle}" onclick="filterByFolder('${t}')">${t}</span></td><td>${agg.count}</td><td>${bytes(agg.size)}</td></tr>`;
     }
@@ -484,6 +601,7 @@
     }
 
     els.preview.innerHTML = html;
+    if(els.overlayPreview) els.overlayPreview.innerHTML = html;
 
     // Add pagination controls to separate container
     if(totalPages > 1) {
@@ -510,6 +628,8 @@
       els.pagination.innerHTML = '';
     }
     lastPlan = { rows };
+    if(els.overlayPagination) els.overlayPagination.innerHTML = els.pagination.innerHTML;
+    updateDownloadButtons();
   }
 
   function uniqueName(target, name, used){
@@ -575,13 +695,13 @@
 
     setProgress(0, 'Idle');
     lastPlan = null;
-    els.downloadBtn.disabled = true;
+    updateDownloadButtons();
     els.preview.innerHTML = '';
     els.pagination.innerHTML = '';
     currentFilter = null;
     currentPage = 1;
     
-    // Switch to upload tab to show the uploaded files
+    // Ensure upload tab stays visible after selection
     switchTab('upload');
     
     // Auto-generate preview if we have rules and files
@@ -589,7 +709,7 @@
       rebuildRulesFromDOM();
       if(rules.length > 0) {
         planPreview();
-        els.downloadBtn.disabled = false;
+        updateDownloadButtons();
       }
     }
   });
@@ -626,13 +746,20 @@
     setProgress(5, 'Planning…');
     planPreview();
     setProgress(10, 'Ready to zip');
-    els.downloadBtn.disabled = false;
+    updateDownloadButtons();
   });
 
   els.downloadBtn.addEventListener('click', ()=>{
     if(!lastPlan){ setProgress(0,'Preview first'); return; }
     buildZip();
   });
+
+  if(els.downloadOverlayBtn){
+    els.downloadOverlayBtn.addEventListener('click', ()=>{
+      if(!lastPlan){ setProgress(0,'Preview first'); return; }
+      buildZip();
+    });
+  }
 
   els.resetBtn.addEventListener('click', ()=>{
     els.input.value = '';
@@ -647,7 +774,7 @@
     els.pagination.innerHTML='';
     els.rules.innerHTML='';
     setProgress(0,'Idle');
-    els.downloadBtn.disabled = true;
+    updateDownloadButtons();
   });
 
   // Filter and pagination functions
@@ -676,6 +803,25 @@
 
   // Seed one blank row
   addRuleRow();
+  
+  // ===== Overlay wiring =====
+  function openOverlay(){
+    if(!els.overlay) return;
+    els.overlay.classList.add('is-open');
+    els.overlay.setAttribute('aria-hidden','false');
+    document.body.classList.add('no-scroll');
+    planPreview(); // ensure overlay content is current
+  }
+  function closeOverlay(){
+    if(!els.overlay) return;
+    els.overlay.classList.remove('is-open');
+    els.overlay.setAttribute('aria-hidden','true');
+    document.body.classList.remove('no-scroll');
+  }
+  if(els.expandPreviewBtn){ els.expandPreviewBtn.addEventListener('click', openOverlay); }
+  if(els.closeOverlayBtn){ els.closeOverlayBtn.addEventListener('click', closeOverlay); }
+  if(els.overlay){ els.overlay.addEventListener('click', (e)=>{ if(e.target === els.overlay) closeOverlay(); }); }
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeOverlay(); });
 })();
 </script>
 </body>
