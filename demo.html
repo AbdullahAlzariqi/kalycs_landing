@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Directory Organizer — Demo</title>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap" rel="stylesheet">
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.min.css">
+  <!-- JSZip + FileSaver -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <style>
+    /* Demo-specific background override */
+    body.demo-page {
+      background: radial-gradient(1200px 800px at 10% -10%, rgba(90,63,207,.25), transparent 60%),
+                  radial-gradient(1000px 600px at 110% 10%, rgba(185,168,249,.15), transparent 50%),
+                  #0B0D19 !important;
+    }
+  </style>
+</head>
+<body class="demo-page">
+  <header>
+    <h1>Directory Organizer — Browser‑only Demo</h1>
+    <p>Upload a folder, define name‑based rules, and download a reorganized <b>.zip</b>. Files never leave your device.</p>
+  </header>
+
+  <div class="shell">
+    <section class="card">
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab active" data-tab="rules">📋 Organization Rules</button>
+        <button class="tab" data-tab="upload">📁 Folder Upload</button>
+      </div>
+
+      <!-- Rules Tab Content -->
+      <div class="tab-content active" id="rules-tab">
+        <h2>Define Organization Rules</h2>
+        <p class="hint" style="margin-bottom:16px">Rules are processed in order (first match wins). Each rule belongs to a folder and defines how files should be organized.</p>
+        
+        <div class="rules" id="rules"></div>
+        
+        <div class="toolbar">
+          <button class="btn secondary" id="addRule">+ Add Rule</button>
+          <button class="btn ghost" id="sampleRules">Load sample rules</button>
+        </div>
+        
+        <div class="toolbar" style="margin-top:20px; padding-top:20px; border-top:1px solid rgba(255,255,255,.08)">
+          <button class="btn primary" id="preview"><span style="color:#fff; font-weight:700;">Preview Organization</span></button>
+          <button class="btn secondary" id="download" disabled>Download Organized .zip</button>
+          <button class="btn warn" id="reset">Reset All</button>
+        </div>
+      </div>
+
+      <!-- Upload Tab Content -->
+      <div class="tab-content" id="upload-tab">
+        <h2>Upload Directory</h2>
+        <div class="filebox">
+          <label for="dir">Choose a directory</label>
+          <input id="dir" type="file" webkitdirectory directory multiple />
+          <div class="stat" id="stat">No files selected.</div>
+        </div>
+
+        <div class="limits">
+          <div class="lim"><b>Max total files</b><span id="maxFiles"></span></div>
+          <div class="lim"><b>Max total size</b><span id="maxSize"></span></div>
+          <div class="lim"><b>Max file size</b><span id="maxFileSize"></span></div>
+          <div class="lim"><b>Max folder depth</b><span id="maxDepth"></span></div>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress"><div class="bar" id="bar"></div></div>
+          <div class="progress-label"><span id="progLabel">Idle</span><span id="progPct">0%</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Preview Table -->
+    <section class="card" style="margin-top:18px">
+      <h2>Preview</h2>
+      <div class="hint">Shows how files will be placed into target folders. Files that don't match any rules will be placed in <code class="inline">Others/</code> folder.</div>
+      <div id="violations" class="hint" style="margin-top:8px;color:var(--danger)"></div>
+      <div class="preview" id="preview"></div>
+      <div id="pagination"></div>
+    </section>
+  </div>
+
+  <footer>
+    <p><b>Demo constraints</b>: in‑browser only; large folders may be slow. Works best on Chromium‑based browsers. No data is uploaded.</p>
+  </footer>
+
+<script>
+(function(){
+  // ===== Demo Limits (tweak freely) =====
+  const LIMITS = {
+    MAX_FILES: 800,                  // total files
+    MAX_TOTAL_BYTES: 200 * 1024**2,  // 200 MB
+    MAX_FILE_BYTES: 25 * 1024**2,    // 25 MB per file
+    MAX_DEPTH: 12                    // folder depth by path segments
+  };
+
+  const els = {
+    input: document.getElementById('dir'),
+    stat: document.getElementById('stat'),
+    rules: document.getElementById('rules'),
+    addRule: document.getElementById('addRule'),
+    sampleRules: document.getElementById('sampleRules'),
+    previewBtn: document.getElementById('preview'),
+    downloadBtn: document.getElementById('download'),
+    resetBtn: document.getElementById('reset'),
+    preview: document.getElementById('preview'),
+    pagination: document.getElementById('pagination'),
+    violations: document.getElementById('violations'),
+    bar: document.getElementById('bar'),
+    progLabel: document.getElementById('progLabel'),
+    progPct: document.getElementById('progPct'),
+    maxFiles: document.getElementById('maxFiles'),
+    maxSize: document.getElementById('maxSize'),
+    maxFileSize: document.getElementById('maxFileSize'),
+    maxDepth: document.getElementById('maxDepth'),
+  };
+
+  // Show limits in UI
+  els.maxFiles.textContent = ` ${LIMITS.MAX_FILES} files`;
+  els.maxSize.textContent = ` ${(LIMITS.MAX_TOTAL_BYTES/1024/1024)|0} MB`;
+  els.maxFileSize.textContent = ` ${(LIMITS.MAX_FILE_BYTES/1024/1024)|0} MB`;
+  els.maxDepth.textContent = ` ${LIMITS.MAX_DEPTH} levels`;
+
+  // State
+  let pickedFiles = [];   // [{file, relPath, base, size, depth}]
+  let rules = [];
+  let lastPlan = null;    // preview plan
+  let currentFilter = null; // current folder filter
+  let currentPage = 1;    // current page for pagination
+  const ITEMS_PER_PAGE = 10; // items per page
+
+  function bytes(n){
+    if(n < 1024) return `${n} B`;
+    if(n < 1024**2) return `${(n/1024).toFixed(1)} KB`;
+    if(n < 1024**3) return `${(n/1024**2).toFixed(1)} MB`;
+    return `${(n/1024**3).toFixed(2)} GB`;
+  }
+
+  function setProgress(pct, label){
+    els.bar.style.width = `${Math.max(0, Math.min(100, pct))}%`;
+    els.progPct.textContent = `${Math.round(pct)}%`;
+    if(label) els.progLabel.textContent = label;
+  }
+
+  // Extension presets and categories
+  const EXTENSION_PRESETS = {
+    'Documents': { extensions: ['pdf', 'doc', 'docx', 'txt', 'rtf', 'odt'], icon: '📄' },
+    'Images': { extensions: ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp', 'tiff'], icon: '🖼️' },
+    'Videos': { extensions: ['mp4', 'avi', 'mov', 'wmv', 'flv', 'webm', 'mkv', 'm4v'], icon: '🎥' },
+    'Audio': { extensions: ['mp3', 'wav', 'flac', 'aac', 'ogg', 'wma', 'm4a'], icon: '🎵' },
+    'Archives': { extensions: ['zip', 'rar', '7z', 'tar', 'gz', 'bz2'], icon: '📦' },
+    'Code': { extensions: ['js', 'ts', 'html', 'css', 'py', 'java', 'cpp', 'c', 'php', 'rb', 'go'], icon: '💻' },
+    'Spreadsheets': { extensions: ['xls', 'xlsx', 'csv', 'ods'], icon: '📊' },
+    'Presentations': { extensions: ['ppt', 'pptx', 'odp'], icon: '📽️' },
+    'Design': { extensions: ['psd', 'ai', 'sketch', 'figma', 'xd'], icon: '🎨' },
+    'Executables': { extensions: ['exe', 'msi', 'dmg', 'pkg', 'deb', 'rpm'], icon: '⚙️' }
+  };
+
+  function sanitizeFolderName(name){
+    return name.replace(/[\\/:*?"<>|]/g, '-').trim() || 'Unnamed';
+  }
+
+  // Tab switching
+  function switchTab(tabName) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    
+    document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+    document.getElementById(`${tabName}-tab`).classList.add('active');
+  }
+
+  // Initialize tab listeners
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+  });
+
+  function addRuleRow(rule={type:'contains', pattern:'', target:''}){
+    const card = document.createElement('div');
+    card.className = 'rule-card';
+
+    // Header with target folder badge
+    const header = document.createElement('div');
+    header.className = 'rule-header';
+    
+    const folderBadge = document.createElement('div');
+    folderBadge.className = 'rule-folder-badge';
+    folderBadge.textContent = rule.target || '';
+    folderBadge.style.cssText = 'border:none; outline:none; background:linear-gradient(135deg, var(--main-violet), var(--primary-indigo)); color:#fff; padding:6px 12px; border-radius:8px; font-size:13px; font-weight:700; flex-shrink:0';
+    
+    header.appendChild(folderBadge);
+
+    // Body with rule configuration
+    const body = document.createElement('div');
+    body.className = 'rule-body';
+
+    // Rule Type field
+    const typeField = document.createElement('div');
+    typeField.className = 'rule-field';
+    const typeLabel = document.createElement('div');
+    typeLabel.className = 'rule-label';
+    typeLabel.textContent = 'Rule Type';
+    const sel = document.createElement('select');
+    ['contains','starts_with','ends_with','extension','extension_category','regex'].forEach(t=>{
+      const o=document.createElement('option'); o.value=t; o.textContent=t.replace('_', ' '); sel.appendChild(o);
+    });
+    sel.value = rule.type;
+    typeField.appendChild(typeLabel);
+    typeField.appendChild(sel);
+
+    // Pattern field
+    const patternField = document.createElement('div');
+    patternField.className = 'rule-field';
+    const patternLabel = document.createElement('div');
+    patternLabel.className = 'rule-label';
+    patternLabel.textContent = 'Pattern';
+    const pat = document.createElement('input');
+    pat.type='text'; 
+    pat.placeholder = getPlaceholderText(rule.type); 
+    pat.value = rule.pattern||'';
+    patternField.appendChild(patternLabel);
+    patternField.appendChild(pat);
+
+    sel.addEventListener('change',()=>{
+      pat.placeholder = getPlaceholderText(sel.value);
+      updatePatternInput(pat, sel.value, body);
+    });
+
+    // Target folder field
+    const targetField = document.createElement('div');
+    targetField.className = 'rule-field';
+    const targetLabel = document.createElement('div');
+    targetLabel.className = 'rule-label';
+    targetLabel.textContent = 'Target Folder';
+    const tgt = document.createElement('input');
+    tgt.type='text'; tgt.placeholder='Folder name'; tgt.value = rule.target||'';
+
+    // Update folder badge when target changes
+    tgt.addEventListener('input', ()=>{
+      folderBadge.textContent = tgt.value || '';
+      rebuildRulesFromDOM();
+    });
+
+    targetField.appendChild(targetLabel);
+    targetField.appendChild(tgt);
+
+    // Create pattern pills container
+    const pillsContainer = document.createElement('div');
+    pillsContainer.className = 'pattern-pills';
+    
+    function updatePatternPills() {
+      pillsContainer.innerHTML = '';
+      const patternValue = pat.value.trim();
+      
+      if (patternValue && (sel.value === 'contains' || sel.value === 'extension')) {
+        const patterns = patternValue.split(',').map(p => p.trim()).filter(p => p);
+        patterns.forEach(pattern => {
+          const pill = document.createElement('span');
+          pill.className = 'pattern-pill';
+          pill.textContent = pattern;
+          pillsContainer.appendChild(pill);
+        });
+      } else if (patternValue) {
+        const pill = document.createElement('span');
+        pill.className = 'pattern-pill';
+        pill.textContent = patternValue;
+        pillsContainer.appendChild(pill);
+      } else {
+        // Only show empty pill for certain rule types that benefit from visual feedback
+        if (sel.value === 'contains' || sel.value === 'extension' || sel.value === 'starts_with' || sel.value === 'ends_with') {
+          const pill = document.createElement('span');
+          pill.className = 'pattern-pill empty';
+          pill.textContent = 'Enter pattern';
+          pill.onclick = () => pat.focus();
+          pillsContainer.appendChild(pill);
+        }
+        // For other types (regex, extension_category), don't show empty pills
+      }
+    }
+
+    // Update pills when pattern or type changes
+    pat.addEventListener('input', updatePatternPills);
+    sel.addEventListener('change', updatePatternPills);
+
+    body.appendChild(typeField);
+    body.appendChild(patternField);
+    body.appendChild(targetField);
+    body.appendChild(pillsContainer);
+    
+    // Initial pill update
+    updatePatternPills();
+
+    // Controls
+    const controls = document.createElement('div');
+    controls.className = 'rule-controls';
+
+    const up = document.createElement('button'); up.type='button'; up.textContent='↑ Move Up'; up.className='btn ghost';
+    const dn = document.createElement('button'); dn.type='button'; dn.textContent='↓ Move Down'; dn.className='btn ghost';
+    const del= document.createElement('button'); del.type='button'; del.textContent='✕ Delete'; del.className='btn ghost';
+
+    up.onclick = ()=>{ if(card.previousElementSibling){ card.parentNode.insertBefore(card, card.previousElementSibling); rebuildRulesFromDOM(); }};
+    dn.onclick = ()=>{ if(card.nextElementSibling){ card.parentNode.insertBefore(card.nextElementSibling, card); rebuildRulesFromDOM(); }};
+    del.onclick= ()=>{ card.remove(); rebuildRulesFromDOM(); };
+
+    [sel, pat, tgt].forEach(el=> el.addEventListener('input', rebuildRulesFromDOM));
+
+    controls.append(up,dn,del);
+    card.appendChild(header);
+    card.appendChild(body);
+    card.appendChild(controls);
+    els.rules.appendChild(card);
+    rebuildRulesFromDOM();
+  }
+
+  function getPlaceholderText(type) {
+    switch(type) {
+      case 'extension': return 'e.g. pdf, jpg, mp4 (comma-separated)';
+      case 'extension_category': return 'Select category below';
+      case 'contains': return 'e.g. invoice, report, contract (comma-separated)';
+      case 'starts_with': return 'e.g. draft, temp';
+      case 'ends_with': return 'e.g. _final, _backup';
+      case 'regex': return 'e.g. ^[A-Z].*\\.pdf$';
+      default: return 'pattern';
+    }
+  }
+
+  function updatePatternInput(input, type, body) {
+    if (type === 'extension_category') {
+      // Replace input with dropdown for categories
+      const select = document.createElement('select');
+      select.innerHTML = '<option value="">Select category...</option>';
+      Object.entries(EXTENSION_PRESETS).forEach(([name, data]) => {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = `${data.icon} ${name} (${data.extensions.join(', ')})`;
+        select.appendChild(option);
+      });
+      select.addEventListener('change', rebuildRulesFromDOM);
+      
+      // Replace the input with select in the pattern field
+      const patternField = input.parentNode;
+      patternField.replaceChild(select, input);
+      
+      // Update pills after replacement
+      const pillsContainer = body.querySelector('.pattern-pills');
+      if (pillsContainer) {
+        pillsContainer.innerHTML = '';
+        // Don't show empty pill for extension_category - the dropdown is self-explanatory
+      }
+    }
+  }
+
+  function rebuildRulesFromDOM(){
+    rules = Array.from(els.rules.querySelectorAll('.rule-card')).map(card=>{
+      const sel = card.querySelector('select');
+      const patEl = card.querySelector('.rule-field:nth-child(2) input, .rule-field:nth-child(2) select');
+      const tgt = card.querySelector('.rule-field:nth-child(3) input');
+      return { 
+        type: sel.value, 
+        pattern: patEl ? patEl.value.trim() : '', 
+        target: tgt ? tgt.value.trim() : '' 
+      };
+    }).filter(r => r.pattern && r.target);
+  }
+
+  function countDepth(relPath){
+    return relPath.split('/').length - 1; // folders count
+  }
+
+  function matchRule(fileBase){
+    for(const r of rules){
+      try{
+        const base = fileBase.toLowerCase();
+        const patt = r.pattern;
+        switch(r.type){
+          case 'contains': {
+            const patterns = patt.split(',').map(p => p.trim().toLowerCase()).filter(p => p);
+            if(patterns.length > 0 && patterns.some(pattern => base.includes(pattern))) return r; break;
+          }
+          case 'starts_with': if(base.startsWith(patt.toLowerCase())) return r; break;
+          case 'ends_with': if(base.endsWith(patt.toLowerCase())) return r; break;
+          case 'extension': {
+            const ext = base.split('.').pop();
+            const extensions = patt.split(',').map(e => e.trim().toLowerCase()).filter(e => e);
+            if(extensions.length > 0 && extensions.includes(ext)) return r; break;
+          }
+          case 'extension_category': {
+            const ext = base.split('.').pop();
+            if(EXTENSION_PRESETS[patt] && EXTENSION_PRESETS[patt].extensions.includes(ext)) return r; break;
+          }
+          case 'regex': {
+            const re = new RegExp(patt, 'i');
+            if(re.test(fileBase)) return r; break;
+          }
+        }
+      }catch(e){ /* invalid regex -> just skip */ }
+    }
+    return null;
+  }
+
+  function validateSelection(){
+    const errors = [];
+    if(pickedFiles.length > LIMITS.MAX_FILES) errors.push(`Too many files: ${pickedFiles.length} > ${LIMITS.MAX_FILES}`);
+    const totalBytes = pickedFiles.reduce((a,b)=>a+b.size,0);
+    if(totalBytes > LIMITS.MAX_TOTAL_BYTES) errors.push(`Total size ${bytes(totalBytes)} exceeds ${bytes(LIMITS.MAX_TOTAL_BYTES)}`);
+    const tooBig = pickedFiles.filter(f=> f.size > LIMITS.MAX_FILE_BYTES);
+    if(tooBig.length) errors.push(`${tooBig.length} file(s) exceed per-file limit ${bytes(LIMITS.MAX_FILE_BYTES)}`);
+    const tooDeep = pickedFiles.filter(f=> f.depth > LIMITS.MAX_DEPTH);
+    if(tooDeep.length) errors.push(`${tooDeep.length} file(s) exceed folder depth limit (${LIMITS.MAX_DEPTH})`);
+    return { ok: errors.length===0, errors };
+  }
+
+  function planPreview(){
+    const rows = [];
+    const buckets = new Map(); // target -> {count,size}
+    const targetSeenNames = new Map(); // target -> Set of file names for duplicate handling later
+    let unmatchedCount = 0;
+
+    for(const info of pickedFiles){
+      const base = info.base;
+      const r = matchRule(base);
+      const target = sanitizeFolderName(r ? r.target : 'Others');
+      const key = target;
+      if(!buckets.has(key)) buckets.set(key, { count:0, size:0 });
+      const b=buckets.get(key); b.count++; b.size+=info.size;
+      rows.push({ target, name: base, size: info.size, path: info.relPath, matched: !!r });
+      if(!targetSeenNames.has(target)) targetSeenNames.set(target, new Set());
+      if(!r) unmatchedCount++;
+    }
+
+    // build table html
+    let html = '<table><thead><tr><th>Target folder</th><th>Count</th><th>Total size</th></tr></thead><tbody>';
+    for(const [t, agg] of buckets){
+      const isOthers = t === 'Others';
+      const isActive = currentFilter === t;
+      const badgeClass = isOthers ? 'badge clickable' : 'badge clickable';
+      const badgeStyle = isOthers ? 
+        `background:rgba(255,93,93,.3); color:#ff5d5d; border:1px solid rgba(255,93,93,.4); font-weight:700${isActive ? '; box-shadow:0 0 0 2px rgba(255,93,93,.3)' : ''}` : 
+        `${isActive ? 'background:rgba(90,63,207,.6); box-shadow:0 0 0 2px rgba(90,63,207,.3)' : ''}`;
+      const rowStyle = isOthers ? 'background:rgba(255,93,93,.05); border-left:3px solid #ff5d5d' : '';
+      html += `<tr style="${rowStyle}"><td><span class="${badgeClass}" style="${badgeStyle}" onclick="filterByFolder('${t}')">${t}</span></td><td>${agg.count}</td><td>${bytes(agg.size)}</td></tr>`;
+    }
+    if(!buckets.size) html += '<tr><td colspan="3">No data</td></tr>';
+    html += '</tbody></table>';
+
+    // Add unmatched files info
+    if(unmatchedCount > 0) {
+      html += `<div style="margin-top:8px; padding:8px; background:rgba(255,93,93,.1); border:1px solid rgba(255,93,93,.2); border-radius:8px; font-size:12px; color:var(--danger)">`;
+      html += `⚠️ ${unmatchedCount} file${unmatchedCount === 1 ? '' : 's'} will be placed in <strong>Others/</strong> folder (no matching rules)`;
+      html += '</div>';
+    }
+
+    // Filter files based on current filter
+    let filteredRows = rows;
+    if(currentFilter) {
+      filteredRows = rows.filter(r => r.target === currentFilter);
+    }
+
+    // Pagination
+    const totalPages = Math.ceil(filteredRows.length / ITEMS_PER_PAGE);
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    const paginatedRows = filteredRows.slice(startIndex, endIndex);
+
+    // File listing table
+    const fileRows = paginatedRows.map(r=> {
+      const matchedClass = r.matched ? '' : 'style="opacity:0.7"';
+      return `<tr ${matchedClass}><td>${r.target}</td><td>${r.name}</td><td>${bytes(r.size)}</td></tr>`;
+    }).join('');
+
+    html += '<div style="height:8px"></div>';
+    html += '<table><thead><tr><th>Target</th><th>File name</th><th>Size</th></tr></thead><tbody>' + (fileRows || '<tr><td colspan="3">—</td></tr>') + '</tbody></table>';
+
+    // Add clear filter button if filter is active
+    if(currentFilter) {
+      html += `<div style="margin-top:8px; text-align:center;"><button onclick="clearFilter()" class="btn ghost" style="font-size:11px;">Clear filter (${currentFilter})</button></div>`;
+    }
+
+    els.preview.innerHTML = html;
+
+    // Add pagination controls to separate container
+    if(totalPages > 1) {
+      let paginationHtml = '<div class="pagination">';
+      paginationHtml += `<button onclick="changePage(1)" ${currentPage === 1 ? 'disabled' : ''}>« First</button>`;
+      paginationHtml += `<button onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>‹ Prev</button>`;
+      
+      // Page numbers
+      const startPage = Math.max(1, currentPage - 2);
+      const endPage = Math.min(totalPages, currentPage + 2);
+      
+      for(let i = startPage; i <= endPage; i++) {
+        paginationHtml += `<button onclick="changePage(${i})" class="${i === currentPage ? 'active' : ''}">${i}</button>`;
+      }
+      
+      paginationHtml += `<button onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>Next ›</button>`;
+      paginationHtml += `<button onclick="changePage(${totalPages})" ${currentPage === totalPages ? 'disabled' : ''}>Last »</button>`;
+      paginationHtml += `<span class="pagination-info">Page ${currentPage} of ${totalPages} (${filteredRows.length} files)</span>`;
+      paginationHtml += '</div>';
+      els.pagination.innerHTML = paginationHtml;
+    } else if(filteredRows.length > 0) {
+      els.pagination.innerHTML = `<div class="pagination"><span class="pagination-info">Showing ${filteredRows.length} file${filteredRows.length === 1 ? '' : 's'}</span></div>`;
+    } else {
+      els.pagination.innerHTML = '';
+    }
+    lastPlan = { rows };
+  }
+
+  function uniqueName(target, name, used){
+    const set = used.get(target) || new Set();
+    if(!set.has(name)) { set.add(name); used.set(target,set); return name; }
+    const dot = name.lastIndexOf('.');
+    const stem = dot>0 ? name.slice(0,dot) : name;
+    const ext  = dot>0 ? name.slice(dot) : '';
+    let i=1; let candidate;
+    do{ candidate = `${stem} (${i++})${ext}`; } while(set.has(candidate));
+    set.add(candidate); used.set(target,set);
+    return candidate;
+  }
+
+  async function buildZip(){
+    if(!lastPlan) return;
+    setProgress(0, 'Packing…');
+
+    const zip = new JSZip();
+    const usedNames = new Map(); // target -> Set(name)
+
+    // Add files to folders in zip
+    for(const row of lastPlan.rows){
+      const folder = zip.folder(row.target);
+      const info = pickedFiles.find(f=> f.relPath === row.path);
+      const safeName = uniqueName(row.target, info.base, usedNames);
+      folder.file(safeName, info.file); // let JSZip read File lazily
+    }
+
+    // Generate zip with progress
+    const blob = await zip.generateAsync({
+      type: 'blob',
+      compression: 'DEFLATE',
+      compressionOptions: { level: 6 }
+    }, (metadata)=>{
+      const pct = 5 + metadata.percent * 0.95; // 5% -> 100%
+      setProgress(pct, 'Generating .zip…');
+    });
+
+    saveAs(blob, 'organized.zip');
+    setProgress(100, 'Done');
+  }
+
+  // ===== Event wiring =====
+    els.input.addEventListener('change', (e)=>{
+    const list = Array.from(e.target.files||[]);
+    pickedFiles = list.map(f=>{
+      const rel = f.webkitRelativePath || f.name; // name when single file
+      return {
+        file: f,
+        relPath: rel,
+        base: rel.split('/').pop(),
+        size: f.size,
+        depth: rel.split('/').length - 1
+      };
+    });
+
+    const total = pickedFiles.reduce((a,b)=>a+b.size,0);
+    els.stat.textContent = `${pickedFiles.length} files • ${bytes(total)}`;
+
+    const v = validateSelection();
+    els.violations.textContent = v.ok ? '' : ('⚠ ' + v.errors.join(' | '));
+
+    setProgress(0, 'Idle');
+    lastPlan = null;
+    els.downloadBtn.disabled = true;
+    els.preview.innerHTML = '';
+    els.pagination.innerHTML = '';
+    currentFilter = null;
+    currentPage = 1;
+    
+    // Switch to upload tab to show the uploaded files
+    switchTab('upload');
+    
+    // Auto-generate preview if we have rules and files
+    if(pickedFiles.length > 0) {
+      rebuildRulesFromDOM();
+      if(rules.length > 0) {
+        planPreview();
+        els.downloadBtn.disabled = false;
+      }
+    }
+  });
+
+  els.addRule.addEventListener('click', ()=> addRuleRow());
+
+  els.sampleRules.addEventListener('click', ()=>{
+    els.rules.innerHTML='';
+    [
+      {type:'extension', pattern:'pdf, doc, docx, txt, rtf, odt', target:'Documents'},
+      {type:'extension', pattern:'csv, xls, xlsx, ods', target:'Sheets'},
+      {type:'extension', pattern:'png, jpeg, jpg, gif, webp, svg, bmp, tiff', target:'Images'},
+      {type:'extension', pattern:'mp4, avi, mov, wmv, flv, webm, mkv, m4v', target:'Videos'},
+      {type:'extension', pattern:'mp3, wav, flac, aac, ogg, wma, m4a', target:'Audio'},
+      {type:'extension', pattern:'js, ts, html, css, py, java, cpp, c, php, rb, go', target:'Code'},
+      {type:'extension', pattern:'zip, rar, 7z, tar, gz, bz2', target:'Archives'},
+      {type:'contains', pattern:'invoice, receipt, bill', target:'Finance'},
+      {type:'contains', pattern:'screenshot, capture, snap', target:'Screenshots'}
+    ].forEach(addRuleRow);
+  });
+
+  els.previewBtn.addEventListener('click', ()=>{
+    const v = validateSelection();
+    els.violations.textContent = v.ok ? '' : ('⚠ ' + v.errors.join(' | '));
+    if(!v.ok){ setProgress(0,'Fix violations'); return; }
+
+    rebuildRulesFromDOM();
+    if(!rules.length){
+      els.violations.textContent = 'Add at least one rule to preview.';
+      setProgress(0,'Awaiting rules');
+      return;
+    }
+
+    setProgress(5, 'Planning…');
+    planPreview();
+    setProgress(10, 'Ready to zip');
+    els.downloadBtn.disabled = false;
+  });
+
+  els.downloadBtn.addEventListener('click', ()=>{
+    if(!lastPlan){ setProgress(0,'Preview first'); return; }
+    buildZip();
+  });
+
+  els.resetBtn.addEventListener('click', ()=>{
+    els.input.value = '';
+    pickedFiles = [];
+    rules = [];
+    lastPlan = null;
+    currentFilter = null;
+    currentPage = 1;
+    els.stat.textContent = 'No files selected.';
+    els.violations.textContent = '';
+    els.preview.innerHTML='';
+    els.pagination.innerHTML='';
+    els.rules.innerHTML='';
+    setProgress(0,'Idle');
+    els.downloadBtn.disabled = true;
+  });
+
+  // Filter and pagination functions
+  function filterByFolder(folderName) {
+    currentFilter = currentFilter === folderName ? null : folderName;
+    currentPage = 1; // Reset to first page when filtering
+    planPreview();
+  }
+
+  function clearFilter() {
+    currentFilter = null;
+    currentPage = 1;
+    planPreview();
+  }
+
+  function changePage(page) {
+    if(page < 1) return;
+    currentPage = page;
+    planPreview();
+  }
+
+  // Make functions globally available
+  window.filterByFolder = filterByFolder;
+  window.clearFilter = clearFilter;
+  window.changePage = changePage;
+
+  // Seed one blank row
+  addRuleRow();
+})();
+</script>
+</body>
+</html>

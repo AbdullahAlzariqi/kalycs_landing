@@ -51,3 +51,9 @@
 
 [build.processing.images]
   compress = true
+
+# Redirects
+[[redirects]]
+  from = "/demo"
+  to = "/demo.html"
+  status = 200
