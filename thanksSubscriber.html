@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Thanks for Subscribing — You're on the list</title>
+    <meta name="description" content="Thanks for subscribing! Check your inbox to confirm your email address and get updates from Kalycs." />
+    <meta name="robots" content="noindex, nofollow" />
+
+    <!-- Social (OG/Twitter) -->
+    <meta property="og:title" content="Thanks for Subscribing — You're on the list">
+    <meta property="og:description" content="Check your inbox to confirm your email address and get updates from Kalycs.">
+    <meta property="og:image" content="https://kalycs.com/assets/icon-512x512.png">
+    <meta property="og:url" content="https://your-domain.com/thanksSubscriber.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://your-domain.com/thanksSubscriber.html">
+
+    <link rel="icon" type="image/svg+xml" sizes="any" href="/assets/favicon.svg">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+    <!-- Main stylesheet - non-blocking -->
+    <link rel="stylesheet" href="styles.min.css" media="print" onload="this.media='all'; this.onload=null;">
+    <noscript><link rel="stylesheet" href="styles.min.css"></noscript>
+    <link rel="stylesheet" href="styles.laptop.css">
+
+    <!-- Preconnects for faster third-party setup -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="preconnect" href="https://eu.i.posthog.com" crossorigin>
+    <link rel="preconnect" href="https://eu-assets.i.posthog.com" crossorigin>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17605791643"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'AW-17605791643');
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="index.html#main">
+          <picture><source srcset="assets/logo.webp" type="image/webp" /><img src="assets/logo.png" alt="Kalycs logo" class="brand__logo" width="40" height="40" /></picture>
+          <span class="brand__name">Kalycs</span>
+        </a>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="section thanks-section text-center">
+        <div class="container">
+          <h1 class="h2" id="thanks-title">You're on the list!</h1>
+          <p class="lead" id="thanks-desc">Thanks for subscribing to Kalycs updates. We'll keep you in the loop with product news, feature launches, and tips.</p>
+          <p class="thanks-note">Check your inbox to confirm your email address. Don't forget to check spam if you don't see it.</p>
+
+          <div class="thanks-actions">
+            <a class="btn btn--primary" id="thanks-home" href="index.html#main">Back to Home</a>
+            <a class="btn btn--ghost" id="thanks-roadmap" href="roadmap.html">View Roadmap</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer">
+        <div class="footer__left">
+          <img src="assets/logo.png" alt="Kalycs logo" class="brand__logo small" loading="lazy" decoding="async" />
+          <span>© <span id="year"></span> Kalycs</span>
+        </div>
+        <div class="footer__right">
+          <a href="privacy.html" class="footer__link">Privacy</a>
+          <a href="terms.html" class="footer__link">Terms of Use</a>
+          <a href="#contact" class="footer__link" id="contact-link">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Contact Modal (for convenience site‑wide) -->
+    <div class="contact-modal" id="contact-modal" aria-hidden="true">
+      <div class="contact-backdrop" data-close="contact-modal" aria-hidden="true"></div>
+      <div class="contact-content" role="dialog" aria-modal="true" aria-labelledby="contact-title">
+        <button class="contact-close" type="button" aria-label="Close contact form" data-close="contact-modal">×</button>
+        <header class="contact-header">
+          <h2 class="h2" id="contact-title">Contact Us</h2>
+          <p class="tiny muted">We'll get back to you within 1–2 business days.</p>
+        </header>
+        <form class="contact-form" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="contact" />
+          <p class="hidden">
+            <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+          </p>
+          <div class="field">
+            <label for="contact-name">Name</label>
+            <input id="contact-name" name="name" type="text" autocomplete="name" required />
+          </div>
+          <div class="field">
+            <label for="contact-email">Email</label>
+            <input id="contact-email" name="email" type="email" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="contact-subject">Subject (optional)</label>
+            <input id="contact-subject" name="subject" type="text" />
+          </div>
+          <div class="field">
+            <label for="contact-message">Message</label>
+            <textarea id="contact-message" name="message" rows="5" required></textarea>
+          </div>
+          <div class="contact-actions">
+            <button class="btn btn--ghost" type="button" data-close="contact-modal">Cancel</button>
+            <button class="btn btn--primary" type="submit">Send</button>
+          </div>
+          <p class="contact-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- PostHog Analytics (deferred, slim features) -->
+    <script>
+      window.addEventListener('load', function() {
+        !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init Re Ms Fs Pe Rs Cs capture Ve calculateEventProperties Ds register register_once register_for_session unregister unregister_for_session zs getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey canRenderSurveyAsync createPersonProfile Ns Is Us opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing is_capturing clear_opt_in_out_capturing Os debug I js getPageViewId captureTraceFeedback captureTraceMetric".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+
+        posthog.init('phc_4Y9RxCs4bQ2WIah1xVjluDkkmsaWAy7n7wsG7K2fkO2', {
+            api_host: 'https://eu.i.posthog.com',
+            capture_pageview: true,
+            capture_pageleave: true,
+            autocapture: false,
+            disable_session_recording: true,
+            disable_surveys: true,
+            enable_recording_console_log: false,
+            person_profiles: 'identified_only'
+        });
+
+        // Track page view manually
+        if (typeof posthog !== 'undefined') {
+          posthog.capture('page_view', { page_title: document.title, page_url: window.location.href });
+        }
+      });
+    </script>
+
+    <script src="script.min.js" defer></script>
+  </body>
+  </html>
