@@ -97,7 +97,7 @@
 
     <!-- Basic CSP (tune for your domain/CDNs) -->
     <meta http-equiv="Content-Security-Policy"
-          content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com 'self'; script-src 'self' 'unsafe-inline' https://app.posthog.com https://eu-assets.i.posthog.com https://eu.i.posthog.com; connect-src 'self' https://eu.i.posthog.com; frame-src 'self';">
+          content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com 'self'; script-src 'self' 'unsafe-inline' https://app.posthog.com https://eu-assets.i.posthog.com https://eu.i.posthog.com https://kalycs.kit.com; connect-src 'self' https://eu.i.posthog.com https://kalycs.kit.com; frame-src 'self';">
 
     <!-- Main stylesheet - non-blocking -->
     <link rel="stylesheet" href="styles.min.css" media="print" onload="this.media='all'; this.onload=null;">
