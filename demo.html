@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Directory Organizer — Demo</title>
+  <title>Folder Organizer — Demo</title>
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,6 +36,10 @@
       gap: 18px;
       align-items: start;
     }
+    /* Step 3: focus on preview */
+    .demo-page .shell.step-3 > .grid { grid-template-columns: 1fr; }
+    .demo-page .shell.step-3 #left-panel { display: none; }
+    .demo-page .shell.step-3 #preview-panel { display: block; }
     @media (max-width: 980px) {
       .demo-page .shell > .grid { grid-template-columns: 1fr; }
     }
@@ -104,29 +108,201 @@
       border-radius: 0;
       overflow: auto;
     }
+
+    /* Compact celebratory modal for downloads */
+    .demo-page #thanksOverlay .overlay-panel.thanks {
+      width: min(520px, 92vw);
+      height: auto;
+      grid-template-rows: auto auto auto;
+    }
+    .demo-page #thanksOverlay .overlay-header {
+      border-bottom: none;
+      padding: 10px 14px 0;
+    }
+    .demo-page #thanksOverlay .overlay-content { padding: 0 14px 6px; overflow: visible; }
+    .demo-page .celebrate { position: relative; display: grid; place-items: center; gap: 10px; padding: 6px 0 10px; }
+    .demo-page .celebrate .icon-ring {
+      width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center;
+      color: #fff; font-weight: 800; font-size: 20px;
+      background: conic-gradient(from 180deg, var(--main-violet), var(--primary-indigo));
+      box-shadow: 0 6px 18px rgba(88,92,218,.35), inset 0 0 0 1px rgba(255,255,255,.12);
+      position: relative; isolation: isolate;
+    }
+    .demo-page .icon-ring::after{ content:""; position:absolute; inset:4px; border-radius:50%; background: rgba(255,255,255,.08); }
+    .demo-page .celebrate .headline { margin: 6px 0 0; font-weight: 800; font-size: 18px; text-align:center; }
+    .demo-page .celebrate .sub { margin: 0; color: var(--muted); font-size: 14px; text-align: center; max-width: 60ch; }
+    .demo-page #thanksOverlay .overlay-footer { display:flex; gap:8px; justify-content:flex-end; align-items:center; padding: 8px 10px 12px; }
+    
+    /* Compact upload confirm modal */
+    .demo-page #uploadConfirmOverlay .overlay-panel.confirm {
+      width: min(520px, 92vw);
+      height: auto;
+      grid-template-rows: auto auto auto;
+    }
+    .demo-page #uploadConfirmOverlay .overlay-header { border-bottom: none; padding: 10px 14px 0; }
+    .demo-page #uploadConfirmOverlay .overlay-content { padding: 0 14px 6px; overflow: visible; }
+    .demo-page #uploadConfirmOverlay .overlay-footer { display:flex; gap:8px; justify-content:flex-end; align-items:center; padding: 8px 10px 12px; }
+    .demo-page .upload-summary { text-align:center; color: rgba(255,255,255,.92); margin: 0; }
+    .demo-page .upload-summary b { color: #fff; }
+    .demo-page .upload-note { text-align:center; color: var(--muted); font-size: 14px; margin: 6px 0 0; }
+
+    /* Stepper */
+    .demo-page .stepper {
+      display: flex;
+      gap: 8px;
+      margin: 8px 0 14px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .demo-page .stepper .step {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
+      color: var(--text);
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .demo-page .stepper .step[disabled] { opacity: .5; cursor: not-allowed; }
+    .demo-page .stepper .step .step-index {
+      width: 22px; height: 22px;
+      display: inline-grid; place-items: center;
+      border-radius: 50%; font-size: 12px;
+      background: rgba(255,255,255,.08);
+    }
+    .demo-page .stepper .step.is-active {
+      border-color: rgba(142,125,255,.9);
+      box-shadow: 0 0 0 2px rgba(142,125,255,.15) inset;
+    }
+    .demo-page .stepper .step.is-completed {
+      background: linear-gradient(180deg, rgba(142,125,255,.25), rgba(142,125,255,.15));
+      border-color: rgba(142,125,255,.65);
+    }
+
+    /* Wizard nav */
+    .demo-page .wizard-nav {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 16px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 12px;
+    }
+    .demo-page .wizard-nav #to-step-2[disabled],
+    .demo-page .wizard-nav #to-step-3[disabled],
+    .demo-page .inline #downloadInPreview[disabled] { opacity: .5; cursor: not-allowed; }
+    
+    /* Compact site header on demo */
+    .demo-page .site-header { 
+      backdrop-filter: blur(8px); 
+      -webkit-backdrop-filter: blur(8px);
+      background: rgba(11,13,25,0.55);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .demo-page .site-header .nav { padding: 10px 0; }
+    .demo-page .brand__logo { width: 28px; height: 28px; }
+    .demo-page .brand__name { font-size: 16px; font-weight: 700; }
+    .demo-page .nav__toggle, .demo-page .nav__links, .demo-page .nav__buy-btn { display: none !important; }
+    .demo-page .demo-back { margin-left: auto; font-size: 13px; font-weight: 700; color: #e6e6ff; text-decoration: none; padding: 6px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.06); }
+    .demo-page .demo-back:hover { background: rgba(255,255,255,0.1); border-color: var(--primary); }
+
+    /* Page intro (compact) */
+    .demo-page .page-intro { 
+      padding: 10px 0 8px; 
+      margin: 0 auto 6px; 
+      max-width: 1200px; 
+      display: grid; 
+      gap: 6px;
+    }
+    .demo-page .intro-row { display: inline-flex; align-items: center; gap: 10px; }
+    .demo-page .intro-badge { 
+      display: inline-block; padding: 4px 10px; border-radius: 999px; 
+      font-size: 12px; font-weight: 800; letter-spacing: .04em; 
+      background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); color: var(--muted);
+    }
+    .demo-page .intro-title { font-size: 18px; margin: 0; font-weight: 800; color: var(--text); }
+    .demo-page .intro-details { font-size: 13px; color: var(--muted); }
+    .demo-page .intro-details > summary { cursor: pointer; list-style: none; }
+    .demo-page .intro-details > summary::-webkit-details-marker { display: none; }
+    .demo-page .intro-details > summary::after { content: '›'; display: inline-block; transform: rotate(90deg); margin-left: 6px; opacity: .7; }
+    .demo-page .intro-details[open] > summary::after { transform: rotate(-90deg); }
   </style>
 </head>
 <body class="demo-page">
-  <header>
-    <h1>Directory Organizer — Browser‑only Demo</h1>
-    <p>Upload a folder, define name‑based rules, and download a reorganized <b>.zip</b>. Files never leave your device.</p>
+  <!-- Site Header / Nav -->
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="index.html">
+        <picture>
+          <source srcset="assets/logo.webp" type="image/webp" />
+          <img src="assets/logo.png" alt="Kalycs logo" class="brand__logo" width="40" height="40" />
+        </picture>
+        <span class="brand__name">Kalycs</span>
+      </a>
+
+      <button class="nav__toggle" aria-controls="primary-menu" aria-expanded="false">
+        <span class="sr-only">Toggle menu</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </button>
+
+      <nav id="primary-menu" class="nav__links" aria-label="Primary">
+        <div class="nav__pill">
+          <a href="index.html#main">Home</a>
+          <a href="index.html#features">Features</a>
+          <a href="blog/">Blog</a>
+          <a href="privacy.html">Privacy</a>
+        </div>
+      </nav>
+      <a class="demo-back" href="index.html">Back to Home</a>
+    </div>
+  </header>
+  <header class="page-intro" aria-labelledby="pageTitle">
+    <div class="intro-row">
+      <span class="intro-badge">Demo</span>
+      <h1 id="pageTitle" class="intro-title">Folder Organizer</h1>
+    </div>
+    <details class="intro-details">
+      <summary>How this demo works</summary>
+      <p>Upload a folder, set simple rules, then download a neatly organized <b>ZIP</b>. Everything stays on your device.</p>
+    </details>
   </header>
 
   <div class="shell">
+    <!-- Stepper -->
+    <nav class="stepper" id="stepper" aria-label="Setup steps">
+      <button class="step is-active" data-step="1" aria-current="step">
+        <span class="step-index">1</span>
+        <span class="step-label">Upload</span>
+      </button>
+      <button class="step" data-step="2">
+        <span class="step-index">2</span>
+        <span class="step-label">Rules</span>
+      </button>
+      <button class="step" data-step="3">
+        <span class="step-index">3</span>
+        <span class="step-label">Preview</span>
+      </button>
+    </nav>
+    <div class="hint" style="margin: -4px 0 12px;">
+      Reminder: Kalycs can automatically organize your files on the go.
+    </div>
     <div class="grid">
-    <section class="card">
+    <section class="card" id="left-panel">
       <!-- Tabs -->
-      <div class="tabs">
-        <button class="tab active" data-tab="upload">📁 Folder Upload</button>
-        <button class="tab" data-tab="rules">📋 Organization Rules</button>
-      </div>
+      <div class="tabs" id="legacyTabs" aria-hidden="true" style="display:none"></div>
 
       <!-- Upload Tab Content -->
       <div class="tab-content active" id="upload-tab">
-        <h2>Upload Directory</h2>
+        <h2>Upload Folder</h2>
         <div class="filebox">
-          <label for="dir">Choose a directory</label>
+          <label for="dir">Choose a folder</label>
           <input id="dir" type="file" webkitdirectory directory multiple />
+          <button class="btn secondary" id="dirPickerBtn" type="button" style="margin-top:8px; display:none">Choose a folder</button>
           <div class="stat" id="stat">No files selected.</div>
         </div>
 
@@ -136,12 +312,15 @@
           <div class="lim"><b>Max file size</b><span id="maxFileSize"></span></div>
           <div class="lim"><b>Max folder depth</b><span id="maxDepth"></span></div>
         </div>
+        <div class="wizard-nav" id="wizard-nav-1">
+          <button class="btn ghost" id="to-step-2" disabled>Next →</button>
+        </div>
       </div>
 
       <!-- Rules Tab Content -->
       <div class="tab-content" id="rules-tab">
-        <h2>Define Organization Rules</h2>
-        <p class="hint" style="margin-bottom:16px">Rules are processed in order (first match wins). Each rule belongs to a folder and defines how files should be organized.</p>
+        <h2>Set Up Rules</h2>
+        <p class="hint" style="margin-bottom:16px">Rules run top to bottom — first match wins. Each rule moves matching files into the folder you name.</p>
         
         <div class="rules" id="rules"></div>
         
@@ -151,23 +330,35 @@
         </div>
         
         <div class="toolbar" style="margin-top:20px; padding-top:20px; border-top:1px solid rgba(255,255,255,.08)">
-          <button class="btn primary" id="previewBtn"><span style="color:#fff; font-weight:700;">Preview Organization</span></button>
-          <button class="btn secondary" id="download" disabled>Download Organized .zip</button>
-          <button class="btn warn" id="reset">Reset All</button>
+          <button class="btn primary" id="previewBtn"><span style="color:#fff; font-weight:700;">Preview</span></button>
+          <button class="btn secondary" id="download" disabled>Download Organized ZIP</button>
+          <button class="btn warn" id="reset">Start Over</button>
+        </div>
+
+        <div class="wizard-nav" id="wizard-nav-2">
+          <button class="btn ghost" id="back-to-1">← Back</button>
+          <div style="flex:1"></div>
+          <button class="btn ghost" id="to-step-3" disabled>Next →</button>
         </div>
       </div>
     </section>
 
     <!-- Preview Table -->
-    <section class="card">
+    <section class="card" id="preview-panel">
       <div class="inline" style="align-items:center; justify-content: space-between;">
         <h2 style="margin:0">Preview</h2>
-        <button class="btn ghost" id="expandPreview">Expand</button>
+        <div class="inline" style="gap:8px; align-items:center;">
+          <button class="btn secondary" id="downloadInPreview" disabled>Download</button>
+          <button class="btn ghost" id="expandPreview">Expand</button>
+        </div>
       </div>
-      <div class="hint">Shows how files will be placed into target folders. Files that don't match any rules will be placed in <code class="inline">Others/</code> folder.</div>
+      <div class="hint">See where your files will land. Anything that doesn’t match a rule goes to <code class="inline">Others/</code>.</div>
       <div id="violations" class="hint" style="margin-top:8px;color:var(--danger)"></div>
       <div class="preview" id="preview"></div>
       <div id="pagination"></div>
+      <div class="wizard-nav" id="wizard-nav-3">
+        <button class="btn ghost" id="back-to-2">← Back</button>
+      </div>
     </section>
     </div>
   </div>
@@ -178,7 +369,7 @@
       <div class="overlay-header">
         <h3 class="overlay-title" id="overlayTitle">Preview</h3>
         <div class="overlay-actions">
-          <button class="btn secondary" id="downloadOverlay" disabled>Download Organized .zip</button>
+          <button class="btn secondary" id="downloadOverlay" disabled>Download Organized ZIP</button>
           <button class="btn ghost" id="closeOverlay">Close</button>
         </div>
       </div>
@@ -191,10 +382,52 @@
     </div>
   </div>
 
+  <!-- Download Thanks Overlay -->
+  <div class="preview-overlay" id="thanksOverlay" aria-hidden="true">
+    <div class="overlay-panel thanks" role="dialog" aria-modal="true" aria-labelledby="thanksTitle" aria-describedby="thanksDesc">
+      <div class="overlay-header">
+      </div>
+      <div class="overlay-content">
+        <div class="celebrate">
+          <div class="icon-ring">✓</div>
+          <p class="headline">All Organized — That Was Easy ✨</p>
+          <p id="thanksDesc" class="sub">Thanks for downloading your organized ZIP. With Kalycs, one setup is all it takes—your folders organize themselves automatically.</p>
+        </div>
+      </div>
+      <div class="overlay-footer">
+        <a class="btn ghost" href="index.html#features">Learn more</a>
+        <a class="btn primary" id="thanksCta" href="index.html#main"><span style="font-weight:700;color:#fff;">Get Kalycs</span></a>
+        <button class="btn secondary" id="thanksConfirm">Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upload Confirm Overlay -->
+  <div class="preview-overlay" id="uploadConfirmOverlay" aria-hidden="true">
+    <div class="overlay-panel confirm" role="dialog" aria-modal="true" aria-labelledby="uploadConfirmTitle" aria-describedby="uploadConfirmDesc">
+      <div class="overlay-header">
+        <h3 class="overlay-title" id="uploadConfirmTitle">Folder Added</h3>
+      </div>
+      <div class="overlay-content">
+        <div class="celebrate">
+          <div class="icon-ring" aria-hidden="true">📁</div>
+          <p id="uploadConfirmDesc" class="upload-summary">We found <b id="ucCount">0 files</b> • <b id="ucSize">0</b></p>
+          <p class="upload-note">Files stay on your device. Next, set simple rules so Kalycs can keep this folder tidy automatically.</p>
+        </div>
+        <div id="uploadViolations" class="hint" style="color:var(--danger); text-align:center;"></div>
+      </div>
+      <div class="overlay-footer">
+        <button class="btn ghost" id="ucReselect">Reselect folder</button>
+        <button class="btn primary" id="ucContinue"><span style="font-weight:700;color:#fff;">Continue</span></button>
+      </div>
+    </div>
+  </div>
+
   <footer>
     <p><b>Demo constraints</b>: in‑browser only; large folders may be slow. Works best on Chromium‑based browsers. No data is uploaded.</p>
   </footer>
 
+<script src="script.min.js"></script>
 <script>
 (function(){
   // ===== Demo Limits (tweak freely) =====
@@ -205,7 +438,7 @@
     MAX_DEPTH: 12                    // folder depth by path segments
   };
 
-  const els = {
+    const els = {
     input: document.getElementById('dir'),
     stat: document.getElementById('stat'),
     rules: document.getElementById('rules'),
@@ -213,6 +446,8 @@
     sampleRules: document.getElementById('sampleRules'),
     previewBtn: document.getElementById('previewBtn'),
     downloadBtn: document.getElementById('download'),
+    downloadInPreviewBtn: document.getElementById('downloadInPreview'),
+    dirPickerBtn: document.getElementById('dirPickerBtn'),
     resetBtn: document.getElementById('reset'),
     preview: document.getElementById('preview'),
     pagination: document.getElementById('pagination'),
@@ -223,6 +458,25 @@
     overlayPagination: document.getElementById('overlayPagination'),
     downloadOverlayBtn: document.getElementById('downloadOverlay'),
     closeOverlayBtn: document.getElementById('closeOverlay'),
+    uploadConfirmOverlay: document.getElementById('uploadConfirmOverlay'),
+    ucContinueBtn: document.getElementById('ucContinue'),
+    ucReselectBtn: document.getElementById('ucReselect'),
+    ucCount: document.getElementById('ucCount'),
+    ucSize: document.getElementById('ucSize'),
+    uploadViolations: document.getElementById('uploadViolations'),
+    thanksOverlay: document.getElementById('thanksOverlay'),
+    closeThanksBtn: document.getElementById('closeThanks'),
+    thanksConfirmBtn: document.getElementById('thanksConfirm'),
+    stepper: document.getElementById('stepper'),
+    shell: document.querySelector('.shell'),
+    leftPanel: document.getElementById('left-panel'),
+    previewPanel: document.getElementById('preview-panel'),
+    uploadTab: document.getElementById('upload-tab'),
+    rulesTab: document.getElementById('rules-tab'),
+    next1: document.getElementById('to-step-2'),
+    back2: document.getElementById('back-to-1'),
+    next2: document.getElementById('to-step-3'),
+    back3: document.getElementById('back-to-2'),
     // progress elements removed in UX simplification
     bar: document.getElementById('bar'),
     progLabel: document.getElementById('progLabel'),
@@ -239,6 +493,14 @@
   els.maxFileSize.textContent = ` ${(LIMITS.MAX_FILE_BYTES/1024/1024)|0} MB`;
   els.maxDepth.textContent = ` ${LIMITS.MAX_DEPTH} levels`;
 
+  // Prefer File System Access API (Chromium) to avoid browser multi-file prompt
+  if (window.showDirectoryPicker && els.dirPickerBtn) {
+    els.dirPickerBtn.style.display = '';
+    const fileLabel = document.querySelector('label[for="dir"]');
+    if (fileLabel) fileLabel.style.display = 'none';
+    if (els.input) els.input.style.display = 'none';
+  }
+
   // State
   let pickedFiles = [];   // [{file, relPath, base, size, depth}]
   let rules = [];
@@ -250,6 +512,7 @@
   function updateDownloadButtons(){
     const ready = !!lastPlan;
     if(els.downloadBtn) els.downloadBtn.disabled = !ready;
+    if(els.downloadInPreviewBtn) els.downloadInPreviewBtn.disabled = !ready;
     if(els.downloadOverlayBtn) els.downloadOverlayBtn.disabled = !ready;
   }
 
@@ -298,6 +561,69 @@
   document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => switchTab(tab.dataset.tab));
   });
+
+  // ===== Wizard Stepper =====
+  let currentStep = 1;
+  function setStepperUI() {
+    if(!els.stepper) return;
+    els.stepper.querySelectorAll('.step').forEach((btn) => {
+      const s = Number(btn.dataset.step);
+      btn.classList.toggle('is-active', s === currentStep);
+      btn.classList.toggle('is-completed', s < currentStep);
+      btn.setAttribute('aria-current', s === currentStep ? 'step' : 'false');
+    });
+  }
+  function renderStep() {
+    // Toggle panels based on step
+    if(currentStep === 1){
+      if(typeof closeOverlay === 'function') try{ closeOverlay(); }catch(_){/*noop*/}
+      if(els.shell) els.shell.classList.remove('step-3');
+      if(els.uploadTab) els.uploadTab.classList.add('active');
+      if(els.rulesTab) els.rulesTab.classList.remove('active');
+      if(els.previewPanel) els.previewPanel.style.display = 'none';
+    }
+    if(currentStep === 2){
+      if(typeof closeOverlay === 'function') try{ closeOverlay(); }catch(_){/*noop*/}
+      if(els.shell) els.shell.classList.remove('step-3');
+      if(els.uploadTab) els.uploadTab.classList.remove('active');
+      if(els.rulesTab) els.rulesTab.classList.add('active');
+      if(els.previewPanel) els.previewPanel.style.display = 'none';
+    }
+    if(currentStep === 3){
+      if(els.shell) els.shell.classList.add('step-3');
+      if(els.previewPanel) els.previewPanel.style.display = '';
+      // Ensure preview exists
+      const v = validateSelection();
+      els.violations.textContent = v.ok ? '' : ('⚠ ' + v.errors.join(' | '));
+      rebuildRulesFromDOM();
+      if(v.ok && rules.length > 0){
+        if(!lastPlan) planPreview();
+      }
+      updateDownloadButtons();
+    }
+    setStepperUI();
+  }
+  function goToStep(step){
+    const s = Math.max(1, Math.min(3, Number(step)||1));
+    if(s === 3){
+      const v = validateSelection();
+      rebuildRulesFromDOM();
+      if(!v.ok || rules.length === 0){
+        els.violations.textContent = v.ok ? 'Add one or more rules to preview.' : ('⚠ ' + v.errors.join(' | '));
+        return; // block going to preview without prerequisites
+      }
+    }
+    currentStep = s;
+    renderStep();
+  }
+  // Stepper click navigation
+  if(els.stepper){
+    els.stepper.addEventListener('click', (e)=>{
+      const btn = e.target.closest('.step');
+      if(!btn) return;
+      goToStep(Number(btn.dataset.step));
+    });
+  }
 
   function addRuleRow(rule={type:'contains', pattern:'', target:''}){
     const card = document.createElement('div');
@@ -485,6 +811,7 @@
         target: tgt ? tgt.value.trim() : '' 
       };
     }).filter(r => r.pattern && r.target);
+    if(els.next2) els.next2.disabled = !(rules.length > 0);
   }
 
   function countDepth(relPath){
@@ -570,7 +897,7 @@
     // Add unmatched files info
     if(unmatchedCount > 0) {
       html += `<div style="margin-top:8px; padding:8px; background:rgba(255,93,93,.1); border:1px solid rgba(255,93,93,.2); border-radius:8px; font-size:12px; color:var(--danger)">`;
-      html += `⚠️ ${unmatchedCount} file${unmatchedCount === 1 ? '' : 's'} will be placed in <strong>Others/</strong> folder (no matching rules)`;
+      html += `⚠️ Heads up: ${unmatchedCount} file${unmatchedCount === 1 ? '' : 's'} will go to <strong>Others/</strong> (no matching rule)`;
       html += '</div>';
     }
 
@@ -666,15 +993,93 @@
       compressionOptions: { level: 6 }
     }, (metadata)=>{
       const pct = 5 + metadata.percent * 0.95; // 5% -> 100%
-      setProgress(pct, 'Generating .zip…');
+      setProgress(pct, 'Generating ZIP…');
     });
 
-    saveAs(blob, 'organized.zip');
+    // Prefer File System Access API (Chromium) to avoid the download shelf UI
+    if (window.showSaveFilePicker) {
+      try {
+        const handle = await window.showSaveFilePicker({
+          suggestedName: 'organized.zip',
+          types: [{ description: 'ZIP archive', accept: { 'application/zip': ['.zip'] } }]
+        });
+        const writable = await handle.createWritable();
+        await writable.write(blob);
+        await writable.close();
+      } catch (err) {
+        // Fallback to traditional download if user cancels or API fails
+        saveAs(blob, 'organized.zip');
+      }
+    } else {
+      // Fallback for non-Chromium browsers
+      saveAs(blob, 'organized.zip');
+    }
     setProgress(100, 'Done');
+    try { openThanksOverlay(); } catch(_){}
   }
 
   // ===== Event wiring =====
-    els.input.addEventListener('change', (e)=>{
+  if (els.dirPickerBtn && window.showDirectoryPicker) {
+    els.dirPickerBtn.addEventListener('click', async ()=>{
+      try {
+        const dirHandle = await window.showDirectoryPicker({ mode: 'read' });
+        const gathered = [];
+        async function walkDirectory(handle, prefix=''){
+          for await (const [name, child] of handle.entries()){
+            if (child.kind === 'file'){
+              const f = await child.getFile();
+              const rel = prefix + name;
+              gathered.push({
+                file: f,
+                relPath: rel,
+                base: name,
+                size: f.size,
+                depth: rel.split('/').length - 1
+              });
+              if (gathered.length >= LIMITS.MAX_FILES) return; // respect max files
+            } else if (child.kind === 'directory'){
+              await walkDirectory(child, prefix + name + '/');
+              if (gathered.length >= LIMITS.MAX_FILES) return;
+            }
+          }
+        }
+        await walkDirectory(dirHandle, '');
+
+        // Apply selection (mirrors <input> handler)
+        pickedFiles = gathered;
+        const total = pickedFiles.reduce((a,b)=>a+b.size,0);
+        els.stat.textContent = `${pickedFiles.length} files • ${bytes(total)}`;
+
+        const v = validateSelection();
+        els.violations.textContent = v.ok ? '' : ('⚠ ' + v.errors.join(' | '));
+
+        setProgress(0, 'Idle');
+        lastPlan = null;
+        updateDownloadButtons();
+        els.preview.innerHTML = '';
+        els.pagination.innerHTML = '';
+        currentFilter = null;
+        currentPage = 1;
+
+        const ok = validateSelection();
+        if(els.next1) els.next1.disabled = !(pickedFiles.length > 0 && ok.ok);
+        currentStep = 1;
+        renderStep();
+
+        if(pickedFiles.length > 0) {
+          try { openUploadConfirmOverlay(); } catch(_){}
+          rebuildRulesFromDOM();
+          if(rules.length > 0) {
+            planPreview();
+            updateDownloadButtons();
+          }
+        }
+      } catch (err) {
+        // User cancelled or API failed; do nothing
+      }
+    });
+  }
+  els.input.addEventListener('change', (e)=>{
     const list = Array.from(e.target.files||[]);
     pickedFiles = list.map(f=>{
       const rel = f.webkitRelativePath || f.name; // name when single file
@@ -689,6 +1094,7 @@
 
     const total = pickedFiles.reduce((a,b)=>a+b.size,0);
     els.stat.textContent = `${pickedFiles.length} files • ${bytes(total)}`;
+    
 
     const v = validateSelection();
     els.violations.textContent = v.ok ? '' : ('⚠ ' + v.errors.join(' | '));
@@ -701,9 +1107,18 @@
     currentFilter = null;
     currentPage = 1;
     
-    // Ensure upload tab stays visible after selection
-    switchTab('upload');
-    
+    // Enable next if selection valid
+    const ok = validateSelection();
+    if(els.next1) els.next1.disabled = !(pickedFiles.length > 0 && ok.ok);
+    // Stay on Step 1 after selection
+    currentStep = 1;
+    renderStep();
+
+    // Open upload confirmation modal
+    if(pickedFiles.length > 0) {
+      try { openUploadConfirmOverlay(); } catch(_){}
+    }
+
     // Auto-generate preview if we have rules and files
     if(pickedFiles.length > 0) {
       rebuildRulesFromDOM();
@@ -729,6 +1144,7 @@
       {type:'contains', pattern:'invoice, receipt, bill', target:'Finance'},
       {type:'contains', pattern:'screenshot, capture, snap', target:'Screenshots'}
     ].forEach(addRuleRow);
+    try { if (window.showToast) window.showToast('Sample rules added', { type: 'success' }); } catch(_){}
   });
 
   els.previewBtn.addEventListener('click', ()=>{
@@ -738,7 +1154,7 @@
 
     rebuildRulesFromDOM();
     if(!rules.length){
-      els.violations.textContent = 'Add at least one rule to preview.';
+      els.violations.textContent = 'Add one or more rules to preview.';
       setProgress(0,'Awaiting rules');
       return;
     }
@@ -746,7 +1162,10 @@
     setProgress(5, 'Planning…');
     planPreview();
     setProgress(10, 'Ready to zip');
+    try { if (window.showToast) window.showToast('Preview ready — looks good? Download your ZIP.', { type: 'info' }); } catch(_){}
     updateDownloadButtons();
+    // If user is on step 2, advance to step 3 after preview
+    if(currentStep === 2) goToStep(3);
   });
 
   els.downloadBtn.addEventListener('click', ()=>{
@@ -756,6 +1175,12 @@
 
   if(els.downloadOverlayBtn){
     els.downloadOverlayBtn.addEventListener('click', ()=>{
+      if(!lastPlan){ setProgress(0,'Preview first'); return; }
+      buildZip();
+    });
+  }
+  if(els.downloadInPreviewBtn){
+    els.downloadInPreviewBtn.addEventListener('click', ()=>{
       if(!lastPlan){ setProgress(0,'Preview first'); return; }
       buildZip();
     });
@@ -775,6 +1200,9 @@
     els.rules.innerHTML='';
     setProgress(0,'Idle');
     updateDownloadButtons();
+    if(els.next1) els.next1.disabled = true;
+    if(els.next2) els.next2.disabled = true;
+    goToStep(1);
   });
 
   // Filter and pagination functions
@@ -803,6 +1231,25 @@
 
   // Seed one blank row
   addRuleRow();
+
+  // Wizard nav buttons
+  if(els.next1){ els.next1.addEventListener('click', ()=> goToStep(2)); }
+  if(els.back2){ els.back2.addEventListener('click', ()=> goToStep(1)); }
+  if(els.next2){ els.next2.addEventListener('click', ()=>{
+    // Trigger preview first, then step 3 (previewBtn handler will advance)
+    els.previewBtn.click();
+  }); }
+  if(els.back3){ els.back3.addEventListener('click', ()=> goToStep(2)); }
+
+  // Enable/disable Step 2 -> Step 3 button based on rules
+  const observeRulesValidity = new MutationObserver(()=>{
+    rebuildRulesFromDOM();
+    if(els.next2) els.next2.disabled = !(rules.length > 0);
+  });
+  if(els.rules){ observeRulesValidity.observe(els.rules, { childList: true, subtree: true, characterData: true }); }
+
+  // Initialize on Step 1 and hide preview area
+  goToStep(1);
   
   // ===== Overlay wiring =====
   function openOverlay(){
@@ -821,7 +1268,64 @@
   if(els.expandPreviewBtn){ els.expandPreviewBtn.addEventListener('click', openOverlay); }
   if(els.closeOverlayBtn){ els.closeOverlayBtn.addEventListener('click', closeOverlay); }
   if(els.overlay){ els.overlay.addEventListener('click', (e)=>{ if(e.target === els.overlay) closeOverlay(); }); }
-  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeOverlay(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') { closeOverlay(); closeThanksOverlay(); try{ closeUploadConfirmOverlay(); }catch(_){/*noop*/} } });
+
+  // ===== Thanks overlay wiring =====
+  function openThanksOverlay(){
+    if(!els.thanksOverlay) return;
+    els.thanksOverlay.classList.add('is-open');
+    els.thanksOverlay.setAttribute('aria-hidden','false');
+    document.body.classList.add('no-scroll');
+    // Focus primary CTA for accessibility
+    const btn = document.getElementById('thanksCta') || els.thanksConfirmBtn;
+    if(btn) try{ btn.focus(); }catch(_){/*noop*/}
+  }
+  function closeThanksOverlay(){
+    if(!els.thanksOverlay) return;
+    els.thanksOverlay.classList.remove('is-open');
+    els.thanksOverlay.setAttribute('aria-hidden','true');
+    document.body.classList.remove('no-scroll');
+  }
+  if(els.thanksConfirmBtn){ els.thanksConfirmBtn.addEventListener('click', closeThanksOverlay); }
+  if(els.thanksOverlay){ els.thanksOverlay.addEventListener('click', (e)=>{ if(e.target === els.thanksOverlay) closeThanksOverlay(); }); }
+
+  // ===== Upload Confirm overlay wiring =====
+  function openUploadConfirmOverlay(){
+    if(!els.uploadConfirmOverlay) return;
+    const total = pickedFiles.reduce((a,b)=>a+b.size,0);
+    if(els.ucCount) els.ucCount.textContent = `${pickedFiles.length} file${pickedFiles.length===1?'':'s'}`;
+    if(els.ucSize) els.ucSize.textContent = bytes(total);
+    const v = validateSelection();
+    if(els.uploadViolations) els.uploadViolations.textContent = v.ok ? '' : ('⚠ ' + v.errors.join(' | '));
+    if(els.ucContinueBtn) els.ucContinueBtn.disabled = !v.ok;
+    els.uploadConfirmOverlay.classList.add('is-open');
+    els.uploadConfirmOverlay.setAttribute('aria-hidden','false');
+    document.body.classList.add('no-scroll');
+  }
+  function closeUploadConfirmOverlay(){
+    if(!els.uploadConfirmOverlay) return;
+    els.uploadConfirmOverlay.classList.remove('is-open');
+    els.uploadConfirmOverlay.setAttribute('aria-hidden','true');
+    document.body.classList.remove('no-scroll');
+  }
+  if(els.uploadConfirmOverlay){ els.uploadConfirmOverlay.addEventListener('click', (e)=>{ if(e.target === els.uploadConfirmOverlay) closeUploadConfirmOverlay(); }); }
+  if(els.ucContinueBtn){ els.ucContinueBtn.addEventListener('click', ()=>{ closeUploadConfirmOverlay(); goToStep(2); }); }
+  if(els.ucReselectBtn){ els.ucReselectBtn.addEventListener('click', ()=>{
+    closeUploadConfirmOverlay();
+    // Clear selection but keep rules intact
+    els.input.value = '';
+    pickedFiles = [];
+    lastPlan = null;
+    currentFilter = null;
+    currentPage = 1;
+    els.stat.textContent = 'No files selected.';
+    els.violations.textContent = '';
+    els.preview.innerHTML = '';
+    els.pagination.innerHTML = '';
+    updateDownloadButtons();
+    goToStep(1);
+    try{ els.input.focus(); setTimeout(()=>els.input.click(), 60); }catch(_){/*noop*/}
+  }); }
 })();
 </script>
 </body>
