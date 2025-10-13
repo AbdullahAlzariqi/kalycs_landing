@@ -22,7 +22,8 @@
       "Bash(do sed -i '' 's|<picture><source srcset=\"\"\\.\\./assets/logo\\.webp\"\" type=\"\"image/webp\"\" /><img src=\"\"\\.\\./assets/logo\\.png\"\" width=\"\"40\"\" height=\"\"40\"\" alt=\"\"Kalycs logo\"\" class=\"\"brand__logo\"\" />|<picture><source srcset=\"\"../assets/logo.webp\"\" type=\"\"image/webp\"\" /><img src=\"\"../assets/logo.png\"\" width=\"\"40\"\" height=\"\"40\"\" alt=\"\"Kalycs logo\"\" class=\"\"brand__logo\"\" /></picture>|g; s|<picture><source srcset=\"\"\\.\\./assets/logo\\.webp\"\" type=\"\"image/webp\"\" /><img src=\"\"\\.\\./assets/logo\\.png\"\" width=\"\"40\"\" height=\"\"40\"\" alt=\"\"Kalycs logo\"\" class=\"\"brand__logo small\"\" loading=\"\"lazy\"\" decoding=\"\"async\"\" />|<picture><source srcset=\"\"../assets/logo.webp\"\" type=\"\"image/webp\"\" /><img src=\"\"../assets/logo.png\"\" width=\"\"40\"\" height=\"\"40\"\" alt=\"\"Kalycs logo\"\" class=\"\"brand__logo small\"\" loading=\"\"lazy\"\" decoding=\"\"async\"\" /></picture>|g' \"$file\")",
       "Bash(npx purgecss:*)",
       "Bash(npm install:*)",
-      "Bash(csso:*)"
+      "Bash(csso:*)",
+      "Bash(sips:*)"
     ],
     "deny": [],
     "ask": []
