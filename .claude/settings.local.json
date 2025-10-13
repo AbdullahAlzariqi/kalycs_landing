@@ -23,7 +23,8 @@
       "Bash(npx purgecss:*)",
       "Bash(npm install:*)",
       "Bash(csso:*)",
-      "Bash(sips:*)"
+      "Bash(sips:*)",
+      "Bash(mv:*)"
     ],
     "deny": [],
     "ask": []
