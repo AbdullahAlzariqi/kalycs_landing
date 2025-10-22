@@ -2194,3 +2194,97 @@ a[href^="mailto:"]:hover {
   border-radius: .4em;
   border: 1px solid rgba(255,255,255,.08);
 }
+
+/* Demo Video Section */
+.section.demo-video {
+  padding: clamp(40px, 6vw, 96px) 0;
+}
+
+.demo-video__header {
+  text-align: center;
+  margin-bottom: clamp(32px, 5vw, 56px);
+  position: relative;
+}
+
+.demo-video__title {
+  font-family: 'Space Grotesk', var(--font-manrope);
+  font-size: clamp(28px, 4.5vw, 52px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text);
+  position: relative;
+  display: inline-block;
+}
+
+.demo-video__quote {
+  font-family: 'Voces', cursive;
+  font-size: 1.3em;
+  color: var(--color-primary-600);
+  opacity: 0.5;
+  position: relative;
+  top: -0.1em;
+}
+
+.demo-video__highlight {
+  background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-600) 50%, var(--color-primary-700) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  font-weight: 700;
+}
+
+.demo-video__highlight::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--color-primary-500) 20%,
+    var(--color-primary-600) 50%,
+    var(--color-primary-700) 80%,
+    transparent 100%
+  );
+  opacity: 0.6;
+  border-radius: 2px;
+}
+
+.demo-video .video-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 24px;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(88, 92, 218, 0.1) 0%, rgba(130, 133, 227, 0.05) 100%);
+  padding: 3px;
+  position: relative;
+}
+
+.demo-video .video-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 2px;
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600), var(--color-primary-700));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.demo-video video {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 24px;
+  background: var(--color-neutral-200);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+              0 0 80px rgba(88, 92, 218, 0.15);
+}

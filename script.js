@@ -809,3 +809,25 @@
     trackClick('thanks-roadmap', 'roadmap');
   });
 })();
+
+// Demo video autoplay on scroll into view
+(function() {
+  const video = document.querySelector('.demo-video-player');
+  if (!video) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        video.play().catch(() => {
+          // Autoplay might be blocked, that's okay
+        });
+      } else {
+        video.pause();
+      }
+    });
+  }, {
+    threshold: 0.5 // Play when 50% of the video is visible
+  });
+
+  observer.observe(video);
+})();
