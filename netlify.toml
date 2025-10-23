@@ -22,12 +22,14 @@
 [[headers]]
   for = "/*.css"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    # CSS changes frequently and files are not fingerprinted, so force revalidation
+    Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
   for = "/*.js"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    # JS bundles are also unfingerprinted; avoid stale caches between deploys
+    Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
   for = "/*.woff2"
