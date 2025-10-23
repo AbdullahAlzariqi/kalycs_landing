@@ -815,19 +815,63 @@
   const video = document.querySelector('.demo-video-player');
   if (!video) return;
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        video.play().catch(() => {
-          // Autoplay might be blocked, that's okay
-        });
-      } else {
-        video.pause();
-      }
-    });
-  }, {
-    threshold: 0.5 // Play when 50% of the video is visible
-  });
+  // Ensure attributes are in sync even if the HTML is modified by JS
+  video.muted = true;
+  video.setAttribute('muted', '');
+  video.setAttribute('playsinline', '');
+  video.setAttribute('autoplay', '');
 
-  observer.observe(video);
+  const playVideo = () => {
+    if (video.paused) {
+      video.play().catch(() => {
+        // Autoplay might be blocked — nothing to do
+      });
+    }
+  };
+
+  const pauseVideo = () => {
+    if (!video.paused) {
+      video.pause();
+    }
+  };
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          playVideo();
+        } else {
+          pauseVideo();
+        }
+      });
+    }, {
+      threshold: 0.5 // Play when 50% of the video is visible
+    });
+
+    observer.observe(video);
+  } else {
+    // Fallback for browsers without IntersectionObserver
+    const checkVisibility = () => {
+      const rect = video.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      const visibleHeight = Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0);
+      const isVisible = visibleHeight > 0 && visibleHeight / rect.height >= 0.5;
+      if (isVisible) {
+        playVideo();
+      } else {
+        pauseVideo();
+      }
+    };
+
+    ['scroll', 'resize'].forEach(evt => {
+      window.addEventListener(evt, checkVisibility, { passive: true });
+    });
+    checkVisibility();
+  }
+
+  if (video.readyState >= 2) {
+    playVideo();
+  } else {
+    video.addEventListener('canplay', playVideo, { once: true });
+  }
 })();
