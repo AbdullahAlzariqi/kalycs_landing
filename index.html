@@ -114,7 +114,7 @@
     <link rel="stylesheet" href="bento.overrides.css">
 
     <!-- Manrope + Sono + Voces fonts - load non-blocking with font-display:swap -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sono:wght@400;600;700&family=Voces:wght@400&family=Space+Grotesk:wght@500;600;700&display=swap&text=" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sono:wght@400;600;700&family=Voces:wght@400&family=Space+Grotesk:wght@500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sono:wght@400;600;700&family=Voces:wght@400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     </noscript>
@@ -361,7 +361,8 @@
               muted
               loop
               playsinline
-              preload="metadata"
+              autoplay
+              preload="auto"
               aria-label="Kalycs semantic search demonstration">
               <source src="assets/demo/Kalycs_semantic_search_demo.mp4" type="video/mp4">
               Your browser does not support the video tag.
