@@ -237,6 +237,23 @@ a[href^="mailto:"]:hover {
   border-color: rgba(88,92,218,0.25);
 }
 
+/* External links in policy sections */
+.policy-block a[href^="https://"],
+.policy-block a[href^="http://"] {
+  color: var(--primary);
+  text-decoration: none;
+  position: relative;
+  font-weight: 600;
+  padding: 1px 0;
+  border-bottom: 1px solid rgba(88,92,218,0.4);
+  transition: all 0.2s ease;
+}
+.policy-block a[href^="https://"]:hover,
+.policy-block a[href^="http://"]:hover {
+  color: var(--color-primary-600);
+  border-bottom-color: var(--color-primary-600);
+}
+
 /* Header */
 .site-header {
   position: sticky;
