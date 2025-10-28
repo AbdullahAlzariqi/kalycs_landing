@@ -685,44 +685,66 @@ a[href^="mailto:"]:hover {
 
 /* Features (enhanced cards) */
 .features__title { margin: 8px 0 24px; }
-.features-grid { display: grid; gap: 28px; align-items: stretch; }
-@media (min-width: 860px){ .features-grid{ grid-template-columns: repeat(3, 1fr); } }
+.features-grid { display: grid; gap: 20px; align-items: stretch; }
+@media (min-width: 860px){ .features-grid{ grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1200px){ .features-grid{ grid-template-columns: repeat(3, 1fr); } }
 
 .feature-card{
   position: relative;
-  background:
-    linear-gradient(180deg, rgba(130,133,227,.06), rgba(88,92,218,.04) 18%, transparent 52%),
-    linear-gradient(180deg, var(--surface), #0E0F14);
-  border: 1px solid #242231;
+  background: var(--surface);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: var(--radius-3xl);
-  box-shadow: var(--shadow);
-  padding: 28px;
-  min-height: 300px;
+  box-shadow: none;
+  padding: 24px;
+  min-height: 260px;
   overflow: hidden;
   isolation: isolate;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 16px;
+  gap: 14px;
   contain: layout style paint;
 }
-.feature-card::after{
-  content: "";
-  position: absolute; inset: auto -40% -40% -40%;
-  height: 120px;
-  background: radial-gradient(60% 120% at 50% 0%, rgba(88,92,218,.12), transparent 70%);
-  filter: blur(18px);
-  z-index: -1;
-}
+.feature-card::after{ content: none; }
 .feature-card h3{ margin: 6px 0 4px; font-size: clamp(18px, 2.2vw, 22px); font-weight: 800; letter-spacing: .005em; }
 .feature-card p{ margin: 0; font-size: 16px; line-height: 1.7; color: var(--muted); }
 .feature-card:hover{ border-color:#2A2E3F; transform: translateY(-1px); transition: transform .2s ease, border-color .2s ease; }
+
+.feature-card__header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
 
 .badge{
   display:inline-grid; place-items:center; width:40px; height:40px; border-radius:12px;
   background: linear-gradient(180deg, var(--color-primary-600), var(--primary));
   color:#fff; font-weight:800; font-size:18px;
   box-shadow: 0 6px 14px rgba(88,92,218,.35), inset 0 0 0 1px rgba(255,255,255,.12);
+  flex-shrink: 0;
+}
+
+.done-badge{
+  display:inline-grid; place-items:center;
+  height:20px;
+  padding: 0 8px;
+  border-radius:999px;
+  background: rgba(52,211,153,.12);
+  color: #34d399;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid rgba(52,211,153,.25);
+}
+
+/* Visually dim completed items for hierarchy */
+#roadmap .features-grid > article:nth-child(-n+3){
+  opacity: 0.85;
+}
+#roadmap .features-grid > article:nth-child(-n+3) p{
+  color: #9aa3b2;
 }
 
 /* Search demo inside Card 1 */
