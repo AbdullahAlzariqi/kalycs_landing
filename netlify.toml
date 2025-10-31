@@ -65,7 +65,9 @@
   to = "/thanksSubscriber.html"
   status = 200
 
+# OAuth callback: use 301 redirect to preserve hash fragment
 [[redirects]]
   from = "/auth/callback"
   to = "/oauth.html"
-  status = 200
+  status = 301
+  force = true
