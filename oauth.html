@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- OAuth callback page -->
+        <!-- To map /auth/callback to this page on Netlify, add to netlify.toml:
+       [[redirects]]
+         from = "/auth/callback"
+         to = "/oauth.html"
+         status = 200
+  -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Authenticating…</title>
+        <meta
+            name="description"
+            content="Completing your sign-in. You can close this window when finished."
+        />
+        <meta name="robots" content="noindex, nofollow" />
+        <meta http-equiv="Referrer-Policy" content="no-referrer" />
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; base-uri 'self'"
+        />
+
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            sizes="any"
+            href="/assets/favicon.svg"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="48x48"
+            href="/assets/favicon-48x48.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/assets/favicon-32x32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/assets/favicon-16x16.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/assets/apple-touch-icon.png"
+        />
+
+        <!-- Parse and strip OAuth params (query/hash) ASAP to avoid leaking them via referrers -->
+        <script>
+            (function () {
+                "use strict";
+                try {
+                    var rawQuery = window.location.search || "";
+                    var rawHash = window.location.hash || "";
+
+                    function parseParams(str) {
+                        if (!str) return {};
+                        if (str[0] === "?" || str[0] === "#")
+                            str = str.slice(1);
+                        var out = {};
+                        try {
+                            var usp = new URLSearchParams(str);
+                            usp.forEach(function (value, key) {
+                                out[key] = value;
+                            });
+                        } catch (_e) {
+                            // Fallback simple parser
+                            str.split("&").forEach(function (part) {
+                                if (!part) return;
+                                var kv = part.split("=");
+                                var k = decodeURIComponent(kv[0] || "");
+                                var v = decodeURIComponent(kv[1] || "");
+                                if (k) out[k] = v;
+                            });
+                        }
+                        return out;
+                    }
+
+                    var queryParams = parseParams(rawQuery);
+                    var hashParams = parseParams(rawHash);
+                    var merged = Object.assign({}, queryParams, hashParams);
+
+                    // Whitelist known OAuth/OIDC response parameters
+                    var allowedKeys = [
+                        "code",
+                        "state",
+                        "error",
+                        "error_description",
+                        "access_token",
+                        "id_token",
+                        "token_type",
+                        "expires_in",
+                        "scope",
+                        "session_state",
+                    ];
+                    var safe = {};
+                    allowedKeys.forEach(function (k) {
+                        if (Object.prototype.hasOwnProperty.call(merged, k)) {
+                            safe[k] = merged[k];
+                        }
+                    });
+
+                    // Store temporarily for later script (do not expose to DOM)
+                    try {
+                        sessionStorage.setItem(
+                            "oauth_result",
+                            JSON.stringify(safe),
+                        );
+                    } catch (_e) {}
+
+                    // Strip query/hash from URL
+                    try {
+                        var url = new URL(window.location.href);
+                        url.search = "";
+                        url.hash = "";
+                        window.history.replaceState(
+                            {},
+                            document.title,
+                            url.toString(),
+                        );
+                    } catch (_e) {}
+                } catch (_e) {
+                    // Non-fatal; UI will reflect uncertainty.
+                }
+            })();
+        </script>
+
+        <!-- Site styles -->
+        <link
+            rel="stylesheet"
+            href="styles.min.css"
+            media="print"
+            onload="this.media='all'; this.onload=null;"
+        />
+        <noscript><link rel="stylesheet" href="styles.min.css" /></noscript>
+        <link rel="stylesheet" href="styles.laptop.css" />
+    </head>
+    <body class="oauth-page">
+        <header class="site-header">
+            <div class="container nav">
+                <a
+                    class="brand"
+                    href="index.html#main"
+                    aria-label="Go to homepage"
+                >
+                    <picture>
+                        <source srcset="assets/logo.webp" type="image/webp" />
+                        <img
+                            src="assets/logo.png"
+                            alt="Kalycs logo"
+                            class="brand__logo"
+                            width="40"
+                            height="40"
+                        />
+                    </picture>
+                    <span class="brand__name">Kalycs</span>
+                </a>
+            </div>
+        </header>
+
+        <main id="main">
+            <section
+                class="section text-center"
+                style="padding-top: 4rem; padding-bottom: 4rem"
+            >
+                <div class="container" role="status" aria-live="polite">
+                    <h1 class="h2" id="status-title">Completing sign-in…</h1>
+                    <p class="lead" id="status-desc" style="text-align: center; margin: 0.75rem auto 0;">Please wait a moment.</p>
+
+                    <pre
+                        id="details"
+                        class="tiny muted"
+                        hidden
+                        style="
+                            text-align: left;
+                            margin: 1rem auto;
+                            max-width: 40rem;
+                            white-space: pre-wrap;
+                        "
+                    ></pre>
+
+                    <div class="thanks-actions" style="margin-top: 1.5rem">
+                        <button
+                            class="btn btn--primary"
+                            type="button"
+                            id="close-btn"
+                        >
+                            Close this window
+                        </button>
+                        <a
+                            class="btn btn--ghost"
+                            href="index.html"
+                            id="home-link"
+                            >Back to Home</a
+                        >
+                    </div>
+
+                    <noscript>
+                        <p class="tiny muted" style="margin-top: 1rem">
+                            JavaScript is required to complete authentication.
+                            Please enable JavaScript and try again.
+                        </p>
+                    </noscript>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <div class="container footer">
+                <div class="footer__left">
+                    <img
+                        src="assets/logo.png"
+                        alt="Kalycs logo"
+                        class="brand__logo small"
+                        loading="lazy"
+                        decoding="async"
+                    />
+                    <span>© <span id="year"></span> Kalycs</span>
+                </div>
+                <div class="footer__right">
+                    <a href="privacy.html" class="footer__link">Privacy</a>
+                    <a href="terms.html" class="footer__link">Terms of Use</a>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            (function () {
+                "use strict";
+
+                // Helpers
+                function mask(val) {
+                    if (!val) return "";
+                    var len = val.length;
+                    if (len <= 8) return "••••";
+                    return val.slice(0, 4) + "••••" + val.slice(-4);
+                }
+                function setText(id, txt) {
+                    var el = document.getElementById(id);
+                    if (el) el.textContent = txt || "";
+                }
+
+                // Footer year
+                var y = document.getElementById("year");
+                if (y) y.textContent = String(new Date().getFullYear());
+
+                // Close handler
+                var closeBtn = document.getElementById("close-btn");
+                if (closeBtn) {
+                    closeBtn.addEventListener("click", function () {
+                        try {
+                            // Try to close if window was opened by script
+                            if (window.opener || window.history.length <= 1) {
+                                window.close();
+                                // Fallback: if close doesn't work, redirect to homepage
+                                setTimeout(function () {
+                                    window.location.href = "index.html";
+                                }, 100);
+                            } else {
+                                // If we can't close, redirect to homepage
+                                window.location.href = "index.html";
+                            }
+                        } catch (_e) {
+                            // If anything fails, redirect to homepage
+                            window.location.href = "index.html";
+                        }
+                    });
+                }
+
+                // Load parsed OAuth data
+                var data = null;
+                try {
+                    var raw = sessionStorage.getItem("oauth_result");
+                    if (raw) data = JSON.parse(raw);
+                } catch (_e) {
+                    // ignore
+                }
+
+                var isError = !!(
+                    data &&
+                    (data.error || data.error_description)
+                );
+                var hasCode = !!(data && data.code);
+                var hasToken = !!(data && (data.access_token || data.id_token));
+
+                if (isError) {
+                    document.documentElement.classList.add("oauth-error");
+                    setText("status-title", "Authentication failed");
+                    var msg = "An error occurred while authenticating.";
+                    if (data.error) msg += " (" + data.error + ")";
+                    setText("status-desc", msg);
+
+                    var details = document.getElementById("details");
+                    if (details) {
+                        var lines = [];
+                        if (data.error) lines.push("error=" + data.error);
+                        if (data.error_description)
+                            lines.push(
+                                "error_description=" + data.error_description,
+                            );
+                        if (data.state) lines.push("state=" + mask(data.state));
+                        details.textContent = lines.join("\n");
+                        details.hidden = false;
+                    }
+                } else if (hasCode || hasToken) {
+                    setText("status-title", "Authentication complete");
+                    setText("status-desc", "You can close this window.");
+                } else {
+                    setText(
+                        "status-title",
+                        "Awaiting authentication response…",
+                    );
+                    setText(
+                        "status-desc",
+                        "If you were not redirected here after signing in, you can safely close this window.",
+                    );
+                }
+
+                // Prepare payload (full values; do not render to DOM)
+                var payload = {};
+                if (data) {
+                    [
+                        "code",
+                        "state",
+                        "error",
+                        "error_description",
+                        "access_token",
+                        "id_token",
+                        "token_type",
+                        "expires_in",
+                        "scope",
+                        "session_state",
+                    ].forEach(function (k) {
+                        if (typeof data[k] !== "undefined")
+                            payload[k] = data[k];
+                    });
+                }
+
+                // Notify opener/parent (same-origin only for safety)
+                try {
+                    var message = {
+                        type: "oauth_callback",
+                        timestamp: Date.now(),
+                        payload: payload,
+                    };
+                    var targetOrigin = window.location.origin;
+                    var sent = false;
+
+                    if (window.opener && !window.opener.closed) {
+                        window.opener.postMessage(message, targetOrigin);
+                        sent = true;
+                    }
+                    if (!sent && window.parent && window.parent !== window) {
+                        window.parent.postMessage(message, targetOrigin);
+                        sent = true;
+                    }
+
+                    // Attempt to close if successfully notified and not an error
+                    if (sent && !isError) {
+                        setTimeout(function () {
+                            try {
+                                window.close();
+                            } catch (_e) {}
+                        }, 300);
+                    }
+                } catch (_e) {
+                    // swallow
+                }
+
+                // Cleanup sensitive data
+                try {
+                    sessionStorage.removeItem("oauth_result");
+                } catch (_e) {}
+            })();
+        </script>
+    </body>
+</html>

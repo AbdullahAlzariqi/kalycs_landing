@@ -15,3 +15,11 @@
 }
 .bento-icon svg { width: 18px; height: 18px; }
 
+/* Centering overrides */
+/* Center hero vertically and horizontally within viewport */
+.hero { margin-top: 0; padding-top: clamp(16px, 4vh, 28px); padding-bottom: clamp(40px, 6vw, 80px); }
+.hero > .container { min-height: calc(100svh - 80px - 37px); display: grid; align-content: center; }
+
+/* Center simple single-section pages */
+.thanks-section { padding: clamp(24px, 4vh, 40px) 0; min-height: calc(100svh - 180px); display: grid; place-items: center; }
+.oauth-page main .section { min-height: calc(100svh - 180px); display: grid; place-items: center; text-align: center; }

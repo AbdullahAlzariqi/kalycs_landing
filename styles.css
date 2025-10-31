@@ -547,11 +547,17 @@ a[href^="mailto:"]:hover {
 
 /* Hero */
 .hero {
-  padding-top: 0;
+  /* Ensure hero sits naturally below header and can center within viewport */
+  margin-top: 0;
+  padding-top: clamp(16px, 4vh, 28px);
   padding-bottom: clamp(40px, 6vw, 80px);
-  margin-top: -140px;
 }
-.announcement + main .hero { margin-top: 0; padding-top: clamp(16px, 4vh, 28px); }
+/* Center hero contents vertically within viewport, accounting for header+announcement */
+.hero > .container {
+  min-height: calc(100svh - 80px - 37px);
+  display: grid;
+  align-content: center;
+}
 .grid-hero { display: grid; grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: clamp(16px, 2vw, 32px); }
 .hero__text { padding: 8px 0; }
 .hero-kicker {
@@ -648,6 +654,7 @@ a[href^="mailto:"]:hover {
 /* Mobile & tablet: fix hero overlap and sizing, smooth app preview spacing */
 @media (max-width: 980px) {
   .hero { margin-top: 0; padding-top: clamp(16px, 4vh, 28px); }
+  .hero > .container { min-height: auto; }
   .hero__image { max-height: clamp(280px, 50vh, 560px); }
   .section.app-shot { margin-top: 0; padding-top: clamp(40px, 6vw, 80px); padding-bottom: clamp(40px, 6vw, 80px); }
   .preview img {
@@ -681,6 +688,17 @@ a[href^="mailto:"]:hover {
   width: auto;
   margin: 0 auto;
   object-fit: contain;
+}
+
+/* OAuth callback page: center the single section */
+.oauth-page main .section {
+  min-height: calc(100svh - 180px);
+  display: grid;
+  place-items: center;
+}
+.oauth-page .lead {
+  text-align: center;
+  margin: 0.75rem auto 0;
 }
 
 /* Features (enhanced cards) */
@@ -1576,7 +1594,12 @@ a[href^="mailto:"]:hover {
 .contact-status { margin: 4px 0 0; font-size: 14px; color: rgba(255,255,255,0.8); min-height: 1.2em; }
 
 /* --- Thanks Page --- */
-.thanks-section { padding: clamp(64px, 12vh, 140px) 0; }
+.thanks-section {
+  padding: clamp(24px, 4vh, 40px) 0;
+  min-height: calc(100svh - 180px);
+  display: grid;
+  place-items: center;
+}
 .thanks-section .lead { margin: 8px auto 0; text-align: center; }
 .thanks-card {
   text-align: center;

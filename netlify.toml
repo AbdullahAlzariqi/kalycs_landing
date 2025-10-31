@@ -64,3 +64,8 @@
   from = "/thanksSubscriber"
   to = "/thanksSubscriber.html"
   status = 200
+
+[[redirects]]
+  from = "/auth/callback"
+  to = "/oauth.html"
+  status = 200
