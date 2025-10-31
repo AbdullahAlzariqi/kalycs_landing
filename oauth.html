@@ -135,25 +135,25 @@
         <!-- Site styles -->
         <link
             rel="stylesheet"
-            href="styles.min.css"
+            href="/styles.min.css"
             media="print"
             onload="this.media='all'; this.onload=null;"
         />
-        <noscript><link rel="stylesheet" href="styles.min.css" /></noscript>
-        <link rel="stylesheet" href="styles.laptop.css" />
+        <noscript><link rel="stylesheet" href="/styles.min.css" /></noscript>
+        <link rel="stylesheet" href="/styles.laptop.css" />
     </head>
     <body class="oauth-page">
         <header class="site-header">
             <div class="container nav">
                 <a
                     class="brand"
-                    href="index.html#main"
+                    href="/index.html#main"
                     aria-label="Go to homepage"
                 >
                     <picture>
-                        <source srcset="assets/logo.webp" type="image/webp" />
+                        <source srcset="/assets/logo.webp" type="image/webp" />
                         <img
-                            src="assets/logo.png"
+                            src="/assets/logo.png"
                             alt="Kalycs logo"
                             class="brand__logo"
                             width="40"
@@ -196,7 +196,7 @@
                         </button>
                         <a
                             class="btn btn--ghost"
-                            href="index.html"
+                            href="/index.html"
                             id="home-link"
                             >Back to Home</a
                         >
@@ -216,7 +216,7 @@
             <div class="container footer">
                 <div class="footer__left">
                     <img
-                        src="assets/logo.png"
+                        src="/assets/logo.png"
                         alt="Kalycs logo"
                         class="brand__logo small"
                         loading="lazy"
@@ -225,8 +225,8 @@
                     <span>© <span id="year"></span> Kalycs</span>
                 </div>
                 <div class="footer__right">
-                    <a href="privacy.html" class="footer__link">Privacy</a>
-                    <a href="terms.html" class="footer__link">Terms of Use</a>
+                    <a href="/privacy.html" class="footer__link">Privacy</a>
+                    <a href="/terms.html" class="footer__link">Terms of Use</a>
                 </div>
             </div>
         </footer>
@@ -261,15 +261,15 @@
                                 window.close();
                                 // Fallback: if close doesn't work, redirect to homepage
                                 setTimeout(function () {
-                                    window.location.href = "index.html";
+                                    window.location.href = "/index.html";
                                 }, 100);
                             } else {
                                 // If we can't close, redirect to homepage
-                                window.location.href = "index.html";
+                                window.location.href = "/index.html";
                             }
                         } catch (_e) {
                             // If anything fails, redirect to homepage
-                            window.location.href = "index.html";
+                            window.location.href = "/index.html";
                         }
                     });
                 }
