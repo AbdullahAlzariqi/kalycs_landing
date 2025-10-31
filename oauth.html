@@ -186,6 +186,20 @@
                         "
                     ></pre>
 
+                    <pre
+                        id="debug"
+                        class="tiny muted"
+                        style="
+                            text-align: left;
+                            margin: 1rem auto;
+                            max-width: 40rem;
+                            white-space: pre-wrap;
+                            background: #2a2a2a;
+                            padding: 1rem;
+                            border-radius: 4px;
+                        "
+                    ></pre>
+
                     <div class="thanks-actions" style="margin-top: 1.5rem">
                         <button
                             class="btn btn--primary"
@@ -290,6 +304,29 @@
                 var hasCode = !!(data && data.code);
                 var hasToken = !!(data && (data.access_token || data.id_token));
 
+                // DEBUG: Show what we received
+                var debugEl = document.getElementById("debug");
+                if (debugEl) {
+                    var debugInfo = [
+                        "=== DEBUG INFO ===",
+                        "URL: " + window.location.href,
+                        "Has code: " + hasCode,
+                        "Has token: " + hasToken,
+                        "Is error: " + isError,
+                        "",
+                        "Received data keys: " + (data ? Object.keys(data).join(", ") : "none"),
+                        "",
+                        "SessionStorage keys: " + (sessionStorage.length > 0 ? Object.keys(sessionStorage).join(", ") : "empty")
+                    ];
+                    if (data && data.access_token) {
+                        debugInfo.push("Access token (first 20 chars): " + data.access_token.substring(0, 20) + "...");
+                    }
+                    if (data && data.code) {
+                        debugInfo.push("Code (first 20 chars): " + data.code.substring(0, 20) + "...");
+                    }
+                    debugEl.textContent = debugInfo.join("\n");
+                }
+
                 if (isError) {
                     document.documentElement.classList.add("oauth-error");
                     setText("status-title", "Authentication failed");
@@ -370,14 +407,17 @@
                             } catch (_e) {}
                         }, 300);
                     }
+
+                    // Only cleanup if we successfully sent to a parent/opener
+                    // If opened directly (no parent), keep data so user can manually copy tokens
+                    if (sent) {
+                        try {
+                            sessionStorage.removeItem("oauth_result");
+                        } catch (_e) {}
+                    }
                 } catch (_e) {
                     // swallow
                 }
-
-                // Cleanup sensitive data
-                try {
-                    sessionStorage.removeItem("oauth_result");
-                } catch (_e) {}
             })();
         </script>
     </body>
