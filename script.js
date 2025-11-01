@@ -636,6 +636,14 @@
 
         if (!res.ok) throw new Error('Network error');
 
+        // Save sign-up data to localStorage for later retrieval
+        try {
+          const name = formData.get('name');
+          const email = formData.get('email');
+          if (name) localStorage.setItem('contact_name', name);
+          if (email) localStorage.setItem('contact_email', email);
+        } catch (_) {}
+
         if (typeof posthog !== 'undefined') {
           try { posthog.capture('contact_submitted'); } catch (_) {}
         }
@@ -726,6 +734,14 @@
         const body = new URLSearchParams(formData).toString();
         const res = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body });
         if (!res.ok) throw new Error('Network error');
+
+        // Save sign-up data to localStorage for later retrieval
+        try {
+          const name = formData.get('name');
+          const email = formData.get('email');
+          if (name) localStorage.setItem('feature_name', name);
+          if (email) localStorage.setItem('feature_email', email);
+        } catch (_) {}
 
         if (typeof posthog !== 'undefined') { try { posthog.capture('feature_requested'); } catch(_){} }
         // Redirect to thank-you page for feature requests (contact stays modal-only)

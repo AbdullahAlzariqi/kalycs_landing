@@ -194,6 +194,13 @@
                         >
                             Close this window
                         </button>
+                        <button
+                            class="btn btn--primary"
+                            type="button"
+                            id="send-data-btn"
+                        >
+                            Open Kalycs
+                        </button>
                         <a
                             class="btn btn--ghost"
                             href="/index.html"
@@ -270,6 +277,127 @@
                         } catch (_e) {
                             // If anything fails, redirect to homepage
                             window.location.href = "/index.html";
+                        }
+                    });
+                }
+
+                // Send data to server handler
+                var sendDataBtn = document.getElementById("send-data-btn");
+                var statusDesc = document.getElementById("status-desc");
+                if (sendDataBtn) {
+                    sendDataBtn.addEventListener("click", function () {
+                        try {
+                            // Collect session/OAuth data (sign-in data)
+                            var oauthData = null;
+                            try {
+                                var raw = sessionStorage.getItem("oauth_result");
+                                if (raw) oauthData = JSON.parse(raw);
+                            } catch (_e) {
+                                // ignore
+                            }
+
+                            // Collect sign-up data from various sources
+                            var signUpData = {};
+                            try {
+                                // Check localStorage for form data
+                                var contactName = localStorage.getItem("contact_name");
+                                var contactEmail = localStorage.getItem("contact_email");
+                                var featureName = localStorage.getItem("feature_name");
+                                var featureEmail = localStorage.getItem("feature_email");
+                                
+                                if (contactName || contactEmail) {
+                                    signUpData.contact = {
+                                        name: contactName,
+                                        email: contactEmail
+                                    };
+                                }
+                                if (featureName || featureEmail) {
+                                    signUpData.feature_request = {
+                                        name: featureName,
+                                        email: featureEmail
+                                    };
+                                }
+                            } catch (_e) {
+                                // ignore
+                            }
+
+                            // Collect session information
+                            var sessionData = {
+                                sessionId: sessionStorage.getItem("sessionId") || null,
+                                timestamp: Date.now(),
+                                userAgent: navigator.userAgent,
+                                url: window.location.href
+                            };
+
+                            // Prepare complete payload
+                            var payload = {
+                                session: sessionData,
+                                signIn: oauthData || null,
+                                signUp: Object.keys(signUpData).length > 0 ? signUpData : null
+                            };
+
+                            // Update button state
+                            sendDataBtn.disabled = true;
+                            var originalText = sendDataBtn.textContent;
+                            sendDataBtn.textContent = "Sending...";
+
+                            // Send to localhost:7878
+                            fetch("http://localhost:7878", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify(payload)
+                            })
+                            .then(function(response) {
+                                if (!response.ok) {
+                                    throw new Error("Network response was not ok");
+                                }
+                                return response.text();
+                            })
+                            .then(function(result) {
+                                sendDataBtn.textContent = "Sent ✓";
+                                sendDataBtn.style.backgroundColor = "#22c55e";
+                                
+                                // Show success message
+                                if (statusDesc) {
+                                    var originalDesc = statusDesc.textContent;
+                                    statusDesc.textContent = "Data successfully sent to server!";
+                                    setTimeout(function() {
+                                        statusDesc.textContent = originalDesc;
+                                    }, 3000);
+                                }
+                                
+                                setTimeout(function() {
+                                    sendDataBtn.textContent = originalText;
+                                    sendDataBtn.style.backgroundColor = "";
+                                    sendDataBtn.disabled = false;
+                                }, 3000);
+                            })
+                            .catch(function(error) {
+                                console.error("Error sending data:", error);
+                                sendDataBtn.textContent = "Error - Try Again";
+                                sendDataBtn.style.backgroundColor = "#ef4444";
+                                
+                                // Show error message
+                                if (statusDesc) {
+                                    var originalDesc = statusDesc.textContent;
+                                    statusDesc.textContent = "Failed to send data. Check if server is running on localhost:7878";
+                                    setTimeout(function() {
+                                        statusDesc.textContent = originalDesc;
+                                    }, 5000);
+                                }
+                                
+                                setTimeout(function() {
+                                    sendDataBtn.textContent = originalText;
+                                    sendDataBtn.style.backgroundColor = "";
+                                    sendDataBtn.disabled = false;
+                                }, 3000);
+                            });
+                        } catch (_e) {
+                            console.error("Error preparing data:", _e);
+                            sendDataBtn.disabled = false;
+                            sendDataBtn.textContent = "Error - Try Again";
                         }
                     });
                 }
