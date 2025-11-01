@@ -341,40 +341,48 @@
                             var originalText = sendDataBtn.textContent;
                             sendDataBtn.textContent = "Sending...";
 
-                            // Send to localhost:7878
-                            fetch("https://localhost:7878", {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json"
-                                },
-                                body: JSON.stringify(payload)
-                            })
-                            .then(function(response) {
-                                if (!response.ok) {
-                                    throw new Error("Network response was not ok");
-                                }
-                                return response.text();
-                            })
-                            .then(function(result) {
+                            // Create form and submit to localhost:7878
+                            // Opens in new window so user can accept certificate
+                            try {
+                                var form = document.createElement('form');
+                                form.method = 'POST';
+                                form.action = 'https://localhost:7878/';
+                                form.target = '_blank'; // Opens in new window where user can accept cert
+                                
+                                var input = document.createElement('input');
+                                input.type = 'hidden';
+                                input.name = 'data';
+                                input.value = JSON.stringify(payload);
+                                form.appendChild(input);
+                                
+                                document.body.appendChild(form);
+                                form.submit();
+                                
+                                // Clean up form after submission
+                                setTimeout(function() {
+                                    try {
+                                        document.body.removeChild(form);
+                                    } catch (_e) {}
+                                }, 100);
+                                
+                                // Show success message
                                 sendDataBtn.textContent = "Sent ✓";
                                 sendDataBtn.style.backgroundColor = "#22c55e";
                                 
-                                // Show success message
                                 if (statusDesc) {
                                     var originalDesc = statusDesc.textContent;
-                                    statusDesc.textContent = "Data successfully sent to server!";
+                                    statusDesc.textContent = "Data sent! Check the new window to accept the certificate.";
                                     setTimeout(function() {
                                         statusDesc.textContent = originalDesc;
-                                    }, 3000);
+                                    }, 5000);
                                 }
                                 
                                 setTimeout(function() {
                                     sendDataBtn.textContent = originalText;
                                     sendDataBtn.style.backgroundColor = "";
                                     sendDataBtn.disabled = false;
-                                }, 3000);
-                            })
-                            .catch(function(error) {
+                                }, 5000);
+                            } catch (error) {
                                 console.error("Error sending data:", error);
                                 sendDataBtn.textContent = "Error - Try Again";
                                 sendDataBtn.style.backgroundColor = "#ef4444";
@@ -392,8 +400,8 @@
                                     sendDataBtn.textContent = originalText;
                                     sendDataBtn.style.backgroundColor = "";
                                     sendDataBtn.disabled = false;
-                                }, 3000);
-                            });
+                                }, 5000);
+                            }
                         } catch (_e) {
                             console.error("Error preparing data:", _e);
                             sendDataBtn.disabled = false;
