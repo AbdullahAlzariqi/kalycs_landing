@@ -65,6 +65,11 @@
   to = "/thanksSubscriber.html"
   status = 200
 
+[[redirects]]
+  from = "/latest-version"
+  to = "/latest-version.html"
+  status = 200
+
 # OAuth callback: rewrite to serve oauth.html at /auth/callback (preserves hash)
 [[redirects]]
   from = "/auth/callback"
