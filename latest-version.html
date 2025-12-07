@@ -57,7 +57,7 @@
           <p class="lead">Get the latest version for macOS.</p>
           
           <div class="thanks-actions">
-            <a class="btn btn--primary" id="download-btn" href="https://mnixzyxwqugnqooinzct.supabase.co/storage/v1/object/public/updates/latest/kalycs-1.0.4.dmg">Download for macOS</a>
+            <a class="btn btn--primary" id="download-btn" href="#" style="opacity: 0.7; pointer-events: none;">Loading download link...</a>
             <a class="btn btn--ghost" href="index.html">Back to Home</a>
           </div>
           
@@ -140,15 +140,46 @@
           posthog.capture('page_view', { page_title: document.title, page_url: window.location.href });
         }
 
-        // Track download click
-        const dlBtn = document.getElementById('download-btn');
-        if (dlBtn) {
-          dlBtn.addEventListener('click', function() {
-            if (typeof posthog !== 'undefined') {
-              posthog.capture('download_clicked', { page: 'latest-version' });
+        // Load Supabase URL and set download link
+        async function initDownloadLink() {
+          const dlBtn = document.getElementById('download-btn');
+          if (!dlBtn) return;
+
+          try {
+            const response = await fetch('/.netlify/functions/supabase-config');
+            if (!response.ok) {
+              throw new Error('Failed to load Supabase configuration');
             }
-          });
+            const config = await response.json();
+            
+            if (!config.url) {
+              throw new Error('Supabase URL not configured');
+            }
+
+            // Construct download URL
+            // Path: /storage/v1/object/public/updates/latest/kalycs-1.0.4.dmg
+            const downloadPath = '/storage/v1/object/public/updates/latest/kalycs-1.0.4.dmg';
+            const downloadUrl = config.url.replace(/\/$/, '') + downloadPath;
+            
+            dlBtn.href = downloadUrl;
+            dlBtn.textContent = 'Download for macOS';
+            dlBtn.style.opacity = '1';
+            dlBtn.style.pointerEvents = 'auto';
+
+            // Track download click
+            dlBtn.addEventListener('click', function() {
+              if (typeof posthog !== 'undefined') {
+                posthog.capture('download_clicked', { page: 'latest-version' });
+              }
+            });
+          } catch (err) {
+            console.error('Error loading download link:', err);
+            dlBtn.textContent = 'Download unavailable';
+            dlBtn.style.opacity = '0.5';
+          }
         }
+
+        initDownloadLink();
       });
     </script>
 
