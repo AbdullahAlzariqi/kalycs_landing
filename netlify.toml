@@ -70,6 +70,11 @@
   to = "/latest-version.html"
   status = 200
 
+[[redirects]]
+  from = "/reset-password"
+  to = "/reset-password.html"
+  status = 200
+
 # OAuth callback: rewrite to serve oauth.html at /auth/callback (preserves hash)
 [[redirects]]
   from = "/auth/callback"
