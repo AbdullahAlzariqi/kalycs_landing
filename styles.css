@@ -647,7 +647,13 @@ a[href^="mailto:"]:hover {
 
 @media (max-width: 980px) {
   .grid-hero { grid-template-columns: 1fr; }
-  .hero__image-wrap { order: -1; }
+  .hero__image-wrap { 
+    order: -1;
+    margin-inline: auto;
+    width: auto;
+    max-height: clamp(280px, 50vh, 560px);
+    justify-self: center;
+  }
   .lead { max-width: 52ch; }
 }
 
@@ -667,7 +673,33 @@ a[href^="mailto:"]:hover {
   .hero__text { text-align: center; }
   .hero-kicker { margin-inline: auto; }
   .cta { justify-content: center; }
-  .hero__image-wrap { margin-inline: auto; max-width: 520px; }
+  .hero__image-wrap { 
+    margin-inline: auto; 
+    max-width: 520px;
+    height: 250px;
+  }
+  
+  .hero .h1 {
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero__image {
+    height: 250px;
+  }
+
+  .announcement__link {
+    width: 120px;
+    height: 40px;
+    font-size: 11px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
 }
 
 /* App preview */

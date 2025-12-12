@@ -113,6 +113,30 @@
     <!-- Bento sizing tweaks -->
     <link rel="stylesheet" href="bento.overrides.css">
 
+    <!-- Persisted preview tweaks (mobile only; override bundled CSS) -->
+    <style>
+      @media (max-width: 640px) {
+        div.hero__image-wrap { height: 250px; }
+
+        /* Heading layout */
+        h1.h1 {
+          flex-wrap: nowrap;
+          justify-content: center;
+          align-items: center;
+        }
+
+        /* Hero image sizing */
+        img.hero__image { height: 250px; }
+
+        /* Announcement link sizing */
+        a.announcement__link {
+          width: 120px;
+          height: 40px;
+          font-size: 11px;
+        }
+      }
+    </style>
+
     <!-- Manrope + Sono + Voces fonts - load non-blocking with font-display:swap -->
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sono:wght@400;600;700&family=Voces:wght@400&family=Space+Grotesk:wght@500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
