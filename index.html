@@ -86,7 +86,7 @@
         padding-top: clamp(42px, 6.2vh, 84px);
         padding-bottom: clamp(56px, 7.4vh, 104px);
       }
-      .home-page .section#feature-map { padding-top: 72px; }
+      .home-page .section#benefits { padding-top: 72px; }
       /* App preview should size to its content */
       .app-shot { height: auto; overflow: visible; }
       /* Prevent image shift */
@@ -109,9 +109,9 @@
     <link rel="stylesheet" href="styles.min.css" media="print" onload="this.media='all'; this.onload=null;">
     <noscript><link rel="stylesheet" href="styles.min.css"></noscript>
     <!-- Laptop overrides: extra breathing room for 1024–1439px -->
-    <link rel="stylesheet" href="styles.laptop.css">
-    <!-- Bento sizing tweaks -->
-    <link rel="stylesheet" href="bento.overrides.css">
+    <link rel="stylesheet" href="styles.laptop.min.css">
+    <!-- Benefits sizing tweaks -->
+    <link rel="stylesheet" href="benefits.min.css">
 
     <!-- Persisted preview tweaks (mobile only; override bundled CSS) -->
     <style>
@@ -395,131 +395,87 @@
         </div>
       </section>
 
-      <!-- Bento Feature Map -->
-      <section class="section bento" id="feature-map" aria-label="What’s inside Kalycs">
+      <!-- Benefits Section (Replacing Bento Feature Map) -->
+      <section class="section benefits" id="benefits" aria-label="Why Kalycs">
         <div class="container">
-          <header class="bento__header">
-            <span class="bento__kicker"><span class="dot" aria-hidden="true"></span>What’s Inside</span>
-            <h2 class="h2">What you can do with Kalycs</h2>
-            <p class="bento__sub">Here’s what’s ready now — and what’s coming next.</p>
+          <header class="benefits__header text-center">
+            <span class="benefits__kicker"><span class="dot" aria-hidden="true"></span>Why Kalycs</span>
+            <h2 class="h2">Built for flow, not just files.</h2>
+            <p class="benefits__sub">Everything you need to reclaim your focus.</p>
           </header>
 
-          <div class="bento-grid" role="list">
-            <!-- Implemented: File Upload & Projects -->
-            <article class="bento-card bento-card--wide" role="listitem">
-              <div class="bento-card__head">
-                <div class="bento-icon" aria-hidden="true">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M3 7h5l2 2h9a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6"/>
-                    <path d="M12 12v4m0 0-2-2m2 2 2-2" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </div>
-                <h3>Upload files and organize</h3>
-                <span class="status status--done" title="Available">Available</span>
+          <div class="benefits-grid">
+            <!-- Benefit 1: Privacy -->
+            <div class="benefit-item">
+              <div class="benefit-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
               </div>
-              <p>Upload your files and keep them tidy in projects. Your files stay on your device.</p>
-              <div class="bento-tags">
-                <span class="tag">Local-first</span>
-                <span class="tag">Private</span>
-              </div>
-            </article>
+              <h3>100% Private</h3>
+              <p>Your files never leave your Mac. All indexing and search happens locally on your device.</p>
+            </div>
 
-            <!-- Implemented: Vector Search -->
-            <article class="bento-card" role="listitem">
-              <div class="bento-card__head">
-                <div class="bento-icon" aria-hidden="true">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <circle cx="11" cy="11" r="6.5" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6"/>
-                    <path d="m20 20-3.8-3.8" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <h3>Smart search</h3>
-                <span class="status status--done" title="Available">Available</span>
+            <!-- Benefit 2: Semantic Search -->
+            <div class="benefit-item">
+              <div class="benefit-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"/>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                  <path d="M11 8a3 3 0 0 0-3 3"/>
+                </svg>
               </div>
-              <p>Find what you need even if you don’t use the exact words.</p>
-              <div class="bento-mini">
-                <span class="chip">Understands what you mean</span>
-                <span class="chip">Fast</span>
-              </div>
-            </article>
+              <h3>Deep Understanding</h3>
+              <p>Search by meaning, not just keywords. Kalycs understands the context of your documents.</p>
+            </div>
 
-            <!-- Implemented: Indexing & Chunking -->
-            <article class="bento-card" role="listitem">
-              <div class="bento-card__head">
-                <div class="bento-icon" aria-hidden="true">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <rect x="3.5" y="4" width="6.5" height="6.5" rx="1.5" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6"/>
-                    <rect x="13" y="4" width="7.5" height="6.5" rx="1.5" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6"/>
-                    <rect x="3.5" y="13" width="6.5" height="7.5" rx="1.5" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6"/>
-                  </svg>
-                </div>
-                <h3>Prepares your files for search</h3>
-                <span class="status status--done" title="Available">Available</span>
+            <!-- Benefit 3: Auto-Organize -->
+            <div class="benefit-item">
+              <div class="benefit-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="7" height="7"/>
+                  <rect x="14" y="3" width="7" height="7"/>
+                  <rect x="14" y="14" width="7" height="7"/>
+                  <rect x="3" y="14" width="7" height="7"/>
+                </svg>
               </div>
-              <p>Kalycs reads and prepares your files so search and answers stay accurate.</p>
-              <div class="bento-mini">
-                <span class="chip">Works with many file types</span>
-                <span class="chip">Accurate results</span>
-              </div>
-            </article>
+              <h3>Zero Maintenance</h3>
+              <p>Smart rules organize your downloads and projects automatically. Stop moving files manually.</p>
+            </div>
 
-            <!-- Implemented: Local Vector DB -->
-            <article class="bento-card" role="listitem">
-              <div class="bento-card__head">
-                <div class="bento-icon" aria-hidden="true">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <ellipse cx="12" cy="6" rx="6.5" ry="3" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6"/>
-                    <path d="M5.5 6v8c0 1.66 2.9 3 6.5 3s6.5-1.34 6.5-3V6" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6"/>
-                  </svg>
-                </div>
-                <h3>On‑device storage</h3>
-                <span class="status status--done" title="Available">Available</span>
+            <!-- Benefit 4: Native Speed -->
+            <div class="benefit-item">
+              <div class="benefit-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
               </div>
-              <p>Keeps your data fast and private — no cloud needed.</p>
-              <div class="bento-mini">
-                <span class="chip">On‑device</span>
-                <span class="chip">No cloud</span>
-              </div>
-            </article>
+              <h3>Native Speed</h3>
+              <p>Built for macOS with Apple Silicon optimization. Instant results, no loading screens.</p>
+            </div>
 
-            <!-- Implemented: Project/UI Basics -->
-            <article class="bento-card" role="listitem">
-              <div class="bento-card__head">
-                <div class="bento-icon" aria-hidden="true">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <rect x="3.5" y="4" width="17" height="5" rx="1.5" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6"/>
-                    <rect x="3.5" y="11" width="8" height="8.5" rx="1.5" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6"/>
-                    <rect x="13.5" y="11" width="7" height="8.5" rx="1.5" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6"/>
-                  </svg>
-                </div>
-                <h3>Simple project and file view</h3>
-                <span class="status status--done" title="Available">Available</span>
+            <!-- Benefit 5: Universal Access -->
+            <div class="benefit-item">
+              <div class="benefit-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/>
+                </svg>
               </div>
-              <p>Browse files, manage projects, and take quick actions.</p>
-              <div class="bento-tags">
-                <span class="tag">Quick actions</span>
-                <span class="tag">Flexible rules</span>
-              </div>
-            </article>
+              <h3>Always Ready</h3>
+              <p>Summon Kalycs from anywhere with <span class="kbd">⌥⌘K</span>. Your files are always one keystroke away.</p>
+            </div>
 
-            <!-- Universal Search Bar -->
-            <article class="bento-card bento-card--accent" role="listitem" aria-labelledby="soon-universal-search">
-              <div class="bento-card__head">
-                <div class="bento-icon" aria-hidden="true">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <rect x="4" y="6" width="16" height="12" rx="3" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6"/>
-                    <path d="M10 12h4" stroke="#fff" stroke-opacity="0.9" stroke-width="1.6" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <h3 id="soon-universal-search">Search from anywhere</h3>
-                <span class="status status--done" title="Available">Available</span>
+            <!-- Benefit 6: No Subscriptions -->
+            <div class="benefit-item">
+              <div class="benefit-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2v20"/>
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
               </div>
-              <p>Open search from anywhere with <span class="kbd">⌥⌘K</span>. Simple and speedy.</p>
-              <div class="bento-mini">
-                <span class="chip">Quick access</span>
-                <span class="chip">Time saver</span>
-              </div>
-            </article>
+              <h3>No Subscriptions</h3>
+              <p>Pay once, own it forever.</p>
+            </div>
           </div>
         </div>
       </section>

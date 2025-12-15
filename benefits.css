@@ -1,0 +1,123 @@
+/* Benefits Section */
+.benefits {
+  position: relative;
+  /* Optional: subtle background difference if needed, but keeping it clean for now */
+}
+
+.benefits__header {
+  margin-bottom: clamp(40px, 6vw, 64px);
+  text-align: center;
+}
+
+.benefits__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px 10px;
+  border-radius: 9999px;
+  margin-bottom: 12px;
+}
+
+.benefits__kicker .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--primary);
+  display: inline-block;
+}
+
+.benefits__sub {
+  margin: 12px auto 0;
+  color: var(--muted);
+  font-size: clamp(16px, 1.8vw, 18px);
+  max-width: 50ch;
+}
+
+.benefits-grid {
+  display: grid;
+  gap: clamp(32px, 4vw, 48px);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .benefits-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.benefit-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 16px;
+  transition: background 0.2s ease;
+}
+
+.benefit-item:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.benefit-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(88, 92, 218, 0.2), rgba(88, 92, 218, 0.05));
+  border: 1px solid rgba(88, 92, 218, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  margin-bottom: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.benefit-icon svg {
+  width: 24px;
+  height: 24px;
+  opacity: 0.95;
+  stroke: var(--primary-700); /* Use primary color for stroke */
+  /* If using fill icons, adjust accordingly */
+}
+
+/* Override svg stroke for consistent brand color */
+.benefit-icon svg {
+  stroke: #8F93B8; /* Default muted */
+}
+
+.benefit-item:hover .benefit-icon {
+  background: linear-gradient(135deg, var(--primary), var(--primary-700));
+  border-color: transparent;
+  transform: translateY(-2px);
+  transition: all 0.2s ease;
+}
+
+.benefit-item:hover .benefit-icon svg {
+  stroke: #fff;
+}
+
+.benefit-item h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.benefit-item p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--muted);
+}
