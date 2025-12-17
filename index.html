@@ -413,7 +413,7 @@
                 </svg>
               </div>
               <h3>100% Private</h3>
-              <p>Your files never leave your Mac. All indexing and search happens locally on your device.</p>
+              <p>All indexing and search happens locally on your device. When you use AI features, only relevant excerpts are sent to OpenAI.</p>
             </div>
 
             <!-- Benefit 2: Semantic Search -->
@@ -486,7 +486,7 @@
         <div class="container">
           <div class="local-first__content">
             <h2 class="local-first__title">Local-First</h2>
-            <p class="local-first__desc">Your files stay on your device. AI requests go directly to OpenAI using your key.</p>
+            <p class="local-first__desc">Your files are indexed locally. AI features send excerpts directly to OpenAI using your key for summaries and embeddings.</p>
           </div>
         </div>
       </section>
@@ -748,7 +748,7 @@
             api_host: 'https://eu.i.posthog.com',
             capture_pageview: true,
             capture_pageleave: true,
-            autocapture: false,
+            autocapture: true,
             disable_session_recording: true,
             disable_surveys: true,
             enable_recording_console_log: false,
