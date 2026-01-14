@@ -1,4 +1,12 @@
 User-agent: *
 Allow: /
 
+# Exclude utility and internal pages
+Disallow: /demo
+Disallow: /oauth
+Disallow: /reset-password
+Disallow: /latest-version
+Disallow: /blog/post.html
+
+# Sitemap
 Sitemap: https://kalycs.com/sitemap.xml
