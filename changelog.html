@@ -198,11 +198,33 @@
                 // Timeline logic
                 let carouselHTML = '';
                 if (item.carousel) {
-                    const slidesHTML = item.carousel.map(slide => `
-                        <div class="carousel-slide w-full flex-shrink-0 h-full relative" data-header="${slide.header}" data-subtitle="${slide.subtitle}">
-                            <img src="${slide.src}" alt="${slide.header}" class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity duration-500">
-                        </div>
-                    `).join('');
+                    const slidesHTML = item.carousel.map(slide => {
+                        const isVideo = slide.src.endsWith('.gif');
+                        const videoSrc = slide.src.replace('.gif', '.mp4');
+
+                        if (isVideo) {
+                            return `
+                                <div class="carousel-slide w-full flex-shrink-0 h-full relative" data-header="${slide.header}" data-subtitle="${slide.subtitle}">
+                                    <video 
+                                        src="${videoSrc}" 
+                                        alt="${slide.header}" 
+                                        class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity duration-500"
+                                        autoplay 
+                                        loop 
+                                        muted 
+                                        playsinline
+                                        loading="lazy">
+                                    </video>
+                                </div>
+                            `;
+                        } else {
+                            return `
+                                <div class="carousel-slide w-full flex-shrink-0 h-full relative" data-header="${slide.header}" data-subtitle="${slide.subtitle}">
+                                    <img src="${slide.src}" alt="${slide.header}" class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity duration-500" loading="lazy">
+                                </div>
+                            `;
+                        }
+                    }).join('');
 
                     const indicatorsHTML = item.carousel.map((_, i) => `
                         <div class="indicator w-1.5 h-1.5 rounded-full ${i === 0 ? 'bg-white' : 'bg-white/30'} transition-all cursor-pointer" data-index="${i}"></div>
@@ -330,6 +352,18 @@
                         captionTitle.textContent = activeSlide.dataset.header || '';
                         captionSubtitle.textContent = activeSlide.dataset.subtitle || '';
                     }
+
+                    // Pause all videos and play only the active one
+                    slides.forEach((slide, i) => {
+                        const video = slide.querySelector('video');
+                        if (video) {
+                            if (i === index) {
+                                video.play().catch(() => { }); // Play active video
+                            } else {
+                                video.pause(); // Pause inactive videos
+                            }
+                        }
+                    });
                 };
 
                 indicators.forEach((ind, i) => {
