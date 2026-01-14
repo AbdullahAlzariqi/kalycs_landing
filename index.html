@@ -1,150 +1,223 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Kalycs — AI File Search & Auto-Organize for Mac (Local-First)</title>
-    <meta name="description" content="Stop searching. Start finding. Kalycs keeps your files organized, finds anything fast, and turns documents into instant answers — all on your device." />
 
-    <!-- Icons & PWA -->
-    <!-- Prefer SVG favicon for Google Search; include 48px PNG fallback -->
-    <link rel="icon" type="image/svg+xml" sizes="any" href="/assets/favicon.svg">
-    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <meta name="msapplication-TileColor" content="#0B0C0F">
-    <meta name="theme-color" content="#0B0C0F">
-    <meta name="color-scheme" content="dark light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kalycs — AI File Search & Auto-Organize for Mac</title>
+  <meta name="description"
+    content="Stop searching. Start finding. Kalycs keeps your files organized, finds anything fast, and turns documents into instant answers — all on your device." />
 
-    <!-- Social (OG/Twitter) -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://kalycs.com/">
-    <meta property="og:title" content="Kalycs — AI File Search & Auto-Organize for Mac">
-    <meta property="og:description" content="Local-first, private, and fast. Ask your documents anything and get grounded answers with citations.">
-    <meta property="og:image" content="https://kalycs.com/assets/website-banner.png?v=2">
-    <meta property="og:image:width" content="3200">
-    <meta property="og:image:height" content="1792">
-    <meta property="og:image:type" content="image/png">
-    <meta property="og:site_name" content="Kalycs">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@KalycsAI">
-    <meta name="twitter:creator" content="@KalycsAI">
-    <meta name="twitter:title" content="Kalycs — AI File Search & Auto-Organize for Mac">
-    <meta name="twitter:description" content="On-device file intelligence: organize, search, and get instant answers.">
-    <meta name="twitter:image" content="https://kalycs.com/assets/website-banner.png?v=2">
+  <!-- Icons & PWA -->
+  <!-- Prefer SVG favicon for Google Search; include 48px PNG fallback -->
+  <link rel="icon" type="image/svg+xml" sizes="any" href="/assets/favicon.svg">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="msapplication-TileColor" content="#0B0C0F">
+  <meta name="theme-color" content="#0B0C0F">
+  <meta name="color-scheme" content="dark light">
 
-    <!-- Canonical & robots -->
-    <link rel="canonical" href="https://kalycs.com/">
-    <meta name="robots" content="index,follow,max-image-preview:large">
+  <!-- Social (OG/Twitter) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kalycs.com/">
+  <meta property="og:title" content="Kalycs — AI File Search & Auto-Organize for Mac">
+  <meta property="og:description"
+    content="Private and fast. Ask your documents anything and get grounded answers with citations.">
+  <meta property="og:image" content="https://kalycs.com/assets/website-banner.png?v=2">
+  <meta property="og:image:width" content="3200">
+  <meta property="og:image:height" content="1792">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:site_name" content="Kalycs">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@KalycsAI">
+  <meta name="twitter:creator" content="@KalycsAI">
+  <meta name="twitter:title" content="Kalycs — AI File Search & Auto-Organize for Mac">
+  <meta name="twitter:description" content="On-device file intelligence: organize, search, and get instant answers.">
+  <meta name="twitter:image" content="https://kalycs.com/assets/website-banner.png?v=2">
 
-    <!-- Preload LCP image -->
-    <link rel="preload" as="image" href="assets/hero_image-274w.webp" imagesrcset="assets/hero_image-274w.webp 274w, assets/hero_image-548w.webp 548w, assets/hero_image.webp 516w" imagesizes="(max-width: 768px) 274px, 516px" type="image/webp" fetchpriority="high">
+  <!-- Canonical & robots -->
+  <link rel="canonical" href="https://kalycs.com/">
+  <meta name="robots" content="index,follow,max-image-preview:large">
 
-    <!-- Preconnect to Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Preload LCP image -->
+  <link rel="preload" as="image" href="assets/hero_image-274w.webp"
+    imagesrcset="assets/hero_image-274w.webp 274w, assets/hero_image-548w.webp 548w, assets/hero_image.webp 516w"
+    imagesizes="(max-width: 768px) 274px, 516px" type="image/webp" fetchpriority="high">
 
-    <!-- Preconnect to PostHog -->
-    <link rel="preconnect" href="https://eu.i.posthog.com" crossorigin>
-    <link rel="preconnect" href="https://eu-assets.i.posthog.com" crossorigin>
+  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Critical CSS inline for faster initial render -->
-    <style>
-      /* Fallback font metrics to prevent layout shift */
-      @font-face {
-        font-family: 'Manrope-fallback';
-        src: local('Arial');
-        size-adjust: 105%;
-        ascent-override: 95%;
-        descent-override: 25%;
-        line-gap-override: 0%;
+  <!-- Preconnect to PostHog -->
+  <link rel="preconnect" href="https://eu.i.posthog.com" crossorigin>
+  <link rel="preconnect" href="https://eu-assets.i.posthog.com" crossorigin>
+
+  <!-- Critical CSS inline for faster initial render -->
+  <style>
+    /* Fallback font metrics to prevent layout shift */
+    @font-face {
+      font-family: 'Manrope-fallback';
+      src: local('Arial');
+      size-adjust: 105%;
+      ascent-override: 95%;
+      descent-override: 25%;
+      line-gap-override: 0%;
+    }
+
+    @font-face {
+      font-family: 'Space-Grotesk-fallback';
+      src: local('Arial');
+      size-adjust: 100%;
+      ascent-override: 90%;
+      descent-override: 25%;
+      line-gap-override: 0%;
+    }
+
+    /* Critical styles for above-the-fold content */
+    body {
+      margin: 0;
+      font-family: 'Manrope-fallback', system-ui, -apple-system, sans-serif;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: 80px;
+    }
+
+    /* Reserve exact space for announcement bar */
+    .announcement {
+      height: 37px;
+      overflow: hidden;
+    }
+
+    /* Reserve space for hero rotator to prevent layout shift */
+    .hero-rotator {
+      display: inline-flex;
+      align-items: baseline;
+      width: 320px;
+      min-width: 320px;
+      height: 1.15em;
+      vertical-align: baseline;
+    }
+
+    /* Prevent layout shift from lead paragraph - exact height */
+    .lead {
+      height: 3.2em;
+      overflow: hidden;
+    }
+
+    /* Prevent layout shift from main content */
+    main {
+      min-height: 100vh;
+    }
+
+    /* Section spacing defaults are handled in styles.css */
+    /* Tighten spacing for homepage features only (smaller gap below) */
+    .home-page .section#features {
+      padding-top: clamp(42px, 6.2vh, 84px);
+      padding-bottom: clamp(56px, 7.4vh, 104px);
+    }
+
+    .home-page .section#benefits {
+      padding-top: 72px;
+    }
+
+    /* App preview should size to its content */
+    .app-shot {
+      height: auto;
+      overflow: visible;
+    }
+
+    /* Prevent image shift */
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Space Grotesk for h1 */
+    .hero .h1 {
+      font-family: 'Space-Grotesk-fallback', 'Manrope-fallback', system-ui, -apple-system, sans-serif;
+      line-height: 1.15;
+    }
+
+    /* Hero image container - fixed aspect ratio */
+    .hero__image-wrap {
+      aspect-ratio: 516/776;
+      width: 100%;
+      max-width: 516px;
+    }
+
+    /* Prevent CTA shift */
+    .cta {
+      min-height: 48px;
+    }
+
+    /* Prevent hero text shift */
+    .hero__text {
+      min-height: 400px;
+    }
+  </style>
+
+  <!-- Basic CSP (tune for your domain/CDNs) -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com 'self'; script-src 'self' 'unsafe-inline' https://app.posthog.com https://eu-assets.i.posthog.com https://eu.i.posthog.com https://kalycs.kit.com https://f.convertkit.com; connect-src 'self' https://eu.i.posthog.com https://eu-assets.i.posthog.com https://kalycs.kit.com https://app.convertkit.com https://app.kit.com; frame-src 'self';">
+
+  <!-- Main stylesheet - non-blocking -->
+  <link rel="stylesheet" href="styles.min.css" media="print" onload="this.media='all'; this.onload=null;">
+  <noscript>
+    <link rel="stylesheet" href="styles.min.css">
+  </noscript>
+  <!-- Laptop overrides: extra breathing room for 1024–1439px -->
+  <link rel="stylesheet" href="styles.laptop.min.css">
+  <!-- Benefits sizing tweaks -->
+  <link rel="stylesheet" href="benefits.min.css">
+
+  <!-- Persisted preview tweaks (mobile only; override bundled CSS) -->
+  <style>
+    @media (max-width: 640px) {
+      div.hero__image-wrap {
+        height: 250px;
       }
-      @font-face {
-        font-family: 'Space-Grotesk-fallback';
-        src: local('Arial');
-        size-adjust: 100%;
-        ascent-override: 90%;
-        descent-override: 25%;
-        line-gap-override: 0%;
+
+      /* Heading layout */
+      h1.h1 {
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
       }
-      /* Critical styles for above-the-fold content */
-      body { margin: 0; font-family: 'Manrope-fallback', system-ui, -apple-system, sans-serif; }
-      .site-header { position: sticky; top: 0; z-index: 100; height: 80px; }
-      /* Reserve exact space for announcement bar */
-      .announcement { height: 37px; overflow: hidden; }
-      /* Reserve space for hero rotator to prevent layout shift */
-      .hero-rotator { display: inline-flex; align-items: baseline; width: 320px; min-width: 320px; height: 1.15em; vertical-align: baseline; }
-      /* Prevent layout shift from lead paragraph - exact height */
-      .lead { height: 3.2em; overflow: hidden; }
-      /* Prevent layout shift from main content */
-      main { min-height: 100vh; }
-      /* Section spacing defaults are handled in styles.css */
-      /* Tighten spacing for homepage features only (smaller gap below) */
-      .home-page .section#features { 
-        padding-top: clamp(42px, 6.2vh, 84px);
-        padding-bottom: clamp(56px, 7.4vh, 104px);
+
+      /* Hero image sizing */
+      img.hero__image {
+        height: 250px;
       }
-      .home-page .section#benefits { padding-top: 72px; }
-      /* App preview should size to its content */
-      .app-shot { height: auto; overflow: visible; }
-      /* Prevent image shift */
-      img { display: block; max-width: 100%; height: auto; }
-      /* Space Grotesk for h1 */
-      .hero .h1 { font-family: 'Space-Grotesk-fallback', 'Manrope-fallback', system-ui, -apple-system, sans-serif; line-height: 1.15; }
-      /* Hero image container - fixed aspect ratio */
-      .hero__image-wrap { aspect-ratio: 516/776; width: 100%; max-width: 516px; }
-      /* Prevent CTA shift */
-      .cta { min-height: 48px; }
-      /* Prevent hero text shift */
-      .hero__text { min-height: 400px; }
-    </style>
 
-    <!-- Basic CSP (tune for your domain/CDNs) -->
-    <meta http-equiv="Content-Security-Policy"
-          content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com 'self'; script-src 'self' 'unsafe-inline' https://app.posthog.com https://eu-assets.i.posthog.com https://eu.i.posthog.com https://kalycs.kit.com https://f.convertkit.com; connect-src 'self' https://eu.i.posthog.com https://eu-assets.i.posthog.com https://kalycs.kit.com https://app.convertkit.com https://app.kit.com; frame-src 'self';">
-
-    <!-- Main stylesheet - non-blocking -->
-    <link rel="stylesheet" href="styles.min.css" media="print" onload="this.media='all'; this.onload=null;">
-    <noscript><link rel="stylesheet" href="styles.min.css"></noscript>
-    <!-- Laptop overrides: extra breathing room for 1024–1439px -->
-    <link rel="stylesheet" href="styles.laptop.min.css">
-    <!-- Benefits sizing tweaks -->
-    <link rel="stylesheet" href="benefits.min.css">
-
-    <!-- Persisted preview tweaks (mobile only; override bundled CSS) -->
-    <style>
-      @media (max-width: 640px) {
-        div.hero__image-wrap { height: 250px; }
-
-        /* Heading layout */
-        h1.h1 {
-          flex-wrap: nowrap;
-          justify-content: center;
-          align-items: center;
-        }
-
-        /* Hero image sizing */
-        img.hero__image { height: 250px; }
-
-        /* Announcement link sizing */
-        a.announcement__link {
-          width: 120px;
-          height: 40px;
-          font-size: 11px;
-        }
+      /* Announcement link sizing */
+      a.announcement__link {
+        width: 120px;
+        height: 40px;
+        font-size: 11px;
       }
-    </style>
+    }
+  </style>
 
-    <!-- Manrope + Sono + Voces fonts - load non-blocking with font-display:swap -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sono:wght@400;600;700&family=Voces:wght@400&family=Space+Grotesk:wght@500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sono:wght@400;600;700&family=Voces:wght@400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-    </noscript>
+  <!-- Manrope + Sono + Voces fonts - load non-blocking with font-display:swap -->
+  <link rel="preload" as="style"
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sono:wght@400;600;700&family=Voces:wght@400&family=Space+Grotesk:wght@500;600;700&display=swap"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Sono:wght@400;600;700&family=Voces:wght@400&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet">
+  </noscript>
 
 
-    <script type="application/ld+json">
+  <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
@@ -168,7 +241,7 @@
     }
     </script>
 
-    <script type="application/ld+json">
+  <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Organization",
@@ -184,593 +257,626 @@
 
   <!-- Kit Form Script -->
   <script async data-uid="92c76d0aae" src="https://kalycs.kit.com/92c76d0aae/index.js"></script>
-  </head>
-  <body class="home-page">
-    <!-- Header / Nav -->
-    <header class="site-header">
-      <div class="container nav">
-        <a class="brand" href="#">
-          <picture>
-            <source srcset="assets/logo.webp" type="image/webp" />
-            <img src="assets/logo.png" alt="Kalycs logo" class="brand__logo" width="40" height="40" />
-          </picture>
-          <span class="brand__name">Kalycs</span>
-        </a>
+</head>
 
-        <button class="nav__toggle" aria-controls="primary-menu" aria-expanded="false">
-          <span class="sr-only">Toggle menu</span>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-          </svg>
-        </button>
+<body class="home-page">
+  <!-- Header / Nav -->
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#">
+        <picture>
+          <source srcset="assets/logo.webp" type="image/webp" />
+          <img src="assets/logo.png" alt="Kalycs logo" class="brand__logo" width="40" height="40" />
+        </picture>
+        <span class="brand__name">Kalycs</span>
+      </a>
 
-        <nav id="primary-menu" class="nav__links" aria-label="Primary">
-          <div class="nav__pill">
-            <a href="#main">Home</a>
-            <a href="#features" aria-current="page">Features</a>
-            <a href="#faqs">FAQ</a>
-            <a href="#buy">Pricing</a>
-            <a href="blog/">Blog</a>
-          </div>
-        </nav>
-      </div>
-    </header>
+      <button class="nav__toggle" aria-controls="primary-menu" aria-expanded="false">
+        <span class="sr-only">Toggle menu</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </button>
 
-    <!-- Announcement Bar -->
-    <div class="announcement" role="region" aria-label="Product updates">
-      <div class="container announcement__inner">
-        <span class="announcement__dot" aria-hidden="true"></span>
-        <span class="announcement__text">We’re just getting started — expect fresh features with each release.</span>
-        <a class="announcement__link" href="roadmap.html">See what’s next</a>
-      </div>
+      <nav id="primary-menu" class="nav__links" aria-label="Primary">
+        <div class="nav__pill">
+          <a href="#main">Home</a>
+          <a href="#features" aria-current="page">Features</a>
+          <a href="#faqs">FAQ</a>
+          <a href="#buy">Pricing</a>
+          <a href="blog/">Blog</a>
+        </div>
+      </nav>
     </div>
+  </header>
 
-    <!-- Hero -->
-    <main id="main">
-      <section class="section hero hero--caravaggio">
-        <div class="container grid-hero">
-          <div class="hero__text">
-            <div class="hero-kicker" role="note" aria-label="Kalycs qualities">
-              <span class="hero-kicker__dot" aria-hidden="true"></span>
-              <span class="hero-kicker__text"><strong>Local-first</strong> • <strong>Private</strong> • <strong>Fast</strong></span>
-            </div>
-            <h1 class="h1">Stop searching. <span class="hero-rotator" aria-live="polite"><span class="hero-rotator__item is-active">Start finding.</span><span class="hero-rotator__item">Save time.</span><span class="hero-rotator__item">Stay focused.</span><span class="hero-rotator__item">Get answers.</span><span class="hero-rotator__item">Reclaim control.</span></span></h1>
-            <p class="lead">
-              <a href="#" class="link">Kalycs</a> keeps your files <span class="u">organized</span>, makes <span class="u">finding</span> effortless, and turns them into instant <span class="u">answers</span>.
-            </p>
-            <div class="cta">
-              <a class="btn btn--ghost" href="#features">See how</a>
-              <a class="btn btn--primary" href="https://kalycs.lemonsqueezy.com/buy/3bd0ff64-cb04-47e9-bbb4-b7b2ce1c1d05" target="_blank" rel="noopener">Stop wasting time — Get organized now</a>
-            </div>
+  <!-- Announcement Bar -->
+  <div class="announcement" role="region" aria-label="Product updates">
+    <div class="container announcement__inner">
+      <span class="announcement__dot" aria-hidden="true"></span>
+      <span class="announcement__text">We’re just getting started — expect fresh features with each release.</span>
+      <a class="announcement__link" href="roadmap.html">See what’s next</a>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <main id="main">
+    <section class="section hero hero--caravaggio">
+      <div class="container grid-hero">
+        <div class="hero__text">
+          <div class="hero-kicker" role="note" aria-label="Kalycs qualities">
+            <span class="hero-kicker__dot" aria-hidden="true"></span>
+            <span class="hero-kicker__text"><strong>Private</strong> • <strong>Fast</strong> •
+              <strong>Powerful</strong></span>
           </div>
-          <div class="hero__image-wrap" style="aspect-ratio: 516/776;">
-            <picture>
-              <source srcset="assets/hero_image-274w.webp 274w, assets/hero_image-548w.webp 548w, assets/hero_image.webp 516w" sizes="(max-width: 768px) 274px, 516px" type="image/webp" />
-              <img src="assets/hero_image.png" alt="Person overwhelmed with flying folders" class="hero__image hero__image--base" loading="eager" fetchpriority="high" width="516" height="776" style="aspect-ratio: 516/776;" />
-            </picture>
-            <picture>
-              <source srcset="assets/hero_image_2-274w.webp 274w, assets/hero_image_2-548w.webp 548w, assets/hero_image_2.webp 516w" sizes="(max-width: 768px) 274px, 516px" type="image/webp" />
-              <img src="assets/hero_image_2.png" alt="" aria-hidden="true" class="hero__image hero__image--alt" width="516" height="700" style="aspect-ratio: 516/700;" />
-            </picture>
+          <h1 class="h1">Stop searching. <span class="hero-rotator" aria-live="polite"><span
+                class="hero-rotator__item is-active">Start finding.</span><span class="hero-rotator__item">Save
+                time.</span><span class="hero-rotator__item">Stay focused.</span><span class="hero-rotator__item">Get
+                answers.</span><span class="hero-rotator__item">Reclaim control.</span></span></h1>
+          <p class="lead">
+            <a href="#" class="link">Kalycs</a> keeps your files <span class="u">organized</span>, makes <span
+              class="u">finding</span> effortless, and turns them into instant <span class="u">answers</span>.
+          </p>
+          <div class="cta">
+            <a class="btn btn--ghost" href="#features">See how</a>
+            <a class="btn btn--primary" href="https://kalycs.lemonsqueezy.com/buy/3bd0ff64-cb04-47e9-bbb4-b7b2ce1c1d05"
+              target="_blank" rel="noopener">Stop wasting time — Get organized now</a>
           </div>
         </div>
-      </section>
-
-      <!-- App preview -->
-      <section class="section app-shot" id="preview">
-        <div class="container">
-          <figure class="preview">
-            <picture>
-              <source srcset="assets/KalycsScreen.svg" sizes="(max-width: 768px) 377px, 1200px" type="image/webp" />
-              <img src="assets/KalycsScreen.svg" alt="Kalycs app preview" loading="eager" fetchpriority="high" decoding="async" width="1200" height="759" />
-            </picture>
-          </figure>
+        <div class="hero__image-wrap" style="aspect-ratio: 516/776;">
+          <picture>
+            <source
+              srcset="assets/hero_image-274w.webp 274w, assets/hero_image-548w.webp 548w, assets/hero_image.webp 516w"
+              sizes="(max-width: 768px) 274px, 516px" type="image/webp" />
+            <img src="assets/hero_image.png" alt="Person overwhelmed with flying folders"
+              class="hero__image hero__image--base" loading="eager" fetchpriority="high" width="516" height="776"
+              style="aspect-ratio: 516/776;" />
+          </picture>
+          <picture>
+            <source
+              srcset="assets/hero_image_2-274w.webp 274w, assets/hero_image_2-548w.webp 548w, assets/hero_image_2.webp 516w"
+              sizes="(max-width: 768px) 274px, 516px" type="image/webp" />
+            <img src="assets/hero_image_2.png" alt="" aria-hidden="true" class="hero__image hero__image--alt"
+              width="516" height="700" style="aspect-ratio: 516/700;" />
+          </picture>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- Features -->
-      <section class="section" id="features">
-        <div class="container">
-          <h2 class="h2 features__title">Three reasons people choose Kalycs</h2>
+    <!-- App preview -->
+    <section class="section app-shot" id="preview">
+      <div class="container">
+        <figure class="preview">
+          <picture>
+            <source srcset="assets/KalycsScreen.svg" sizes="(max-width: 768px) 377px, 1200px" type="image/webp" />
+            <img src="assets/KalycsScreen.svg" alt="Kalycs app preview" loading="eager" fetchpriority="high"
+              decoding="async" width="1200" height="759" />
+          </picture>
+        </figure>
+      </div>
+    </section>
 
-          <section class="features-grid" aria-label="Kalycs key features">
-            <!-- Card 1 -->
-            <article class="feature-card">
-              <div class="badge" aria-hidden="true">1</div>
-              <h3>Ask anything</h3>
-              <p>Type a question in plain language. Kalycs reads across your documents and gives grounded answers with citations.</p>
+    <!-- Features -->
+    <section class="section" id="features">
+      <div class="container">
+        <h2 class="h2 features__title">Three reasons people choose Kalycs</h2>
 
-              <div class="feature-search" role="search" aria-label="Search example">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z" stroke="#8F93B8" stroke-width="1.6"/>
-                  <path d="m20.5 20.5-3.8-3.8" stroke="#8F93B8" stroke-width="1.6" stroke-linecap="round"/>
-                </svg>
-                <input type="text" value="Where's the Q3 roadmap and who owns it?" aria-label="Search input mock" />
-                <span class="kbd">⌥⌘K</span>
-              </div>
-            </article>
+        <section class="features-grid" aria-label="Kalycs key features">
+          <!-- Card 1 -->
+          <article class="feature-card">
+            <div class="badge" aria-hidden="true">1</div>
+            <h3>Ask anything</h3>
+            <p>Type a question in plain language. Kalycs reads across your documents and gives grounded answers with
+              citations.</p>
 
-            <!-- Card 2 -->
-            <article class="feature-card">
-              <div class="badge" aria-hidden="true">2</div>
-              <h3>Find everything</h3>
-              <p>Lightning-fast search that understands meaning, not just keywords—so the right file shows up first.</p>
-
-              <!-- Stacked folders illustration -->
-              <svg class="stack" width="150" height="110" viewBox="0 0 150 110" fill="none" aria-hidden="true">
-                <defs>
-                  <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" stop-color="#FFE7B4"/>
-                    <stop offset="1" stop-color="#E1B06A"/>
-                  </linearGradient>
-                  <linearGradient id="shade" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0" stop-color="rgba(0,0,0,.45)"/>
-                    <stop offset="1" stop-color="rgba(0,0,0,0)"/>
-                  </linearGradient>
-                </defs>
-                <g transform="translate(6,8)">
-                  <rect x="18" y="60" rx="6" ry="6" width="112" height="24" fill="#2B2F3D"/>
-                  <rect x="12" y="48" rx="6" ry="6" width="116" height="24" fill="#32384A"/>
-                  <rect x="8"  y="36" rx="6" ry="6" width="120" height="24" fill="#3A4156"/>
-                  <rect x="4"  y="24" rx="6" ry="6" width="124" height="24" fill="#424B63"/>
-                  <rect x="0"  y="0"  rx="8" ry="8" width="126" height="34" fill="url(#paper)"/>
-                  <rect x="0"  y="26" width="126" height="8" fill="url(#shade)" />
-                </g>
+            <div class="feature-search" role="search" aria-label="Search example">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z" stroke="#8F93B8" stroke-width="1.6" />
+                <path d="m20.5 20.5-3.8-3.8" stroke="#8F93B8" stroke-width="1.6" stroke-linecap="round" />
               </svg>
-            </article>
+              <input type="text" value="Where's the Q3 roadmap and who owns it?" aria-label="Search input mock" />
+              <span class="kbd">⌥⌘K</span>
+            </div>
+          </article>
 
-            <!-- Card 3 — Auto-organize Downloads -->
-            <article class="feature-card">
-              <div class="badge" aria-hidden="true">3</div>
-              <h3>Auto-organize your Downloads</h3>
-              <p>Kalycs watches your Downloads and files everything for you—using your rules or AI suggestions.</p>
+          <!-- Card 2 -->
+          <article class="feature-card">
+            <div class="badge" aria-hidden="true">2</div>
+            <h3>Find everything</h3>
+            <p>Lightning-fast search that understands meaning, not just keywords—so the right file shows up first.</p>
 
-              <div class="feature-visual" aria-label="Files falling into organized folders">
-                <div class="organize-container">
-                  <!-- Download Arrow -->
-                  <div class="download-arrow" aria-hidden="true">
-                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="url(#acc-grad)" stroke-width="2" role="img" aria-label="Download">
-                      <defs>
-                        <linearGradient id="acc-grad" x1="0" y1="0" x2="1" y2="1">
-                          <stop offset="0" stop-color="#8285E3"/>
-                          <stop offset="1" stop-color="#585CDA"/>
-                        </linearGradient>
-                      </defs>
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                      <polyline points="7,10 12,15 17,10"/>
-                      <line x1="12" y1="15" x2="12" y2="3"/>
-                    </svg>
+            <!-- Stacked folders illustration -->
+            <svg class="stack" width="150" height="110" viewBox="0 0 150 110" fill="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#FFE7B4" />
+                  <stop offset="1" stop-color="#E1B06A" />
+                </linearGradient>
+                <linearGradient id="shade" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="rgba(0,0,0,.45)" />
+                  <stop offset="1" stop-color="rgba(0,0,0,0)" />
+                </linearGradient>
+              </defs>
+              <g transform="translate(6,8)">
+                <rect x="18" y="60" rx="6" ry="6" width="112" height="24" fill="#2B2F3D" />
+                <rect x="12" y="48" rx="6" ry="6" width="116" height="24" fill="#32384A" />
+                <rect x="8" y="36" rx="6" ry="6" width="120" height="24" fill="#3A4156" />
+                <rect x="4" y="24" rx="6" ry="6" width="124" height="24" fill="#424B63" />
+                <rect x="0" y="0" rx="8" ry="8" width="126" height="34" fill="url(#paper)" />
+                <rect x="0" y="26" width="126" height="8" fill="url(#shade)" />
+              </g>
+            </svg>
+          </article>
+
+          <!-- Card 3 — Auto-organize Downloads -->
+          <article class="feature-card">
+            <div class="badge" aria-hidden="true">3</div>
+            <h3>Auto-organize your Downloads</h3>
+            <p>Kalycs watches your Downloads and files everything for you—using your rules or AI suggestions.</p>
+
+            <div class="feature-visual" aria-label="Files falling into organized folders">
+              <div class="organize-container">
+                <!-- Download Arrow -->
+                <div class="download-arrow" aria-hidden="true">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="url(#acc-grad)" stroke-width="2"
+                    role="img" aria-label="Download">
+                    <defs>
+                      <linearGradient id="acc-grad" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0" stop-color="#8285E3" />
+                        <stop offset="1" stop-color="#585CDA" />
+                      </linearGradient>
+                    </defs>
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7,10 12,15 17,10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                </div>
+
+                <!-- Falling files -->
+                <div class="falling-files" aria-hidden="true">
+                  <div class="file file-pdf"></div>
+                  <div class="file file-image"></div>
+                  <div class="file file-doc"></div>
+                </div>
+
+                <!-- Destination folders -->
+                <div class="folders-container">
+                  <div class="folder folder-docs">
+                    <div class="folder-icon"></div>
+                    <span>Docs</span>
                   </div>
-
-                  <!-- Falling files -->
-                  <div class="falling-files" aria-hidden="true">
-                    <div class="file file-pdf"></div>
-                    <div class="file file-image"></div>
-                    <div class="file file-doc"></div>
+                  <div class="folder folder-images">
+                    <div class="folder-icon"></div>
+                    <span>Images</span>
                   </div>
-
-                  <!-- Destination folders -->
-                  <div class="folders-container">
-                    <div class="folder folder-docs">
-                      <div class="folder-icon"></div>
-                      <span>Docs</span>
-                    </div>
-                    <div class="folder folder-images">
-                      <div class="folder-icon"></div>
-                      <span>Images</span>
-                    </div>
-                    <div class="folder folder-other">
-                      <div class="folder-icon"></div>
-                      <span>Other</span>
-                    </div>
+                  <div class="folder folder-other">
+                    <div class="folder-icon"></div>
+                    <span>Other</span>
                   </div>
                 </div>
               </div>
-            </article>
-          </section>
-        </div>
-      </section>
-
-      <!-- Demo Video -->
-      <section class="section demo-video" id="demo">
-        <div class="container">
-          <header class="demo-video__header">
-            <h2 class="demo-video__title">
-              <span class="demo-video__quote">"</span>Even if you forget, <span class="demo-video__highlight">I remember.</span><span class="demo-video__quote">"</span>
-            </h2>
-          </header>
-          <div class="video-wrapper">
-            <video
-              class="demo-video-player"
-              muted
-              loop
-              playsinline
-              autoplay
-              preload="auto"
-              aria-label="Kalycs semantic search demonstration">
-              <source src="assets/demo/Kalycs_semantic_search_demo.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-        </div>
-      </section>
-
-      <!-- Benefits Section (Replacing Bento Feature Map) -->
-      <section class="section benefits" id="benefits" aria-label="Why Kalycs">
-        <div class="container">
-          <header class="benefits__header text-center">
-            <span class="benefits__kicker"><span class="dot" aria-hidden="true"></span>Why Kalycs</span>
-            <h2 class="h2">Built for flow, not just files.</h2>
-            <p class="benefits__sub">Everything you need to reclaim your focus.</p>
-          </header>
-
-          <div class="benefits-grid">
-            <!-- Benefit 1: Privacy -->
-            <div class="benefit-item">
-              <div class="benefit-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                </svg>
-              </div>
-              <h3>100% Private</h3>
-              <p>All indexing and search happens locally on your device. When you use AI features, only relevant excerpts are sent to OpenAI.</p>
             </div>
-
-            <!-- Benefit 2: Semantic Search -->
-            <div class="benefit-item">
-              <div class="benefit-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="11" cy="11" r="8"/>
-                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                  <path d="M11 8a3 3 0 0 0-3 3"/>
-                </svg>
-              </div>
-              <h3>Deep Understanding</h3>
-              <p>Search by meaning, not just keywords. Kalycs understands the context of your documents.</p>
-            </div>
-
-            <!-- Benefit 3: Auto-Organize -->
-            <div class="benefit-item">
-              <div class="benefit-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="3" width="7" height="7"/>
-                  <rect x="14" y="3" width="7" height="7"/>
-                  <rect x="14" y="14" width="7" height="7"/>
-                  <rect x="3" y="14" width="7" height="7"/>
-                </svg>
-              </div>
-              <h3>Zero Maintenance</h3>
-              <p>Smart rules organize your downloads and projects automatically. Stop moving files manually.</p>
-            </div>
-
-            <!-- Benefit 4: Native Speed -->
-            <div class="benefit-item">
-              <div class="benefit-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-                </svg>
-              </div>
-              <h3>Native Speed</h3>
-              <p>Built for macOS with Apple Silicon optimization. Instant results, no loading screens.</p>
-            </div>
-
-            <!-- Benefit 5: Universal Access -->
-            <div class="benefit-item">
-              <div class="benefit-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/>
-                </svg>
-              </div>
-              <h3>Always Ready</h3>
-              <p>Summon Kalycs from anywhere with <span class="kbd">⌥⌘K</span>. Your files are always one keystroke away.</p>
-            </div>
-
-            <!-- Benefit 6: No Subscriptions -->
-            <div class="benefit-item">
-              <div class="benefit-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 2v20"/>
-                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                </svg>
-              </div>
-              <h3>No Subscriptions</h3>
-              <p>Pay once, own it forever.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      <!-- Local-first Section -->
-      <section class="section local-first" id="local-first">
-        <div class="container">
-          <div class="local-first__content">
-            <h2 class="local-first__title">Local-First</h2>
-            <p class="local-first__desc">Your files are indexed locally. AI features send excerpts directly to OpenAI using your key for summaries and embeddings.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Pricing -->
-      <section class="section pricing" id="buy" aria-label="Pricing">
-        <div class="container">
-          <header class="pricing__header text-center">
-            <span class="pricing__kicker pricing__kicker--primary">Lifetime access</span>
-            <h2 class="h2">Pay once. Own it forever.</h2>
-            <p class="pricing__sub">No subscriptions. Updates included.</p>
-          </header>
-
-          <article class="pricing__card" role="group" aria-label="One-time purchase">
-            <div class="pricing__plan">
-              <h3 class="pricing__title">Lifetime license</h3>
-              <p class="pricing__desc">Full access to all features and future updates. No recurring fees.</p>
-            </div>
-
-            <div class="pricing__price" aria-label="Price">
-              <span class="pricing__amount" aria-label="49.99 US dollars">$49.99</span>
-              <span class="pricing__period">lifetime</span>
-            </div>
-
-            <div class="bento-tags" aria-label="Highlights">
-              <span class="chip" aria-label="Lifetime license">Lifetime license</span>
-              <span class="chip" aria-label="No subscription">No subscription</span>
-              <span class="chip" aria-label="14-day money-back guarantee">14-day guarantee</span>
-            </div>
-
-            <a class="btn btn--primary pricing__cta" href="https://kalycs.lemonsqueezy.com/buy/3bd0ff64-cb04-47e9-bbb4-b7b2ce1c1d05" target="_blank" rel="noopener">Get lifetime access</a>
-            <p class="pricing__note">One-time payment in USD. 14-day money-back guarantee. Activate on up to 2 devices. AI features use your own OpenAI API key.</p>
           </article>
+        </section>
+      </div>
+    </section>
+
+    <!-- Demo Video -->
+    <section class="section demo-video" id="demo">
+      <div class="container">
+        <header class="demo-video__header">
+          <h2 class="demo-video__title">
+            <span class="demo-video__quote">"</span>Even if you forget, <span class="demo-video__highlight">I
+              remember.</span><span class="demo-video__quote">"</span>
+          </h2>
+        </header>
+        <div class="video-wrapper">
+          <video class="demo-video-player" muted loop playsinline autoplay preload="auto"
+            aria-label="Kalycs semantic search demonstration">
+            <source src="assets/demo/Kalycs_semantic_search_demo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- FAQs -->
-      <section class="section faq-section" id="faqs">
-        <div class="container">
-          <div class="faq-intro">
-            <span class="faq-kicker"><span class="dot" aria-hidden="true"></span>FAQ</span>
-            <h2 class="h2">Frequently Asked Questions</h2>
-            <p class="faq-sub">Quick answers about Kalycs, AI features, and privacy.</p>
-          </div>
+    <!-- Benefits Section (Replacing Bento Feature Map) -->
+    <section class="section benefits" id="benefits" aria-label="Why Kalycs">
+      <div class="container">
+        <header class="benefits__header text-center">
+          <span class="benefits__kicker"><span class="dot" aria-hidden="true"></span>Why Kalycs</span>
+          <h2 class="h2">Built for flow, not just files.</h2>
+          <p class="benefits__sub">Everything you need to reclaim your focus.</p>
+        </header>
 
-          <div class="faq-list" role="list">
-            <details class="faq-item" role="listitem">
-              <summary><span>Is AI included in Kalycs?</span></summary>
-              <div class="faq-body">
-                <p>Yes. Kalycs includes semantic search, natural-language Q&amp;A, smart summaries, tagging, and auto-organize suggestions.</p>
-              </div>
-            </details>
-
-            <details class="faq-item" role="listitem">
-              <summary><span>Do I need an OpenAI API key?</span></summary>
-              <div class="faq-body">
-                <p>Yes. To use AI features, add your own OpenAI API key in Settings. Without a key, Kalycs works with local (non-AI) search and organization.</p>
-              </div>
-            </details>
-
-            <details class="faq-item" role="listitem">
-              <summary><span>Which AI models are supported?</span></summary>
-              <div class="faq-body">
-                <p>OpenAI GPT models only. Other providers are not supported at this time.</p>
-              </div>
-            </details>
-
-            <details class="faq-item" role="listitem">
-              <summary><span>Can I use Kalycs completely offline?</span></summary>
-              <div class="faq-body">
-                <p>Yes. Local search , organization, and file management work offline. AI features require internet access to call OpenAI.</p>
-              </div>
-            </details>
-
-            <details class="faq-item" role="listitem">
-              <summary><span>Does Kalycs upload my files?</span></summary>
-              <div class="faq-body">
-                <p>No. Your files stay on your device. When you use AI features, only the minimum relevant excerpts are sent to OpenAI via your key to generate answers.</p>
-              </div>
-            </details>
-
-            <details class="faq-item" role="listitem">
-              <summary><span>How are my API keys stored?</span></summary>
-              <div class="faq-body">
-                <p>Keys are stored in your system keychain and are never sent to Kalycs servers.</p>
-              </div>
-            </details>
-
-            <details class="faq-item" role="listitem">
-              <summary><span>What are the system requirements?</span></summary>
-              <div class="faq-body">
-                <p>Only macOS is supported. Modern hardware recommended; large libraries index faster on SSDs.</p>
-              </div>
-            </details>
-
-            <details class="faq-item" role="listitem">
-              <summary><span>Is there a free trial or refund policy?</span></summary>
-              <div class="faq-body">
-                <p>We offer a 14-day money-back guarantee. If Kalycs isn't a fit, contact support for a refund within 14 days of purchase.</p>
-              </div>
-            </details>
-
-            <details class="faq-item" role="listitem">
-              <summary><span>How do I get support?</span></summary>
-              <div class="faq-body">
-                <p>Email support is included. We typically respond within 1–2 business days.</p>
-              </div>
-            </details>
-          </div>
-
-          <aside class="faq-note" aria-label="Important note">
-            <div class="faq-note__icon" aria-hidden="true">ⓘ</div>
-            <div class="faq-note__content">
-              <strong>Note:</strong> AI capabilities (semantic search, chat with files, summaries, tagging) require your OpenAI API key.
+        <div class="benefits-grid">
+          <!-- Benefit 1: Privacy -->
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
             </div>
-          </aside>
-        </div>
-      </section>
-
-      
-    </main>
-
-    <footer class="site-footer">
-      <div class="container footer">
-        <div class="footer__left">
-          <picture>
-            <source srcset="assets/logo.webp" type="image/webp" />
-            <img src="assets/logo.png" alt="Kalycs logo" class="brand__logo small" loading="lazy" decoding="async" width="40" height="40" />
-          </picture>
-          <span>© <span id="year"></span> Kalycs</span>
-        </div>
-        <div class="footer__right">
-          <div class="footer__links">
-            <a href="privacy.html" class="footer__link">Privacy</a>
-            <a href="terms.html" class="footer__link">Terms of Use</a>
-            <a href="#contact" class="footer__link" id="contact-link">Contact</a>
-            <a href="#feature-request" class="footer__link" id="feature-request-link-footer">Request a Feature</a>
+            <h3>100% Private</h3>
+            <p>All indexing and search happens locally on your device. When you use AI features, only relevant excerpts
+              are sent to OpenAI.</p>
           </div>
-          <div class="footer__social">
-            <a href="https://x.com/KalycsAI" target="_blank" rel="noopener" class="social-link" aria-label="Follow Kalycs on Twitter">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+
+          <!-- Benefit 2: Semantic Search -->
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                <path d="M11 8a3 3 0 0 0-3 3" />
               </svg>
-            </a>
-            <a href="https://www.youtube.com/@Kalycs" target="_blank" rel="noopener" class="social-link" aria-label="Watch Kalycs on YouTube">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </div>
+            <h3>Deep Understanding</h3>
+            <p>Search by meaning, not just keywords. Kalycs understands the context of your documents.</p>
+          </div>
+
+          <!-- Benefit 3: Auto-Organize -->
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7" />
+                <rect x="14" y="3" width="7" height="7" />
+                <rect x="14" y="14" width="7" height="7" />
+                <rect x="3" y="14" width="7" height="7" />
               </svg>
-            </a>
+            </div>
+            <h3>Zero Maintenance</h3>
+            <p>Smart rules organize your downloads and projects automatically. Stop moving files manually.</p>
+          </div>
+
+          <!-- Benefit 4: Native Speed -->
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+              </svg>
+            </div>
+            <h3>Native Speed</h3>
+            <p>Built for macOS with Apple Silicon optimization. Instant results, no loading screens.</p>
+          </div>
+
+          <!-- Benefit 5: Universal Access -->
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z" />
+              </svg>
+            </div>
+            <h3>Always Ready</h3>
+            <p>Summon Kalycs from anywhere with <span class="kbd">⌥⌘K</span>. Your files are always one keystroke away.
+            </p>
+          </div>
+
+          <!-- Benefit 6: No Subscriptions -->
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2v20" />
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+              </svg>
+            </div>
+            <h3>No Subscriptions</h3>
+            <p>Pay once, own it forever.</p>
           </div>
         </div>
       </div>
-    </footer>
+    </section>
 
-    
 
-    <!-- Contact Modal -->
-    <div class="contact-modal" id="contact-modal" aria-hidden="true">
-      <div class="contact-backdrop" data-close="contact-modal" aria-hidden="true"></div>
-      <div class="contact-content" role="dialog" aria-modal="true" aria-labelledby="contact-title">
-        <button class="contact-close" type="button" aria-label="Close contact form" data-close="contact-modal">×</button>
-        <header class="contact-header">
-          <h2 class="h2" id="contact-title">Contact Us</h2>
-          <p class="tiny muted">We’ll get back to you within 1–2 business days.</p>
+
+
+    <!-- Pricing -->
+    <section class="section pricing" id="buy" aria-label="Pricing">
+      <div class="container">
+        <header class="pricing__header text-center">
+          <span class="pricing__kicker pricing__kicker--primary">Lifetime access</span>
+          <h2 class="h2">Pay once. Own it forever.</h2>
+          <p class="pricing__sub">No subscriptions. Updates included.</p>
         </header>
-        <!-- Netlify form: keep in static HTML so Netlify detects it -->
-        <form class="contact-form" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
-          <input type="hidden" name="form-name" value="contact" />
-          <p class="hidden">
-            <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
-          </p>
-          <div class="field">
-            <label for="contact-name">Name</label>
-            <input id="contact-name" name="name" type="text" autocomplete="name" required />
+
+        <article class="pricing__card" role="group" aria-label="One-time purchase">
+          <div class="pricing__plan">
+            <h3 class="pricing__title">Lifetime license</h3>
+            <p class="pricing__desc">Full access to all features and future updates. No recurring fees.</p>
           </div>
-          <div class="field">
-            <label for="contact-email">Email</label>
-            <input id="contact-email" name="email" type="email" autocomplete="email" required />
+
+          <div class="pricing__price" aria-label="Price">
+            <span class="pricing__amount" aria-label="49.99 US dollars">$49.99</span>
+            <span class="pricing__period">lifetime</span>
           </div>
-          <div class="field">
-            <label for="contact-subject">Subject (optional)</label>
-            <input id="contact-subject" name="subject" type="text" />
+
+          <div class="bento-tags" aria-label="Highlights">
+            <span class="chip" aria-label="Lifetime license">Lifetime license</span>
+            <span class="chip" aria-label="No subscription">No subscription</span>
+            <span class="chip" aria-label="14-day money-back guarantee">14-day guarantee</span>
           </div>
-          <div class="field">
-            <label for="contact-message">Message</label>
-            <textarea id="contact-message" name="message" rows="5" required></textarea>
+
+          <a class="btn btn--primary pricing__cta"
+            href="https://kalycs.lemonsqueezy.com/buy/3bd0ff64-cb04-47e9-bbb4-b7b2ce1c1d05" target="_blank"
+            rel="noopener">Get lifetime access</a>
+          <p class="pricing__note">One-time payment in USD. 14-day money-back guarantee. Activate on up to 2 devices. AI
+            features use your own OpenAI API key.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- FAQs -->
+    <section class="section faq-section" id="faqs">
+      <div class="container">
+        <div class="faq-intro">
+          <span class="faq-kicker"><span class="dot" aria-hidden="true"></span>FAQ</span>
+          <h2 class="h2">Frequently Asked Questions</h2>
+          <p class="faq-sub">Quick answers about Kalycs, AI features, and privacy.</p>
+        </div>
+
+        <div class="faq-list" role="list">
+          <details class="faq-item" role="listitem">
+            <summary><span>Is AI included in Kalycs?</span></summary>
+            <div class="faq-body">
+              <p>Yes. Kalycs includes semantic search, natural-language Q&amp;A, smart summaries, tagging, and
+                auto-organize suggestions.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" role="listitem">
+            <summary><span>Do I need an OpenAI API key?</span></summary>
+            <div class="faq-body">
+              <p>Yes. To use AI features, add your own OpenAI API key in Settings. Without a key, Kalycs works with
+                local (non-AI) search and organization.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" role="listitem">
+            <summary><span>Which AI models are supported?</span></summary>
+            <div class="faq-body">
+              <p>OpenAI GPT models only. Other providers are not supported at this time.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" role="listitem">
+            <summary><span>Can I use Kalycs completely offline?</span></summary>
+            <div class="faq-body">
+              <p>Yes. Local search , organization, and file management work offline. AI features require internet access
+                to call OpenAI.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" role="listitem">
+            <summary><span>Does Kalycs upload my files?</span></summary>
+            <div class="faq-body">
+              <p>No. Your files stay on your device. When you use AI features, only the minimum relevant excerpts are
+                sent to OpenAI via your key to generate answers.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" role="listitem">
+            <summary><span>How are my API keys stored?</span></summary>
+            <div class="faq-body">
+              <p>Keys are stored in your system keychain and are never sent to Kalycs servers.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" role="listitem">
+            <summary><span>What are the system requirements?</span></summary>
+            <div class="faq-body">
+              <p>Only macOS is supported. Modern hardware recommended; large libraries index faster on SSDs.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" role="listitem">
+            <summary><span>Is there a free trial or refund policy?</span></summary>
+            <div class="faq-body">
+              <p>We offer a 14-day money-back guarantee. If Kalycs isn't a fit, contact support for a refund within 14
+                days of purchase.</p>
+            </div>
+          </details>
+
+          <details class="faq-item" role="listitem">
+            <summary><span>How do I get support?</span></summary>
+            <div class="faq-body">
+              <p>Email support is included. We typically respond within 1–2 business days.</p>
+            </div>
+          </details>
+        </div>
+
+        <aside class="faq-note" aria-label="Important note">
+          <div class="faq-note__icon" aria-hidden="true">ⓘ</div>
+          <div class="faq-note__content">
+            <strong>Note:</strong> AI capabilities (semantic search, chat with files, summaries, tagging) require your
+            OpenAI API key.
           </div>
-          <div class="contact-actions">
-            <button class="btn btn--ghost" type="button" data-close="contact-modal">Cancel</button>
-            <button class="btn btn--primary" type="submit">Send</button>
-          </div>
-          <p class="contact-status" role="status" aria-live="polite"></p>
-        </form>
+        </aside>
+      </div>
+    </section>
+
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer">
+      <div class="footer__left">
+        <picture>
+          <source srcset="assets/logo.webp" type="image/webp" />
+          <img src="assets/logo.png" alt="Kalycs logo" class="brand__logo small" loading="lazy" decoding="async"
+            width="40" height="40" />
+        </picture>
+        <span>© <span id="year"></span> Kalycs</span>
+      </div>
+      <div class="footer__right">
+        <div class="footer__links">
+          <a href="privacy.html" class="footer__link">Privacy</a>
+          <a href="terms.html" class="footer__link">Terms of Use</a>
+          <a href="changelog.html" class="footer__link">Changelog</a>
+          <a href="#contact" class="footer__link" id="contact-link">Contact</a>
+          <a href="#feature-request" class="footer__link" id="feature-request-link-footer">Request a Feature</a>
+        </div>
+        <div class="footer__social">
+          <a href="https://x.com/KalycsAI" target="_blank" rel="noopener" class="social-link"
+            aria-label="Follow Kalycs on Twitter">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path
+                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg>
+          </a>
+          <a href="https://www.youtube.com/@Kalycs" target="_blank" rel="noopener" class="social-link"
+            aria-label="Watch Kalycs on YouTube">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path
+                d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
+  </footer>
 
-    <!-- Feature Request Modal -->
-    <div class="contact-modal" id="feature-modal" aria-hidden="true">
-      <div class="contact-backdrop" data-close="feature-modal" aria-hidden="true"></div>
-      <div class="contact-content" role="dialog" aria-modal="true" aria-labelledby="feature-title">
-        <button class="contact-close" type="button" aria-label="Close feature request form" data-close="feature-modal">×</button>
-        <header class="contact-header">
-          <h2 class="h2" id="feature-title">Request a Feature</h2>
-          <p class="tiny muted">Tell us the outcome you want; we’ll use this to prioritize.</p>
-        </header>
-        <!-- Netlify form: keep in static HTML so Netlify detects it -->
-        <form class="contact-form" name="feature-request" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="thanks.html">
-          <input type="hidden" name="form-name" value="feature-request" />
-          <p class="hidden">
-            <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
-          </p>
-          <div class="field">
-            <label for="fr-name">Name (optional)</label>
-            <input id="fr-name" name="name" type="text" autocomplete="name" />
-          </div>
-          <div class="field">
-            <label for="fr-email">Email (optional)</label>
-            <input id="fr-email" name="email" type="email" autocomplete="email" />
-          </div>
-          <div class="field">
-            <label for="fr-title">Feature title</label>
-            <input id="fr-title" name="title" type="text" placeholder="e.g., See answers with highlighted context" required />
-          </div>
-          <div class="field">
-            <label for="fr-outcome">What outcome do you need?</label>
-            <textarea id="fr-outcome" name="outcome" rows="5" placeholder="Describe the job-to-be-done or problem" required></textarea>
-          </div>
-          <div class="field">
-            <label for="fr-importance">How important is this?</label>
-            <select id="fr-importance" name="importance" required>
-              <option value="" disabled selected>Select importance</option>
-              <option>Nice to have</option>
-              <option>Important</option>
-              <option>Critical</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="fr-examples">Examples or links (optional)</label>
-            <input id="fr-examples" name="examples" type="url" placeholder="https://..." />
-          </div>
-          <div class="contact-actions">
-            <button class="btn btn--ghost" type="button" data-close="feature-modal">Cancel</button>
-            <button class="btn btn--primary" type="submit">Send request</button>
-          </div>
-          <p class="contact-status" role="status" aria-live="polite"></p>
-        </form>
-      </div>
+
+
+  <!-- Contact Modal -->
+  <div class="contact-modal" id="contact-modal" aria-hidden="true">
+    <div class="contact-backdrop" data-close="contact-modal" aria-hidden="true"></div>
+    <div class="contact-content" role="dialog" aria-modal="true" aria-labelledby="contact-title">
+      <button class="contact-close" type="button" aria-label="Close contact form" data-close="contact-modal">×</button>
+      <header class="contact-header">
+        <h2 class="h2" id="contact-title">Contact Us</h2>
+        <p class="tiny muted">We’ll get back to you within 1–2 business days.</p>
+      </header>
+      <!-- Netlify form: keep in static HTML so Netlify detects it -->
+      <form class="contact-form" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="contact" />
+        <p class="hidden">
+          <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
+        </p>
+        <div class="field">
+          <label for="contact-name">Name</label>
+          <input id="contact-name" name="name" type="text" autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label for="contact-email">Email</label>
+          <input id="contact-email" name="email" type="email" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label for="contact-subject">Subject (optional)</label>
+          <input id="contact-subject" name="subject" type="text" />
+        </div>
+        <div class="field">
+          <label for="contact-message">Message</label>
+          <textarea id="contact-message" name="message" rows="5" required></textarea>
+        </div>
+        <div class="contact-actions">
+          <button class="btn btn--ghost" type="button" data-close="contact-modal">Cancel</button>
+          <button class="btn btn--primary" type="submit">Send</button>
+        </div>
+        <p class="contact-status" role="status" aria-live="polite"></p>
+      </form>
     </div>
+  </div>
 
-    <!-- PostHog Analytics - load on user interaction or idle to minimize initial JS footprint -->
-    <script>
-      (function() {
-        function initPosthog() {
-          if (window.__posthogLoaded) return;
-          window.__posthogLoaded = true;
-          !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split('.');2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement('script')).type='text/javascript',p.crossOrigin='anonymous',p.async=!0,p.src=s.api_host.replace('.i.posthog.com','-assets.i.posthog.com')+'/static/array.js',(r=t.getElementsByTagName('script')[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a='posthog',u.people=u.people||[],u.toString=function(t){var e='posthog';return'posthog'!==a&&(e+='.'+a),t||(e+=' (stub)'),e},u.people.toString=function(){return u.toString(1)+'.people (stub)'},o='init Re Ms Fs Pe Rs Cs capture Ve calculateEventProperties Ds register register_once register_for_session unregister unregister_for_session zs getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey canRenderSurveyAsync createPersonProfile Ns Is Us opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing is_capturing clear_opt_in_out_capturing Os debug I js getPageViewId captureTraceFeedback captureTraceMetric'.split(' '),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document, window.posthog || []);
+  <!-- Feature Request Modal -->
+  <div class="contact-modal" id="feature-modal" aria-hidden="true">
+    <div class="contact-backdrop" data-close="feature-modal" aria-hidden="true"></div>
+    <div class="contact-content" role="dialog" aria-modal="true" aria-labelledby="feature-title">
+      <button class="contact-close" type="button" aria-label="Close feature request form"
+        data-close="feature-modal">×</button>
+      <header class="contact-header">
+        <h2 class="h2" id="feature-title">Request a Feature</h2>
+        <p class="tiny muted">Tell us the outcome you want; we’ll use this to prioritize.</p>
+      </header>
+      <!-- Netlify form: keep in static HTML so Netlify detects it -->
+      <form class="contact-form" name="feature-request" method="POST" data-netlify="true"
+        data-netlify-honeypot="bot-field" action="thanks.html">
+        <input type="hidden" name="form-name" value="feature-request" />
+        <p class="hidden">
+          <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
+        </p>
+        <div class="field">
+          <label for="fr-name">Name (optional)</label>
+          <input id="fr-name" name="name" type="text" autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="fr-email">Email (optional)</label>
+          <input id="fr-email" name="email" type="email" autocomplete="email" />
+        </div>
+        <div class="field">
+          <label for="fr-title">Feature title</label>
+          <input id="fr-title" name="title" type="text" placeholder="e.g., See answers with highlighted context"
+            required />
+        </div>
+        <div class="field">
+          <label for="fr-outcome">What outcome do you need?</label>
+          <textarea id="fr-outcome" name="outcome" rows="5" placeholder="Describe the job-to-be-done or problem"
+            required></textarea>
+        </div>
+        <div class="field">
+          <label for="fr-importance">How important is this?</label>
+          <select id="fr-importance" name="importance" required>
+            <option value="" disabled selected>Select importance</option>
+            <option>Nice to have</option>
+            <option>Important</option>
+            <option>Critical</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="fr-examples">Examples or links (optional)</label>
+          <input id="fr-examples" name="examples" type="url" placeholder="https://..." />
+        </div>
+        <div class="contact-actions">
+          <button class="btn btn--ghost" type="button" data-close="feature-modal">Cancel</button>
+          <button class="btn btn--primary" type="submit">Send request</button>
+        </div>
+        <p class="contact-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
 
-          posthog.init('phc_4Y9RxCs4bQ2WIah1xVjluDkkmsaWAy7n7wsG7K2fkO2', {
-            api_host: 'https://eu.i.posthog.com',
-            capture_pageview: true,
-            capture_pageleave: true,
-            autocapture: true,
-            disable_session_recording: true,
-            disable_surveys: true,
-            enable_recording_console_log: false,
-            person_profiles: 'identified_only'
-          });
+  <!-- PostHog Analytics - load on user interaction or idle to minimize initial JS footprint -->
+  <script>
+    (function () {
+      function initPosthog() {
+        if (window.__posthogLoaded) return;
+        window.__posthogLoaded = true;
+        !function (t, e) { var o, n, p, r; e.__SV || (window.posthog = e, e._i = [], e.init = function (i, s, a) { function g(t, e) { var o = e.split('.'); 2 == o.length && (t = t[o[0]], e = o[1]), t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } } (p = t.createElement('script')).type = 'text/javascript', p.crossOrigin = 'anonymous', p.async = !0, p.src = s.api_host.replace('.i.posthog.com', '-assets.i.posthog.com') + '/static/array.js', (r = t.getElementsByTagName('script')[0]).parentNode.insertBefore(p, r); var u = e; for (void 0 !== a ? u = e[a] = [] : a = 'posthog', u.people = u.people || [], u.toString = function (t) { var e = 'posthog'; return 'posthog' !== a && (e += '.' + a), t || (e += ' (stub)'), e }, u.people.toString = function () { return u.toString(1) + '.people (stub)' }, o = 'init Re Ms Fs Pe Rs Cs capture Ve calculateEventProperties Ds register register_once register_for_session unregister unregister_for_session zs getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey canRenderSurveyAsync createPersonProfile Ns Is Us opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing is_capturing clear_opt_in_out_capturing Os debug I js getPageViewId captureTraceFeedback captureTraceMetric'.split(' '), n = 0; n < o.length; n++)g(u, o[n]); e._i.push([i, s, a]) }, e.__SV = 1) }(document, window.posthog || []);
+
+        posthog.init('phc_4Y9RxCs4bQ2WIah1xVjluDkkmsaWAy7n7wsG7K2fkO2', {
+          api_host: 'https://eu.i.posthog.com',
+          capture_pageview: true,
+          capture_pageleave: true,
+          autocapture: true,
+          disable_session_recording: true,
+          disable_surveys: true,
+          enable_recording_console_log: false,
+          person_profiles: 'identified_only'
+        });
+      }
+
+      var passiveOnce = { once: true, passive: true };
+      ['pointerdown', 'keydown', 'scroll'].forEach(function (evt) {
+        window.addEventListener(evt, initPosthog, passiveOnce);
+      });
+
+      window.addEventListener('load', function () {
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(initPosthog, { timeout: 6000 });
+        } else {
+          setTimeout(initPosthog, 4000);
         }
+      });
+    })();
+  </script>
 
-        var passiveOnce = { once: true, passive: true };
-        ['pointerdown', 'keydown', 'scroll'].forEach(function(evt) {
-          window.addEventListener(evt, initPosthog, passiveOnce);
-        });
+  <script src="script.min.js" defer></script>
+</body>
 
-        window.addEventListener('load', function() {
-          if ('requestIdleCallback' in window) {
-            requestIdleCallback(initPosthog, { timeout: 6000 });
-          } else {
-            setTimeout(initPosthog, 4000);
-          }
-        });
-      })();
-    </script>
-
-    <script src="script.min.js" defer></script>
-  </body>
-  </html>
+</html>

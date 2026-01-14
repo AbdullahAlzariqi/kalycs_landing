@@ -75,6 +75,11 @@
   to = "/reset-password.html"
   status = 200
 
+[[redirects]]
+  from = "/changelog"
+  to = "/changelog.html"
+  status = 200
+
 # OAuth callback: rewrite to serve oauth.html at /auth/callback (preserves hash)
 [[redirects]]
   from = "/auth/callback"

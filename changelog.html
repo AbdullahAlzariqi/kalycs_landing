@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Changelog | Kalycs</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts: Manrope -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Manrope"', 'system-ui', 'sans-serif'],
+                        display: ['"Manrope"', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        // Kalycs Palette (Matched to styles.css)
+                        kalycs: {
+                            bg: '#191A1A',        // --color-neutral-100
+                            surface: '#252727',   // --color-neutral-200
+                            primary: '#585cda',   // --color-primary-500
+                            accent: '#8285e3',    // --color-primary-600
+                            text: '#e5e6e6',      // --color-neutral-900
+                            muted: '#abb0b0',     // --color-neutral-700
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar for Webkit */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #191A1A;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3e4242;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #575c5c;
+        }
+
+        /* Utility for removing scrollbar in carousels but keeping functionality */
+        .hide-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scroll {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Smooth fade for images */
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .carousel-slide {
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(90deg, #8285e3, #585cda);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+
+<body class="bg-kalycs-bg text-kalycs-text font-sans antialiased selection:bg-kalycs-primary selection:text-white"
+    style="background: radial-gradient(1200px 800px at 70% -10%, #1b1a22 0%, #191A1A 60%), #191A1A;">
+
+    <!-- Navigation (Minimal) -->
+    <nav
+        class="fixed top-0 w-full z-50 mix-blend-difference px-6 py-6 flex justify-between items-center pointer-events-none">
+        <div class="pointer-events-auto cursor-pointer group">
+            <a href="/"
+                class="font-display text-2xl font-bold tracking-tight text-white group-hover:opacity-70 transition-opacity flex items-center gap-2">
+                <!-- Simple Circle Logo representation if needed, or just text -->
+                Kalycs.
+            </a>
+        </div>
+        <!-- Right side empty as per request (no Back to Dashboard) -->
+        <div class="pointer-events-auto">
+        </div>
+    </nav>
+
+    <!-- Header Section Removed -->
+
+    <!-- Main Content Area -->
+    <!-- Main Content Area -->
+    <main class="max-w-6xl mx-auto px-6 pb-32 relative">
+
+        <!-- Timeline Container (No Filters) -->
+        <div id="timeline-container" class="space-y-24 pt-32">
+            <!-- Content will be injected here by JavaScript -->
+        </div>
+
+        <!-- Footer -->
+        <footer class="pt-20 border-t border-white/5 mt-20 flex justify-between items-end text-kalycs-muted pl-8">
+            <div class="text-xs tracking-widest uppercase">
+                &copy; 2024 Kalycs Inc.
+            </div>
+            <div class="flex gap-4">
+                <a href="https://x.com/KalycsAI" class="hover:text-white transition-colors"><i
+                        class="ph ph-twitter-logo text-xl"></i></a>
+                <a href="https://www.youtube.com/@Kalycs" class="hover:text-white transition-colors"><i
+                        class="ph ph-youtube-logo text-xl"></i></a>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Data & Interactive Logic -->
+    <script>
+        // Changelog Data Structure
+        const changelogData = [
+            {
+                date: "Jan 14",
+                version: "v1.1.0",
+                type: "Feature",
+                title: "Advanced Rule System & File Management",
+                description: "Major updates to our core automation engine. Composite Rules let you build complex logic using AND/OR operators and nested conditions for precise document classification. Apply Rules scans local folders (Downloads, Documents, Desktop) for matches with confirmation. Upload Files provides instant file picker access with validation for 12+ formats. New settings control automatic classification behavior, giving you full control over when and how files are processed.",
+                carousel: [
+                    {
+                        src: "assets/changelog/CompositeRules.gif",
+                        header: "Composite Rules",
+                        subtitle: "Build complex logic with nested AND/OR operators"
+                    },
+                    {
+                        src: "assets/changelog/ApplyRules.gif",
+                        header: "Apply Rules",
+                        subtitle: "Scan folders for rule matches with confirmation workflow"
+                    },
+                    {
+                        src: "assets/changelog/UploadFile.gif",
+                        header: "Upload Files",
+                        subtitle: "Instant file picker with validation and real-time status"
+                    },
+                    {
+                        src: "assets/changelog/settings.png",
+                        header: "Settings",
+                        subtitle: "Control auto-classification and file processing behavior"
+                    }
+                ],
+                list: [
+                    { icon: "check", text: "Composite Rules: Combine multiple conditions with AND/OR operators. Create nested logic like '(starts_with(\"invoice\") OR starts_with(\"bill\")) AND extension(\"pdf\")' for high-precision organization." },
+                    { icon: "check", text: "Apply Rules & Upload Files: Both workflows evaluate simple and composite rules. Files matching any rule are classified automatically, with conflict resolution for multi-project matches." },
+                    { icon: "check", text: "Settings: 'Auto-Classify Files' enables automatic composite rule evaluation for Downloads folder. 'Process Incoming Files' controls whether unmatched files are still processed." },
+                    { icon: "check", text: "Performance: Composite rule trees are compiled and cached in memory with thread-safe recursive evaluation for efficient concurrent file processing." }
+                ]
+            }
+        ];
+
+        // Rendering Logic
+        const renderChangelog = () => {
+            const container = document.getElementById('timeline-container');
+            let delay = 0.3;
+
+            changelogData.forEach((item, index) => {
+                const article = document.createElement('article');
+                article.className = "relative pl-8 group fade-in-up";
+                article.style.animationDelay = `${delay}s`;
+                delay += 0.1;
+
+                // Timeline logic
+                let carouselHTML = '';
+                if (item.carousel) {
+                    const slidesHTML = item.carousel.map(slide => `
+                        <div class="carousel-slide w-full flex-shrink-0 h-full relative" data-header="${slide.header}" data-subtitle="${slide.subtitle}">
+                            <img src="${slide.src}" alt="${slide.header}" class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                    `).join('');
+
+                    const indicatorsHTML = item.carousel.map((_, i) => `
+                        <div class="indicator w-1.5 h-1.5 rounded-full ${i === 0 ? 'bg-white' : 'bg-white/30'} transition-all cursor-pointer" data-index="${i}"></div>
+                    `).join('');
+
+                    carouselHTML = `
+                        <div class="carousel-wrapper space-y-4">
+                            <div class="carousel-container relative w-full aspect-video bg-kalycs-surface rounded-[24px] overflow-hidden group/carousel mt-6 border border-white/5 shadow-2xl">
+                                <div class="carousel-track flex transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] h-full">
+                                    ${slidesHTML}
+                                </div>
+                                <!-- Controls -->
+                                <div class="absolute inset-0 flex items-center justify-between p-4 opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-300 pointer-events-none">
+                                    <button class="prev-btn pointer-events-auto w-10 h-10 flex items-center justify-center rounded-full bg-black/30 backdrop-blur-sm border border-white/10 hover:bg-white hover:text-black transition-all">
+                                        <i class="ph ph-arrow-left"></i>
+                                    </button>
+                                    <button class="next-btn pointer-events-auto w-10 h-10 flex items-center justify-center rounded-full bg-black/30 backdrop-blur-sm border border-white/10 hover:bg-white hover:text-black transition-all">
+                                        <i class="ph ph-arrow-right"></i>
+                                    </button>
+                                </div>
+                                <!-- Indicators -->
+                                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 pointer-events-auto z-20">
+                                    ${indicatorsHTML}
+                                </div>
+                            </div>
+                            <div class="carousel-caption">
+                                <h3 class="font-display text-2xl font-bold tracking-wide text-white mb-1 drop-shadow-md carousel-caption-title">${item.carousel[0].header}</h3>
+                                <p class="text-xs font-sans tracking-widest uppercase text-kalycs-muted/90 drop-shadow-sm carousel-caption-subtitle">${item.carousel[0].subtitle}</p>
+                            </div>
+                        </div>
+                    `;
+                } else if (item.singleImage) {
+                    carouselHTML = `
+                         <div class="relative w-full aspect-[21/9] overflow-hidden rounded-[24px] grayscale hover:grayscale-0 transition-all duration-700 mt-6 border border-white/5">
+                             <img src="${item.singleImage}" alt="${item.title}" class="w-full h-full object-cover">
+                             <div class="absolute inset-0 bg-gradient-to-t from-kalycs-bg via-transparent to-transparent opacity-60"></div>
+                        </div>
+                    `;
+                }
+
+                let extrasHTML = '';
+                if (item.list && item.list.length > 0) {
+                    const listItems = item.list.map(li => `
+                        <li class="flex items-start gap-3 text-sm text-kalycs-muted font-light">
+                            <i class="ph ph-${li.icon} text-white mt-0.5"></i>
+                            <span>${li.text}</span>
+                        </li>
+                    `).join('');
+                    extrasHTML = `<ul class="space-y-3 pt-4 border-t border-white/5 mt-6">${listItems}</ul>`;
+                }
+
+                if (item.codeBlock) {
+                    const lines = item.codeBlock.lines.map(line => {
+                        let content = line.text;
+                        return `<p class="${line.class || ''}">${content}</p>`;
+                    }).join('');
+
+                    extrasHTML += `
+                        <div class="bg-kalycs-surface/50 p-6 border border-white/5 rounded-sm font-mono text-xs text-kalycs-muted mt-6">
+                            <p class="text-white mb-2">${item.codeBlock.comment}</p>
+                            ${lines}
+                        </div>
+                     `;
+                }
+
+                article.innerHTML = `
+                    <div class="absolute -left-[5px] top-2 w-[9px] h-[9px] bg-kalycs-surface border border-kalycs-muted rounded-full group-hover:bg-white group-hover:scale-125 transition-all duration-300"></div>
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
+                        <div class="md:col-span-2">
+                            <div class="sticky top-32">
+                                <span class="block font-display text-3xl mb-1">${item.date}</span>
+                                <span class="text-xs text-kalycs-muted tracking-widest uppercase">${item.version} &mdash; <span class="text-kalycs-primary font-bold">${item.type}</span></span>
+                            </div>
+                        </div>
+                        <div class="md:col-span-10">
+                            <div>
+                                <h2 class="text-3xl font-display font-light mb-4 text-white">${item.title}</h2>
+                                <p class="text-kalycs-muted font-light leading-relaxed">${item.description}</p>
+                            </div>
+                            ${carouselHTML}
+                            ${extrasHTML}
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(article);
+            });
+
+            initCarousels();
+        };
+
+        const initCarousels = () => {
+            const carousels = document.querySelectorAll('.carousel-container');
+
+            carousels.forEach(carousel => {
+                const track = carousel.querySelector('.carousel-track');
+                const slides = Array.from(track.children);
+                const nextBtn = carousel.querySelector('.next-btn');
+                const prevBtn = carousel.querySelector('.prev-btn');
+                const indicators = carousel.querySelectorAll('.indicator');
+                const wrapper = carousel.parentElement;
+                const captionTitle = wrapper.querySelector('.carousel-caption-title');
+                const captionSubtitle = wrapper.querySelector('.carousel-caption-subtitle');
+
+                let currentIndex = 0;
+
+                const updateCarousel = (index) => {
+                    const amount = index * -100;
+                    track.style.transform = `translateX(${amount}%)`;
+
+                    if (indicators.length > 0) {
+                        indicators.forEach((ind, i) => {
+                            if (i === index) {
+                                ind.classList.remove('bg-white/30');
+                                ind.classList.add('bg-white');
+                            } else {
+                                ind.classList.add('bg-white/30');
+                                ind.classList.remove('bg-white');
+                            }
+                        });
+                    }
+
+                    const activeSlide = slides[index];
+                    if (activeSlide && captionTitle && captionSubtitle) {
+                        captionTitle.textContent = activeSlide.dataset.header || '';
+                        captionSubtitle.textContent = activeSlide.dataset.subtitle || '';
+                    }
+                };
+
+                indicators.forEach((ind, i) => {
+                    ind.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        currentIndex = i;
+                        updateCarousel(currentIndex);
+                    });
+                });
+
+                if (nextBtn) nextBtn.addEventListener('click', () => {
+                    currentIndex = (currentIndex + 1) % slides.length;
+                    updateCarousel(currentIndex);
+                });
+
+                if (prevBtn) prevBtn.addEventListener('click', () => {
+                    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                    updateCarousel(currentIndex);
+                });
+
+                updateCarousel(currentIndex);
+            });
+        };
+
+        document.addEventListener('DOMContentLoaded', renderChangelog);
+    </script>
+</body>
+
+</html>
